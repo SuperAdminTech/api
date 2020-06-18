@@ -1,0 +1,14 @@
+
+version: "3"
+
+services:
+    api:
+        user: ${UID:-1000}:${UID:-1000}
+        build:
+            context: ../..
+            dockerfile: docker/dev/Dockerfile
+        command: dev
+        volumes:
+            - ../../:/api
+        ports:
+            - 8000:8000
