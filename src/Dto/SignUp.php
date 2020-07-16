@@ -3,20 +3,20 @@
 namespace App\Dto;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Action\RegisterAction;
+use App\Action\SignUpAction;
 
 /**
  * @ApiResource(
  *     itemOperations={},
  *     collectionOperations={
  *          "post"={
- *              "path"="/app/register",
- *              "controller"=RegisterAction::class
+ *              "path"="/app/sign_up",
+ *              "controller"=SignUpAction::class
  *          }
  *     }
  * )
  */
-class Register {
+class SignUp {
 
     /**
      * @var string

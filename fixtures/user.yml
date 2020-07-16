@@ -1,0 +1,13 @@
+
+App\Entity\User:
+    user_admin:
+        username: admin@example.com
+        plain_password: secret
+        roles: ['ROLE_USER', 'ROLE_ADMIN']
+        application: '@default'
+
+    user_test:
+        username: test@example.com
+        plain_password: secret
+        roles: ['ROLE_USER']
+        application: '@default'

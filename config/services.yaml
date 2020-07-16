@@ -23,5 +23,20 @@ services:
         resource: '../src/Action'
         tags: ['controller.service_arguments']
 
+    App\EventSubscriber\Doctrine\:
+        resource: '../src/EventSubscriber/Doctrine'
+        tags: ['doctrine.event_subscriber']
+
+    App\EventSubscriber\Kernel\:
+        resource: '../src/EventSubscriber/Kernel'
+        tags: ['kernel.event_subscriber']
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    Gedmo\Timestampable\TimestampableListener:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]

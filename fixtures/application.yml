@@ -1,0 +1,5 @@
+
+App\Entity\Application:
+    default:
+        name: "Default app"
+        token: default

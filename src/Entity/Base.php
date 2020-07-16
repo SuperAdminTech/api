@@ -12,7 +12,7 @@ class Base
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
      */
     public $id;

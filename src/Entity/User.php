@@ -12,7 +12,7 @@ use App\Entity\Permission;
 
 /**
  * @ORM\Entity
- * @UniqueEntity(fields={"username", "application_id"}, message="Username already taken")
+ * @UniqueEntity(fields={"username", "application"}, message="Username already taken")
  * @ApiResource()
  */
 class User extends Base implements UserInterface
@@ -20,7 +20,7 @@ class User extends Base implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180)
-     * @Assert\Length(min="1", max="180")
+     * @Assert\Length(allowEmptyString="false", max="180")
      */
     public $username;
 
@@ -37,7 +37,7 @@ class User extends Base implements UserInterface
 
     /**
      * @var Application
-     * @ORM\OneToOne(targetEntity=Application::class, inversedBy="user")
+     * @ORM\ManyToOne(targetEntity=Application::class, inversedBy="users")
      */
     public $application;
 
@@ -46,6 +46,11 @@ class User extends Base implements UserInterface
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user")
      */
     public $permissions;
+
+    /**
+     * @var string The plain password
+     */
+    public $plain_password;
 
     /**
      * A visual identifier that represents this user.
@@ -104,7 +109,6 @@ class User extends Base implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plain_password = null;
     }
 }
