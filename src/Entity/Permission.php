@@ -9,6 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ApiResource()
  */
-class Account extends Base {
+class Permission extends Base {
 
 }

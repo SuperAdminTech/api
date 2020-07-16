@@ -1,5 +1,5 @@
-controllers:
-    resource: ../../src/Controller/
+actions:
+    resource: ../../src/Action/
     type: annotation
 
 kernel:
