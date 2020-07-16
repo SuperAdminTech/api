@@ -13,8 +13,20 @@ use App\Entity\User;
 class Application extends Base {
 
     /**
-     * @var User
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="application")
+     * @var string $name
+     * @ORM\Column(type="string")
      */
-    public $user;
+    public $name;
+
+    /**
+     * @var string $token
+     * @ORM\Column(type="string")
+     */
+    public $token;
+
+    /**
+     * @var User
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="application")
+     */
+    public $users;
 }

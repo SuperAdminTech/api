@@ -1,14 +1,19 @@
 FROM debian:buster
 ENV DEBIAN_FRONTEND=noninteractive
 
+# PROD Deps
 RUN apt update && apt install -y \
     php-cli \
     php-mysql \
     php-xml \
-    php-sqlite3 \
     php-curl \
     composer \
     wget
+
+# DEV Deps
+RUN apt install -y \
+    php-sqlite3 \
+    php-xdebug
 
 
 
