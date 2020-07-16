@@ -16,9 +16,9 @@ security:
             security: false
 
         login:
-            pattern: ^/token$
+            pattern: ^/app/token$
             json_login:
-                check_path: /token
+                check_path: /app/token
                 username_path: username
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -43,7 +43,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
-        - { path: ^/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/app, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

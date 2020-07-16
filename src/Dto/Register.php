@@ -10,7 +10,7 @@ use App\Action\RegisterAction;
  *     itemOperations={},
  *     collectionOperations={
  *          "post"={
- *              "path"="/register",
+ *              "path"="/app/register",
  *              "controller"=RegisterAction::class
  *          }
  *     }

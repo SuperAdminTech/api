@@ -4,19 +4,23 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Application;
+use App\Entity\Permission;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"username", "application_id"}, message="Username already taken")
  * @ApiResource()
  */
 class User extends Base implements UserInterface
 {
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email()
+     * @ORM\Column(type="string", length=180)
+     * @Assert\Length(min="1", max="180")
      */
     public $username;
 
@@ -30,6 +34,18 @@ class User extends Base implements UserInterface
      * @ORM\Column(type="string")
      */
     public $password;
+
+    /**
+     * @var Application
+     * @ORM\OneToOne(targetEntity=Application::class, inversedBy="user")
+     */
+    public $application;
+
+    /**
+     * @var Permission[]
+     * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user")
+     */
+    public $permissions;
 
     /**
      * A visual identifier that represents this user.
