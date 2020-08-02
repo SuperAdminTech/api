@@ -10,9 +10,7 @@ RUN apt update && apt install -y \
     php-cli \
     php-mbstring \
     php-zip \
-    php-redis \
     php-gd \
-    libxrender1 \
     composer \
     gettext-base \
     apache2 \
