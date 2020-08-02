@@ -12,6 +12,7 @@ RUN apt update && apt install -y \
     php-zip \
     php-gd \
     composer \
+    gettext-base \
     apache2 \
     wget
 
