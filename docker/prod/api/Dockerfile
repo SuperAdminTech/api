@@ -12,22 +12,23 @@ RUN apt update && apt install -y \
     php-zip \
     php-gd \
     composer \
-    gettext-base \
     apache2 \
     wget
 
+# apache2 config
+COPY docker/prod/api/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite php7.3
 RUN sed 's/^ServerTokens OS/ServerTokens Prod/' -i /etc/apache2/conf-available/security.conf
 RUN sed 's/^ServerSignature On/ServerSignature Off/' -i /etc/apache2/conf-available/security.conf
 
+WORKDIR /api
+
 COPY composer.lock /api/composer.lock
 COPY composer.json /api/composer.json
-WORKDIR /api
 RUN composer global require hirak/prestissimo --no-plugins --no-scripts
 RUN composer install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-autoloader && rm -rf /root/.composer
 
 COPY . /api
-COPY docker/prod/api/vhost /etc/apache2/sites-available/000-default.conf
 
 RUN composer dump-autoload --no-ansi --no-interaction --no-scripts --no-dev --optimize
 
