@@ -11,7 +11,8 @@ use App\Action\SignUpAction;
  *     collectionOperations={
  *          "post"={
  *              "path"="/app/sign_up",
- *              "controller"=SignUpAction::class
+ *              "controller"=SignUpAction::class,
+ *              "write"=false
  *          }
  *     }
  * )

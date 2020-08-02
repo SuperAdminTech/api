@@ -12,6 +12,7 @@ use App\Entity\Account;
  * @ApiResource()
  */
 class Permission extends Base {
+    const MANAGER = "manager";
 
     /**
      * @var User

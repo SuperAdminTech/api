@@ -4,7 +4,9 @@ namespace App\Action;
 
 
 use App\Dto\SignUp;
+use App\Entity\Account;
 use App\Entity\Application;
+use App\Entity\Permission;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -40,6 +42,23 @@ class SignUpAction
         $user->application = $app;
         $user->username = $data->username;
         $user->plain_password = $data->password;
+        $account = new Account();
+
+        $this->em->persist($user);
+        $this->em->persist($account);
+
+        $permission = new Permission();
+        $permission->user = $user;
+        $permission->account = $account;
+        $permission->grants = [Permission::MANAGER];
+
+        $this->em->persist($permission);
+
+        $user->permissions = [$permission];
+        $account->permissions = [$permission];
+
+        $this->em->flush();
+
         return $user;
     }
 }
