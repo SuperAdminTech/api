@@ -1,5 +1,9 @@
 
 STACK := caste
+DOCKER_IMAGE := api-caste
+DOCKER_TAG := master
+BUILD_DIR := .
+DOCKERFILE_DIR := .
 
 dev:
 	@docker-compose -f docker/dev/docker-compose.yml -p $(STACK) up --build
