@@ -16,6 +16,9 @@ trait ApiUtilsTrait {
     /** @var string $token */
     private $token = null;
 
+    /** @var KernelBrowser $client  */
+    private $client = null;
+
     /**
      * @param string $email
      * @param string $password
@@ -23,7 +26,7 @@ trait ApiUtilsTrait {
      * @throws AuthenticationException
      */
     protected function login($email = 'test@example.com', $password = 'secret'): self {
-        $client = static::createClient();
+        $client = $this->getApiClient();
         $credentials = ['email' => $email, 'password' => $password];
         $jsonCredentials = json_encode($credentials);
         $client->request('POST', '/login', [], [], ['CONTENT_TYPE' => 'application/ld+json'], $jsonCredentials);
@@ -69,7 +72,7 @@ trait ApiUtilsTrait {
      * @return Response
      */
     protected function request($method, $uri, $json = null): Response {
-        $client = $this->makeClient();
+        $client = $this->getApiClient();
         $client->setServerParameter('HTTP_Accept', 'application/ld+json');
         if($json == null)
             $client->request($method, $uri);
@@ -85,7 +88,7 @@ trait ApiUtilsTrait {
      * @return Response
      */
     protected function upload($method, $uri, $files): Response {
-        $client = $this->makeClient();
+        $client = $this->getApiClient();
         $client->setServerParameter('HTTP_Accept', 'application/ld+json');
 
         $files_upload = [];
@@ -117,10 +120,12 @@ trait ApiUtilsTrait {
     /**
      * @return KernelBrowser
      */
-    protected function makeClient(): KernelBrowser {
-        $client = self::createClient();
-        $client = $this->addJsonHeaders($client);
-        $client = $this->addAuthenticationToken($client);
-        return $client;
+    protected function getApiClient(): KernelBrowser {
+        if(!$this->client){
+            $this->client = self::createClient();
+            $this->client = $this->addJsonHeaders($this->client);
+            $this->client = $this->addAuthenticationToken($this->client);
+        }
+        return $this->client;
     }
 }

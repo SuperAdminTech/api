@@ -19,10 +19,10 @@ class Application extends Base {
     public $name;
 
     /**
-     * @var string $token
+     * @var string $realm
      * @ORM\Column(type="string")
      */
-    public $token;
+    public $realm;
 
     /**
      * @var User

@@ -31,5 +31,5 @@ class SignUp {
     /**
      * @var string
      */
-    public $app_token;
+    public $realm;
 }

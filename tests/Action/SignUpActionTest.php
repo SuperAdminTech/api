@@ -8,13 +8,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Hautelook\AliceBundle\PhpUnit\RecreateDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RegisterActionTest extends WebTestCase
+class SignUpActionTest extends WebTestCase
 {
     use RecreateDatabaseTrait;
     use ApiUtilsTrait;
 
     public function testSignUpOk(): void {
-        $credentials = ['username' => 'test@test.com', 'password' => '1234', 'app_token' => 'default'];
+        $credentials = ['username' => 'test@test.com', 'password' => '1234', 'realm' => 'default'];
         $this->json()->request('POST', '/app/sign_up', $credentials);
         $this->assertResponseIsSuccessful();
     }
@@ -27,7 +27,7 @@ class RegisterActionTest extends WebTestCase
 
     public function testSignUpAlreadyRegistered(): void {
         /** @var EntityManagerInterface $em */
-        $em = static::createClient()->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getApiClient()->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $em->getRepository(User::class)->findOneBy([]);
         self::assertNotNull($user);

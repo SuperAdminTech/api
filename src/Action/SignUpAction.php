@@ -8,7 +8,6 @@ use App\Entity\Application;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class SignUpAction
@@ -35,8 +34,8 @@ class SignUpAction
         /** @var Application $app */
         $app = $this->em
             ->getRepository(Application::class)
-            ->findOneBy(['token' => $data->app_token]);
-        if(!$app) throw new HttpException(400, "Application Token empty or invalid");
+            ->findOneBy(['realm' => $data->realm]);
+        if(!$app) throw new HttpException(400, "Application realm empty or invalid");
         $user = new User();
         $user->application = $app;
         $user->username = $data->username;
