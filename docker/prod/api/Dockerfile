@@ -27,6 +27,7 @@ RUN composer global require hirak/prestissimo --no-plugins --no-scripts
 RUN composer install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-autoloader && rm -rf /root/.composer
 
 COPY . /api
+COPY docker/prod/api/vhost /etc/apache2/sites-available/000-default.conf
 
 RUN composer dump-autoload --no-ansi --no-interaction --no-scripts --no-dev --optimize
 
