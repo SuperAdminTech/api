@@ -17,7 +17,6 @@ RUN apt update && apt install -y \
     wget
 
 # apache2 config
-COPY docker/prod/api/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite php7.3
 RUN sed 's/^ServerTokens OS/ServerTokens Prod/' -i /etc/apache2/conf-available/security.conf
 RUN sed 's/^ServerSignature On/ServerSignature Off/' -i /etc/apache2/conf-available/security.conf

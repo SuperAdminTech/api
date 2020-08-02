@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-env | grep -v "^_" >> /etc/apache2/envvars
+envsubst < docker/prod/api/vhost.conf > /etc/apache2/sites-available/000-default.conf
 
 composer run-script post-update-cmd
 chmod +x src config public
