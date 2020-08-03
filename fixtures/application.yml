@@ -5,5 +5,9 @@ App\Entity\Application:
         realm: default
 
     app0:
-        name: "First application"
+        name: "Application 0"
         realm: app0
+
+    app1:
+        name: "Application 1"
+        realm: app1

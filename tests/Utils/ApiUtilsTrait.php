@@ -71,13 +71,20 @@ trait ApiUtilsTrait {
      * @param null $json
      * @return Response
      */
-    protected function request($method, $uri, $json = null): Response {
+    protected function request($method, $uri, $json = null): Response
+    {
         $client = $this->getApiClient();
-        $client->setServerParameter('HTTP_Accept', 'application/ld+json');
-        if($json == null)
+        if ($json == null) {
+            $client->setServerParameter('HTTP_Accept', 'application/ld+json');
             $client->request($method, $uri);
-        else
-            $client->request($method, $uri, [], [], [], json_encode($json));
+        }
+        else {
+            $server = [
+                'HTTP_Accept' => 'application/ld+json',
+                'CONTENT_TYPE' => 'application/ld+json'
+            ];
+            $client->request($method, $uri, [], [], $server, json_encode($json));
+        }
         return $client->getResponse();
     }
 
