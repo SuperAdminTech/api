@@ -7,12 +7,18 @@ use App\Action\SignUpAction;
 
 /**
  * @ApiResource(
+ *     routePrefix="/app",
+ *     shortName="Register",
  *     itemOperations={},
  *     collectionOperations={
  *          "post"={
- *              "path"="/app/sign_up",
+ *              "path"="/sign_up",
  *              "controller"=SignUpAction::class,
- *              "write"=false
+ *              "write"=false,
+ *              "openapi_context"={
+ *                  "summary"="The registration endpoint",
+ *                  "description"="Creates a new User in the system, with default account and permissions."
+ *              }
  *          }
  *     }
  * )
