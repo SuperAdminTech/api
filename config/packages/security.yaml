@@ -9,7 +9,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: email
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -17,21 +17,17 @@ security:
 
         login:
             pattern: ^/app/token$
-            json_login:
-                check_path: /app/token
-                username_path: username
-                password_path: password
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            stateless: true
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\ApplicationAuthenticator
 
         main:
             pattern: ^/
             stateless: true
             anonymous: true
             provider: app_user_provider
-            guard:
-                authenticators:
-                    - App\Security\AppAwareAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

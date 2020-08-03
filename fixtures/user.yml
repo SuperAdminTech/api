@@ -11,3 +11,10 @@ App\Entity\User:
         plain_password: secret
         roles: ['ROLE_USER']
         application: '@default'
+
+
+    user_test0:
+        username: test@example.com
+        plain_password: secret0
+        roles: ['ROLE_USER']
+        application: '@app0'

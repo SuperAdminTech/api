@@ -40,3 +40,6 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface: '@lexik_jwt_authentication.handler.authentication_success'
+    Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface: '@lexik_jwt_authentication.handler.authentication_failure'

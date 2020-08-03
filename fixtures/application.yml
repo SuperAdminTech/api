@@ -3,3 +3,7 @@ App\Entity\Application:
     default:
         name: "Default app"
         realm: default
+
+    app0:
+        name: "First application"
+        realm: app0
