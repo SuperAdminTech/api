@@ -43,3 +43,8 @@ services:
 
     Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface: '@lexik_jwt_authentication.handler.authentication_success'
     Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface: '@lexik_jwt_authentication.handler.authentication_failure'
+
+    App\EventListener\JWTCreatedListener:
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }

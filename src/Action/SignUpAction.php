@@ -18,9 +18,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class SignUpAction
 {
 
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface $em */
     private $em;
 
     /**
@@ -38,25 +36,30 @@ class SignUpAction
             ->getRepository(Application::class)
             ->findOneBy(['realm' => $data->realm]);
         if(!$app) throw new HttpException(400, "Application realm empty or invalid");
+
+        # Creating user
         $user = new User();
         $user->application = $app;
         $user->username = $data->username;
         $user->plain_password = $data->password;
-        $account = new Account();
-
         $this->em->persist($user);
+
+        # Creating account
+        $account = new Account();
         $this->em->persist($account);
 
+        # Creating permission between user and account
         $permission = new Permission();
         $permission->user = $user;
         $permission->account = $account;
         $permission->grants = [Permission::MANAGER];
-
         $this->em->persist($permission);
 
+        # Link users and accounts
         $user->permissions = [$permission];
         $account->permissions = [$permission];
 
+        # Save into the DB
         $this->em->flush();
 
         return $user;

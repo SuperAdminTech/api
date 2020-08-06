@@ -25,6 +25,21 @@ class SignInTest extends WebTestCase
         $this->assertObjectHasAttribute('token', json_decode($resp->getContent()));
     }
 
+    public function testTokenHasRequiredInfo(): void {
+        $credentials = ['username' => 'test@example.com', 'password' => 'secret', 'realm' => 'default'];
+        $resp = $this->json()->request('POST', '/app/token', $credentials);
+        $token = json_decode($resp->getContent())->token;
+        $decoded = self::decodeJWT($token);
+        self::assertObjectHasAttribute("username", $decoded);
+        self::assertObjectHasAttribute("ip", $decoded);
+        self::assertObjectHasAttribute("application", $decoded);
+        self::assertObjectHasAttribute("permissions", $decoded);
+    }
+
+    private static function decodeJWT($token){
+        return json_decode(base64_decode(explode(".", $token)[1]));
+    }
+
     public function testSignInOkApp0ShouldSuccess(): void {
         $credentials = ['username' => 'test@example.com', 'password' => 'secret0', 'realm' => 'app0'];
         $this->json()->request('POST', '/app/token', $credentials);
