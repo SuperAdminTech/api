@@ -35,6 +35,7 @@ class JWTCreatedListener {
         $payload['ip'] = $request->getClientIp();
         /** @var User $user */
         $user = $event->getUser();
+        $payload['id'] = $user->id;
         $payload['application'] = [
             'name' => $user->application->name,
             'realm' => $user->application->realm
