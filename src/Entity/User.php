@@ -13,7 +13,15 @@ use App\Entity\Permission;
 /**
  * @ORM\Entity
  * @UniqueEntity(fields={"username", "application"}, message="Username already taken")
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={"security"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *          "get"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && object == user)"},
+ *          "put"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && object == user)"}
+ *     }
+ * )
  */
 class User extends Base implements UserInterface
 {
