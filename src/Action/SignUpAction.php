@@ -52,7 +52,7 @@ class SignUpAction
         $permission = new Permission();
         $permission->user = $user;
         $permission->account = $account;
-        $permission->grants = [Permission::MANAGER];
+        $permission->grants = [Permission::ACCOUNT_MANAGER];
         $this->em->persist($permission);
 
         # Link users and accounts

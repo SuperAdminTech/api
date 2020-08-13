@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     }
  * )
  */
-class Application extends Base {
+class Application extends Base implements Restricted {
 
     /**
      * @var string $name
@@ -39,4 +40,20 @@ class Application extends Base {
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applications")
      */
     public $administrator;
+
+    /**
+     * @inheritDoc
+     */
+    function getWriters(): array
+    {
+        return [$this->administrator];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function getReaders(): array
+    {
+        return $this->getWriters();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,7 +25,7 @@ use App\Entity\Permission;
  *     }
  * )
  */
-class User extends Base implements UserInterface
+class User extends Base implements UserInterface, Restricted
 {
 
     /**
@@ -130,5 +131,21 @@ class User extends Base implements UserInterface
     public function eraseCredentials()
     {
         $this->plain_password = null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function getWriters(): array
+    {
+        return [$this];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function getReaders(): array
+    {
+        return $this->getWriters();
     }
 }
