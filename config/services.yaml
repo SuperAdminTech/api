@@ -48,3 +48,9 @@ services:
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+
+    App\Security\Serializer\ContextBuilder:
+        decorates: 'api_platform.serializer.context_builder'
+        arguments: [ '@App\Security\Serializer\ContextBuilder.inner' ]
+        autoconfigure: false

@@ -4,6 +4,7 @@ namespace App\Dto;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Action\SignUpAction;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
@@ -27,16 +28,19 @@ class SignUp {
 
     /**
      * @var string
+     * @Groups({"public:write"})
      */
     public $username;
 
     /**
      * @var string
+     * @Groups({"public:write"})
      */
     public $password;
 
     /**
      * @var string
+     * @Groups({"public:write"})
      */
     public $realm;
 }

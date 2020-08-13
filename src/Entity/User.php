@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Application;
 use App\Entity\Permission;
@@ -29,17 +30,20 @@ class User extends Base implements UserInterface
     /**
      * @ORM\Column(type="string", length=180)
      * @Assert\Length(allowEmptyString="false", max="180")
+     * @Groups({"public:read", "admin:write"})
      */
     public $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:read", "admin:write"})
      */
     public $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:write", "admin:write"})
      */
     public $password;
 
@@ -63,6 +67,7 @@ class User extends Base implements UserInterface
 
     /**
      * @var string The plain password
+     * @Groups({"user:write", "admin:write"})
      */
     public $plain_password;
 
@@ -112,6 +117,7 @@ class User extends Base implements UserInterface
 
     /**
      * @see UserInterface
+     * @Groups({"super:read", "super:write"})
      */
     public function getSalt()
     {
