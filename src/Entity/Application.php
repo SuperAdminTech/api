@@ -4,11 +4,15 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\User;
 
 /**
  * @ORM\Entity
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={"security"="is_granted('ROLE_ADMIN')"},
+ *          "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *     }
+ * )
  */
 class Application extends Base {
 
@@ -29,4 +33,10 @@ class Application extends Base {
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="application")
      */
     public $users;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applications")
+     */
+    public $administrator;
 }

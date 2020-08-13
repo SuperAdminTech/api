@@ -56,6 +56,12 @@ class User extends Base implements UserInterface
     public $permissions;
 
     /**
+     * @var Application[]
+     * @ORM\OneToMany(targetEntity=Application::class, mappedBy="administrator")
+     */
+    public $applications = [];
+
+    /**
      * @var string The plain password
      */
     public $plain_password;
