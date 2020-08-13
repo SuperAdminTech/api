@@ -1,0 +1,13 @@
+
+App\Entity\Permission:
+    perm_admin:
+        user: '@user_admin'
+        account: '@account_admin'
+
+    perm_test:
+        user: '@user_test'
+        account: '@account_test'
+
+    perm_test0:
+        user: '@user_test0'
+        account: '@account_test0'

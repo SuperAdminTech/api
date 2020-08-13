@@ -5,12 +5,14 @@ App\Entity\User:
         plain_password: secret
         roles: ['ROLE_USER', 'ROLE_ADMIN']
         application: '@default'
+        permissions: ['@perm_admin']
 
     user_test:
         username: test@example.com
         plain_password: secret
         roles: ['ROLE_USER']
         application: '@default'
+        permissions: ['@perm_test']
 
 
     user_test0:
@@ -18,3 +20,4 @@ App\Entity\User:
         plain_password: secret0
         roles: ['ROLE_USER']
         application: '@app0'
+        permissions: ['@perm_test0']
