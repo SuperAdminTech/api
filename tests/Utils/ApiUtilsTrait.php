@@ -3,6 +3,7 @@
 
 namespace App\Tests\Utils;
 
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,18 +23,46 @@ trait ApiUtilsTrait {
     /**
      * @param string $email
      * @param string $password
+     * @param string $realm
      * @return $this
-     * @throws AuthenticationException
      */
-    protected function login($email = 'test@example.com', $password = 'secret'): self {
-        $client = $this->getApiClient();
-        $credentials = ['email' => $email, 'password' => $password];
-        $jsonCredentials = json_encode($credentials);
-        $client->request('POST', '/login', [], [], ['CONTENT_TYPE' => 'application/ld+json'], $jsonCredentials);
-        if($client->getResponse()->getStatusCode() != 200)
+    protected function login($email = 'test@example.com', $password = 'secret', $realm = 'default'): self {
+        $credentials = ['username' => $email, 'password' => $password, 'realm' => $realm];
+        $resp = $this->json()->request('POST', '/app/token', $credentials);
+        if($resp->getStatusCode() != Response::HTTP_OK)
             throw new AuthenticationException("Authentication for user $email with password $password failed");
-        $data = json_decode($client->getResponse()->getContent());
+        $data = json_decode($resp->getContent());
         $this->token = $data->token;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function logout(): self {
+        return $this->setToken(null);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUserToken(){
+        return $_ENV['USER_TOKEN'];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAdminToken(){
+        return $_ENV['ADMIN_TOKEN'];
+    }
+
+    /**
+     * @param $token
+     * @return $this
+     */
+    protected function setToken($token){
+        $this->token = $token;
         return $this;
     }
 
@@ -49,7 +78,7 @@ trait ApiUtilsTrait {
      * @return KernelBrowser
      */
     private function addAuthenticationToken(KernelBrowser $client): KernelBrowser {
-        if($this->token != null)
+        if($this->token)
             $client->setServerParameter('HTTP_Authorization', "Bearer $this->token");
         return $client;
     }
@@ -59,6 +88,7 @@ trait ApiUtilsTrait {
      * @return KernelBrowser
      */
     private function addJsonHeaders(KernelBrowser $client): KernelBrowser {
+        $client->setServerParameter('HTTP_Accept', 'application/ld+json');
         if($this->contentTypeJson) {
             $client->setServerParameter('CONTENT_TYPE', "application/ld+json");
         }
@@ -73,17 +103,12 @@ trait ApiUtilsTrait {
      */
     protected function request($method, $uri, $json = null): Response
     {
-        $client = $this->getApiClient();
-        if ($json == null) {
-            $client->setServerParameter('HTTP_Accept', 'application/ld+json');
+        $client = $this->createApiClient();
+        if (!$json) {
             $client->request($method, $uri);
         }
         else {
-            $server = [
-                'HTTP_Accept' => 'application/ld+json',
-                'CONTENT_TYPE' => 'application/ld+json'
-            ];
-            $client->request($method, $uri, [], [], $server, json_encode($json));
+            $client->request($method, $uri, [], [], [], json_encode($json));
         }
         return $client->getResponse();
     }
@@ -95,8 +120,7 @@ trait ApiUtilsTrait {
      * @return Response
      */
     protected function upload($method, $uri, $files): Response {
-        $client = $this->getApiClient();
-        $client->setServerParameter('HTTP_Accept', 'application/ld+json');
+        $client = $this->createApiClient();
 
         $files_upload = [];
         foreach ($files as $param => $fileName) {
@@ -127,12 +151,20 @@ trait ApiUtilsTrait {
     /**
      * @return KernelBrowser
      */
+    protected function createApiClient(): KernelBrowser {
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+        $client = $this->addJsonHeaders($client);
+        $client = $this->addAuthenticationToken($client);
+        $this->client = $client;
+        return $client;
+    }
+
+    /**
+     * @return KernelBrowser
+     */
     protected function getApiClient(): KernelBrowser {
-        if(!$this->client){
-            $this->client = self::createClient();
-            $this->client = $this->addJsonHeaders($this->client);
-            $this->client = $this->addAuthenticationToken($this->client);
-        }
+        if (!$this->client) return $this->createApiClient();
         return $this->client;
     }
 }

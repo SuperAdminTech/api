@@ -20,8 +20,8 @@ use App\Entity\Permission;
  *          "get"={"security"="is_granted('ROLE_ADMIN')"}
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && object == user)"},
- *          "put"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && object == user)"}
+ *          "get"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && in_array(user, object.readers)"},
+ *          "put"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && in_array(user, object.writers))"}
  *     }
  * )
  */
