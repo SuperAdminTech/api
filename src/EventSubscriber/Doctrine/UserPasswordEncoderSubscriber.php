@@ -51,7 +51,6 @@ class UserPasswordEncoderSubscriber implements EventSubscriber
                 $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $user);
             }
         }
-
     }
 
     private function encodePassword(User $user) {

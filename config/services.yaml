@@ -54,3 +54,10 @@ services:
         decorates: 'api_platform.serializer.context_builder'
         arguments: [ '@App\Security\Serializer\ContextBuilder.inner' ]
         autoconfigure: false
+
+
+    App\EventListener\ReaderFilterConfigurator:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 5 }
+        # Autoconfiguration must be disabled to set a custom priority
+        autoconfigure: false

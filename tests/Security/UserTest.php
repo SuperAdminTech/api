@@ -18,13 +18,26 @@ class UserTest extends WebTestCase
         $this->json()->login('test@example.com', 'secret');
     }
 
-    public function testUserListUsersShouldDeny(): void {
-        $this->request('GET', '/users');
-        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    public function testUserListShouldAllow(): void {
+        $uris = [
+            '/applications'
+        ];
+
+        foreach ($uris as $uri) {
+            $this->request('GET', $uri);
+            self::assertResponseIsSuccessful();
+        }
     }
 
-    public function testUserListApplicationsShouldDeny(): void {
-        $this->request('GET', '/applications');
-        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    public function testUserListShouldDeny(): void {
+        $uris = [
+            '/users',
+        ];
+
+        foreach ($uris as $uri) {
+            $this->request('GET', $uri);
+            self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        }
     }
+
 }

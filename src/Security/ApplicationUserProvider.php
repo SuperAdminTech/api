@@ -45,6 +45,7 @@ class ApplicationUserProvider implements PayloadAwareUserProviderInterface {
 
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
      */
     public function loadUserByUsername($username)
     {
@@ -53,6 +54,7 @@ class ApplicationUserProvider implements PayloadAwareUserProviderInterface {
 
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
      */
     public function refreshUser(UserInterface $user)
     {

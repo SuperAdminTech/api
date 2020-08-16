@@ -31,44 +31,47 @@ class User extends Base implements UserInterface, Restricted
     /**
      * @ORM\Column(type="string", length=180)
      * @Assert\Length(allowEmptyString="false", max="180")
-     * @Groups({"public:read", "admin:write"})
+     * @Groups({"public:read", "admin:read", "admin:write", "super:read", "super:write"})
      */
     public $username;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:read", "admin:write"})
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      */
     public $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write", "admin:write"})
+     * @Groups({"super:read", "super:write"})
      */
     public $password;
 
     /**
      * @var Application
      * @ORM\ManyToOne(targetEntity=Application::class, inversedBy="users")
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      */
     public $application;
 
     /**
      * @var Permission[]
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user")
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      */
     public $permissions;
 
     /**
      * @var Application[]
      * @ORM\OneToMany(targetEntity=Application::class, mappedBy="administrator")
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      */
     public $applications = [];
 
     /**
      * @var string The plain password
-     * @Groups({"user:write", "admin:write"})
+     * @Groups({"user:write", "admin:write", "super:read", "super:write"})
      */
     public $plain_password;
 
@@ -118,7 +121,6 @@ class User extends Base implements UserInterface, Restricted
 
     /**
      * @see UserInterface
-     * @Groups({"super:read", "super:write"})
      */
     public function getSalt()
     {

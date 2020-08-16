@@ -121,6 +121,7 @@ class ApplicationAuthenticator extends AbstractGuardAuthenticator {
 
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
      */
     public function supportsRememberMe()
     {
