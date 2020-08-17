@@ -18,20 +18,12 @@ class UserTest extends WebTestCase
         $this->json()->login('test@example.com', 'secret');
     }
 
-    public function testUserListShouldAllow(): void {
-        $uris = [
-            '/applications'
-        ];
-
-        foreach ($uris as $uri) {
-            $this->request('GET', $uri);
-            self::assertResponseIsSuccessful();
-        }
-    }
-
-    public function testUserListShouldDeny(): void {
+    public function testUserListEntitiesShouldDeny(): void {
         $uris = [
             '/users',
+            '/accounts',
+            '/permissions',
+            '/applications'
         ];
 
         foreach ($uris as $uri) {

@@ -1,5 +1,9 @@
 
 App\Entity\Permission:
+    perm_super:
+        user: '@user_super'
+        account: '@account_super'
+
     perm_admin:
         user: '@user_admin'
         account: '@account_admin'

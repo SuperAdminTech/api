@@ -56,7 +56,7 @@ services:
         autoconfigure: false
 
 
-    App\EventListener\ReaderFilterConfigurator:
+    App\EventListener\ApplicationFilterConfigurator:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 5 }
         # Autoconfiguration must be disabled to set a custom priority

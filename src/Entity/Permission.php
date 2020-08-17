@@ -4,12 +4,20 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\User;
-use App\Entity\Account;
 
 /**
  * @ORM\Entity
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
+ *          "post"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.user == user)"},
+ *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
+ *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
+ *     }
+ * )
  */
 class Permission extends Base {
     const ACCOUNT_WORKER = "ACCOUNT_WORKER";

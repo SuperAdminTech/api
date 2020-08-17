@@ -1,7 +1,10 @@
 
 App\Entity\Account:
+    account_super:
+        permissions: [ '@perm_super' ]
+
     account_admin:
-        permissions: ['@perm_admin']
+        permissions: [ '@perm_admin' ]
 
     account_test:
         permissions: ['@perm_test']

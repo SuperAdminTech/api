@@ -10,13 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ApiResource(
  *     collectionOperations={
- *          "get"={"security"="is_granted('ROLE_ADMIN')"},
- *          "post"={"security"="is_granted('ROLE_ADMIN') || in_array(user, object.writers)"}
+ *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
+ *          "post"={"security"="is_granted('ROLE_USER')"}
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_ADMIN') || in_array(user, object.readers)"},
- *          "put"={"security"="is_granted('ROLE_ADMIN') || in_array(user, object.writers)"},
- *          "delete"={"security"="is_granted('ROLE_ADMIN') || in_array(user, object.writers)"}
+ *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user)"},
+ *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsWrite(user))"},
+ *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsWrite(user))"}
  *     }
  * )
  */
@@ -31,27 +31,22 @@ class Account extends Base implements Restricted {
     /**
      * @inheritDoc
      */
-    function getWriters(): array
+    function allowsRead(User $user): bool
     {
-        $owners = [];
-        /** @var Permission $permission */
         foreach ($this->permissions as $permission){
-            if (in_array(Permission::ACCOUNT_MANAGER, $permission->grants))
-                $owners []= $permission->user;
+            if ($permission->user->id == $user->id) return true;
         }
-        return $owners;
+        return false;
     }
 
     /**
      * @inheritDoc
      */
-    function getReaders(): array
+    function allowsWrite(User $user): bool
     {
-        $owners = [];
-        /** @var Permission $permission */
         foreach ($this->permissions as $permission){
-            $owners []= $permission->user;
+            if ($permission->user->id == $user->id && in_array(Permission::ACCOUNT_MANAGER, $permission->grants)) return true;
         }
-        return $owners;
+        return false;
     }
 }

@@ -6,12 +6,12 @@ namespace App\Annotation;
 use Doctrine\Common\Annotations\Annotation;
 
 /**
- * Class ReaderAware
+ * Class ApplicationAware
  * @package App\Annotation
  * @Annotation
  * @Target("CLASS")
  */
-class ReaderAware
+class ApplicationAware
 {
-    public $readerFieldName;
+    public $applicationFieldName;
 }

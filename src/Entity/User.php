@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Annotation\ApplicationAware;
+use App\Annotation\ReaderAware;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -20,13 +22,14 @@ use App\Entity\Permission;
  *          "get"={"security"="is_granted('ROLE_ADMIN')"}
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && in_array(user, object.readers)"},
- *          "put"={"security"="is_granted('ROLE_ADMIN') || (is_granted('ROLE_USER') && in_array(user, object.writers))"}
+ *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || (is_granted('ROLE_USER') && object == user)"},
+ *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || (is_granted('ROLE_USER') && object == user)"},
+ *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
  *     }
  * )
+ * @ApplicationAware(applicationFieldName="application_id")
  */
-class User extends Base implements UserInterface, Restricted
-{
+class User extends Base implements UserInterface {
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -61,13 +64,6 @@ class User extends Base implements UserInterface, Restricted
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      */
     public $permissions;
-
-    /**
-     * @var Application[]
-     * @ORM\OneToMany(targetEntity=Application::class, mappedBy="administrator")
-     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
-     */
-    public $applications = [];
 
     /**
      * @var string The plain password
@@ -135,19 +131,4 @@ class User extends Base implements UserInterface, Restricted
         $this->plain_password = null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    function getWriters(): array
-    {
-        return [$this];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    function getReaders(): array
-    {
-        return $this->getWriters();
-    }
 }

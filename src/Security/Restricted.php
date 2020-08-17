@@ -9,12 +9,14 @@ use App\Entity\User;
 interface Restricted {
 
     /**
-     * @return User[]
+     * @param User $user
+     * @return bool
      */
-    function getWriters(): array;
+    function allowsRead(User $user): bool;
 
     /**
-     * @return User[]
+     * @param User $user
+     * @return bool
      */
-    function getReaders(): array;
+    function allowsWrite(User $user): bool;
 }

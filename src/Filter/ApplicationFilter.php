@@ -4,12 +4,12 @@
 namespace App\Filter;
 
 
-use App\Annotation\ReaderAware;
+use App\Annotation\ApplicationAware;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 
-class ReaderFilter extends SQLFilter
+class ApplicationFilter extends SQLFilter
 {
     /** @var Reader */
     private $reader;
@@ -25,30 +25,30 @@ class ReaderFilter extends SQLFilter
 
         // The Doctrine filter is called for any query on any entity
         // Check if the current entity is "user aware" (marked with an annotation)
-        /** @var ReaderAware $readerAware */
-        $readerAware = $this->reader->getClassAnnotation(
+        /** @var ApplicationAware $applicationAware */
+        $applicationAware = $this->reader->getClassAnnotation(
             $targetEntity->getReflectionClass(),
-            ReaderAware::class
+            ApplicationAware::class
         );
-        if (!$readerAware) {
+        if (!$applicationAware) {
             return '';
         }
 
 
-        $fieldName = $readerAware->readerFieldName;
+        $fieldName = $applicationAware->applicationFieldName;
         try {
             // Don't worry, getParameter automatically escapes parameters
-            $userId = $this->getParameter('id');
+            $applicationId = $this->getParameter('application');
         } catch (\InvalidArgumentException $e) {
             // No user id has been defined
             return '';
         }
 
-        if (empty($fieldName) || empty($userId)) {
+        if (empty($fieldName) || empty($applicationId)) {
             return '';
         }
 
-        return sprintf('%s.%s = %s', $targetTableAlias, $fieldName, $userId);
+        return sprintf('%s.%s = %s', $targetTableAlias, $fieldName, $applicationId);
     }
 
     public function setAnnotationReader(Reader $reader): void

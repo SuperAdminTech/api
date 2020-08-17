@@ -1,5 +1,12 @@
 
 App\Entity\User:
+    user_super:
+        username: super@example.com
+        plain_password: secret
+        roles: [ 'ROLE_SUPER_ADMIN' ]
+        application: '@default'
+        permissions: [ '@perm_super' ]
+
     user_admin:
         username: admin@example.com
         plain_password: secret

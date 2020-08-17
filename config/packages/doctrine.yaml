@@ -18,5 +18,5 @@ doctrine:
                 alias: App
 
         filters:
-            reader_filter:
-                class: App\Filter\ReaderFilter
+            application_filter:
+                class: App\Filter\ApplicationFilter
