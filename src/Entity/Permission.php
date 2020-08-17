@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"user", "account"}, message="Permission for this user and account already exists")
  * @ApiResource(
  *     collectionOperations={
  *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
