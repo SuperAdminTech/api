@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -15,13 +16,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          "post"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.user == user)"},
- *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
+ *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user)"},
+ *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsWrite(user))"},
  *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
  *     }
  * )
  */
-class Permission extends Base {
+class Permission extends Base implements Restricted {
     const ACCOUNT_WORKER = "ACCOUNT_WORKER";
     const ACCOUNT_MANAGER = "ACCOUNT_MANAGER";
 
@@ -40,5 +41,21 @@ class Permission extends Base {
     /**
      * @ORM\Column(type="json")
      */
-    public $grants = [];
+    public $grants = [self::ACCOUNT_WORKER];
+
+    /**
+     * @inheritDoc
+     */
+    function allowsRead(User $user): bool
+    {
+        return $this->user->id == $user->id;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function allowsWrite(User $user): bool
+    {
+        return $this->allowsRead($user) && in_array(self::ACCOUNT_MANAGER, $this->grants);
+    }
 }
