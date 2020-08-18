@@ -6,6 +6,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
@@ -16,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          "post"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user)"},
+ *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user))"},
  *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsWrite(user))"},
  *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
  *     }
@@ -29,17 +31,22 @@ class Permission extends Base implements Restricted {
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="permissions")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     public $user;
 
     /**
      * @var Account
      * @ORM\ManyToOne(targetEntity=Account::class, inversedBy="permissions")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     public $account;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:read", "user:write"})
      */
     public $grants = [self::ACCOUNT_WORKER];
 

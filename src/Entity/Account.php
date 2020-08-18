@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
@@ -25,6 +26,7 @@ class Account extends Base implements Restricted {
     /**
      * @var Permission[]
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="account")
+     * @MaxDepth(1)
      */
     public $permissions;
 

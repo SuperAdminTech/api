@@ -35,6 +35,8 @@ class ContextBuilder implements SerializerContextBuilderInterface {
     {
         $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);
 
+        $context['enable_max_depth'] = true;
+
         if (!isset($context['groups'])) $context['groups'] = [];
 
         $context['groups'][] = $normalization? 'public:read': 'public:write';

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Annotation\ApplicationAware;
 use App\Annotation\ReaderAware;
 use App\Security\Restricted;
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Application;
 use App\Entity\Permission;
@@ -55,6 +57,7 @@ class User extends Base implements UserInterface {
      * @var Application
      * @ORM\ManyToOne(targetEntity=Application::class, inversedBy="users")
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @MaxDepth(1)
      */
     public $application;
 
@@ -62,6 +65,7 @@ class User extends Base implements UserInterface {
      * @var Permission[]
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user")
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @MaxDepth(1)
      */
     public $permissions;
 

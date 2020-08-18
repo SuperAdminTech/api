@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
@@ -36,6 +37,7 @@ class Application extends Base {
     /**
      * @var User
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="application")
+     * @MaxDepth(1)
      */
     public $users;
 

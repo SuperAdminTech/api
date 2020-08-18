@@ -1,13 +1,16 @@
 
 App\Entity\Application:
     default:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859000'
         name: "Default app"
         realm: default
 
     app0:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859001'
         name: "Application 0"
         realm: app0
 
     app1:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859002'
         name: "Application 1"
         realm: app1

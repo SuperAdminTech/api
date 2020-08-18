@@ -32,4 +32,17 @@ class UserTest extends WebTestCase
         }
     }
 
+
+    public function testUserCanRetrieveItself(): void {
+        $id = "AD779175-76D1-466A-99BF-536AA3F5E002";
+        $this->request('GET', "/users/$id");
+        self::assertResponseIsSuccessful();
+    }
+
+    public function testUserCannotRetrieveOthers(): void {
+        $id = "AD779175-76D1-466A-99BF-536AA3F5E000";
+        $this->request('GET', "/users/$id");
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
 }
