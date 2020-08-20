@@ -32,8 +32,10 @@ class SignUpActionTest extends WebTestCase
         $user = $em->getRepository(User::class)->findOneBy([]);
         self::assertNotNull($user);
         $credentials = ['username' => $user->username, 'password' => '1234', 'realm' => 'default'];
-        $this->json()->request('POST', '/app/sign_up', $credentials);
+        $resp = $this->json()->request('POST', '/app/sign_up', $credentials);
         $this->assertResponseStatusCodeSame(400);
+        $err = json_decode($resp->getContent())->violations[0]->message;
+        self::assertEquals("Username already taken", $err);
     }
 
     public function testSignUpAlreadyRegisteredInOtherAppShouldSuccess(): void {

@@ -46,6 +46,7 @@ class SignUpAction
 
         # Creating account
         $account = new Account();
+        $account->name = $data->username;
         $this->em->persist($account);
 
         # Creating permission between user and account

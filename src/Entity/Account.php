@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -29,6 +30,13 @@ class Account extends Base implements Restricted {
      * @MaxDepth(1)
      */
     public $permissions;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", unique=true)
+     * @Assert\Unique(message="Account name already taken.")
+     */
+    public $name;
 
     /**
      * @inheritDoc
