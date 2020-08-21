@@ -13,7 +13,7 @@ class AdminTest extends WebTestCase
     use ApiUtilsTrait;
 
     public function setUp(): void {
-        $this->json()->login('admin@example.com', 'secret');
+        $this->json()->login('admin@example.com');
     }
 
     public function testAdminListEntitiesShouldSuccess(): void {

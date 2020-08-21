@@ -27,7 +27,7 @@ class SignUpActionTest extends WebTestCase
 
     public function testSignUpAlreadyRegisteredShouldFail(): void {
         /** @var EntityManagerInterface $em */
-        $em = $this->getApiClient()->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->createApiClient()->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $em->getRepository(User::class)->findOneBy([]);
         self::assertNotNull($user);
@@ -40,7 +40,7 @@ class SignUpActionTest extends WebTestCase
 
     public function testSignUpAlreadyRegisteredInOtherAppShouldSuccess(): void {
         /** @var EntityManagerInterface $em */
-        $em = $this->getApiClient()->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->createApiClient()->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $em->getRepository(User::class)->findOneBy([]);
         self::assertNotNull($user);

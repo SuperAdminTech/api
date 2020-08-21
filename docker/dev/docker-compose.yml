@@ -25,3 +25,10 @@ services:
             MYSQL_DATABASE: app
         volumes:
             - db:/var/lib/mysql
+
+    dbadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOST: db
+        ports:
+            - 8080:80

@@ -5,6 +5,7 @@ namespace App\Dto;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Action\NewAccountAction;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -18,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "write"=false,
  *              "openapi_context"={
  *                  "summary"="The creation accounts endpoint",
- *                  "description"="Creates a new Account for the logged-in user, with manager permissions."
+ *                  "description"="Creates a new Account for the current user, with manager permissions."
  *              },
  *              "security"="is_granted('ROLE_USER')"
  *          }
@@ -30,6 +31,8 @@ class NewAccount {
     /**
      * @var string
      * @Groups({"user:write"})
+     * @Assert\Length(allowEmptyString="false", max="64")
+     * @Assert\NotNull()
      */
     public $name;
 

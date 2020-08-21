@@ -25,8 +25,8 @@ class ManagementTest extends WebTestCase
         }
     }
 
-    public function testUserCreatesNewAccount(){
-        $this->json()->login('test@example.com', 'secret');
+    public function testUserCreatesNewAccountSuccessfully(){
+        $this->json()->login('test@example.com');
         $this->request('POST', '/user/new_account', ['name' => 'my new account']);
         self::assertResponseIsSuccessful();
     }

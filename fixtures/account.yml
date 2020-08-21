@@ -2,16 +2,20 @@
 App\Entity\Account:
     account_super:
         id: '05E88714-8FB3-46B0-893D-97CBCA859000'
+        name: 'account_super'
         permissions: [ '@perm_super' ]
 
     account_admin:
         id: '05E88714-8FB3-46B0-893D-97CBCA859001'
+        name: 'account_admin'
         permissions: [ '@perm_admin' ]
 
     account_test:
         id: '05E88714-8FB3-46B0-893D-97CBCA859002'
+        name: 'account_test'
         permissions: ['@perm_test']
 
     account_test0:
         id: '05E88714-8FB3-46B0-893D-97CBCA859003'
+        name: 'account_test0'
         permissions: ['@perm_test0']

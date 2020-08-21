@@ -3,7 +3,6 @@
 
 namespace App\Tests\Utils;
 
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,8 +10,8 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 trait ApiUtilsTrait {
 
-    /** @var boolean $contentTypeJson */
-    private $contentTypeJson = false;
+    /** @var boolean $acceptJson */
+    private $acceptJson = false;
 
     /** @var string $token */
     private $token = null;
@@ -70,29 +69,27 @@ trait ApiUtilsTrait {
      * @return $this
      */
     protected function json(): self {
-        $this->contentTypeJson = true;
+        $this->acceptJson = true;
         return $this;
-    }
-    /**
-     * @param KernelBrowser $client
-     * @return KernelBrowser
-     */
-    private function addAuthenticationToken(KernelBrowser $client): KernelBrowser {
-        if($this->token)
-            $client->setServerParameter('HTTP_Authorization', "Bearer $this->token");
-        return $client;
     }
 
     /**
-     * @param KernelBrowser $client
-     * @return KernelBrowser
+     * @return string[]
      */
-    private function addJsonHeaders(KernelBrowser $client): KernelBrowser {
-        $client->setServerParameter('HTTP_Accept', 'application/ld+json');
-        if($this->contentTypeJson) {
-            $client->setServerParameter('CONTENT_TYPE', "application/ld+json");
-        }
-        return $client;
+    private function getAuthenticationHeaders(): array {
+        if(!$this->token) return [];
+        return ['HTTP_Authorization' => "Bearer $this->token"];
+    }
+
+    /**
+     * @param null $data
+     * @return string[]
+     */
+    private function getJsonHeaders($data = null): array {
+        $headers = [];
+        if($this->acceptJson) $headers = ['HTTP_Accept' => 'application/ld+json'];
+        if ($data) $headers['CONTENT_TYPE'] = "application/ld+json";
+        return $headers;
     }
 
     /**
@@ -104,12 +101,14 @@ trait ApiUtilsTrait {
     protected function request($method, $uri, $json = null): Response
     {
         $client = $this->createApiClient();
-        if (!$json) {
-            $client->request($method, $uri);
-        }
-        else {
-            $client->request($method, $uri, [], [], [], json_encode($json));
-        }
+
+        $server = $this->getJsonHeaders($json);
+        $auth = $this->getAuthenticationHeaders();
+        $headers = array_merge($server, $auth);
+
+        if ($json) $client->request($method, $uri, [], [], $headers, json_encode($json));
+        else $client->request($method, $uri, [], [], $headers);
+
         return $client->getResponse();
     }
 
@@ -154,8 +153,6 @@ trait ApiUtilsTrait {
     protected function createApiClient(): KernelBrowser {
         self::ensureKernelShutdown();
         $client = self::createClient();
-        $client = $this->addJsonHeaders($client);
-        $client = $this->addAuthenticationToken($client);
         $this->client = $client;
         return $client;
     }
@@ -164,7 +161,11 @@ trait ApiUtilsTrait {
      * @return KernelBrowser
      */
     protected function getApiClient(): KernelBrowser {
-        if (!$this->client) return $this->createApiClient();
+        if(!$this->client) $this->createApiClient();
         return $this->client;
     }
+
+
+
+
 }

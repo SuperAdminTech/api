@@ -5,11 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"name"}, message="Account name already taken.")
  * @ApiResource(
  *     collectionOperations={
  *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
@@ -28,13 +31,15 @@ class Account extends Base implements Restricted {
      * @var Permission[]
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="account")
      * @MaxDepth(1)
+     * @Groups({"user:read", "user:write"})
      */
     public $permissions;
 
     /**
      * @var string
      * @ORM\Column(type="string", unique=true)
-     * @Assert\Unique(message="Account name already taken.")
+     * @Assert\Length(allowEmptyString="false", max="64")
+     * @Groups({"user:read", "user:write"})
      */
     public $name;
 
