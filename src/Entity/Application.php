@@ -25,6 +25,7 @@ class Application extends Base {
     /**
      * @var string $name
      * @ORM\Column(type="string")
+     * @Groups({"public:read"})
      */
     public $name;
 
