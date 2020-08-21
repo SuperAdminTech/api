@@ -35,6 +35,7 @@ class Account extends Base implements Restricted {
      * @var string
      * @ORM\Column(type="string", unique=true)
      * @Assert\Unique(message="Account name already taken.")
+     * @Groups({"public:read"})
      */
     public $name;
 
