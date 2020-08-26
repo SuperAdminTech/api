@@ -7,6 +7,7 @@ use App\Tests\Utils\ApiUtilsTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Hautelook\AliceBundle\PhpUnit\RecreateDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class SignUpActionTest extends WebTestCase
 {
@@ -22,7 +23,7 @@ class SignUpActionTest extends WebTestCase
     public function testSignUpWithoutAppTokenShouldFail(): void {
         $credentials = ['username' => 'test.com', 'password' => '1234'];
         $this->json()->request('POST', '/app/users/sign_up', $credentials);
-        $this->assertResponseStatusCodeSame(400);
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
     public function testSignUpAlreadyRegisteredShouldFail(): void {
@@ -33,7 +34,7 @@ class SignUpActionTest extends WebTestCase
         self::assertNotNull($user);
         $credentials = ['username' => $user->username, 'password' => '1234', 'realm' => 'default'];
         $resp = $this->json()->request('POST', '/app/users/sign_up', $credentials);
-        $this->assertResponseStatusCodeSame(400);
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
         $err = json_decode($resp->getContent())->violations[0]->message;
         self::assertEquals("Username already taken", $err);
     }
