@@ -19,7 +19,7 @@ use App\Dto\SignUp;
  *     collectionOperations={
  *          "get"={"security"="is_granted('ROLE_ADMIN')"},
  *          "post"={
- *              "path"="/public/users/sign_up",
+ *              "path"="/app/users/sign_up",
  *              "input"=SignUp::class,
  *              "openapi_context"={
  *                  "summary"="Call to register users",

@@ -15,13 +15,13 @@ class SignUpActionTest extends WebTestCase
 
     public function testSignUpOkShouldSuccess(): void {
         $credentials = ['username' => 'test@test.com', 'password' => '1234', 'realm' => 'default'];
-        $this->json()->request('POST', '/public/users/sign_up', $credentials);
+        $this->json()->request('POST', '/app/users/sign_up', $credentials);
         $this->assertResponseIsSuccessful();
     }
 
     public function testSignUpWithoutAppTokenShouldFail(): void {
         $credentials = ['username' => 'test.com', 'password' => '1234'];
-        $this->json()->request('POST', '/public/users/sign_up', $credentials);
+        $this->json()->request('POST', '/app/users/sign_up', $credentials);
         $this->assertResponseStatusCodeSame(400);
     }
 
@@ -32,7 +32,7 @@ class SignUpActionTest extends WebTestCase
         $user = $em->getRepository(User::class)->findOneBy([]);
         self::assertNotNull($user);
         $credentials = ['username' => $user->username, 'password' => '1234', 'realm' => 'default'];
-        $resp = $this->json()->request('POST', '/public/users/sign_up', $credentials);
+        $resp = $this->json()->request('POST', '/app/users/sign_up', $credentials);
         $this->assertResponseStatusCodeSame(400);
         $err = json_decode($resp->getContent())->violations[0]->message;
         self::assertEquals("Username already taken", $err);
@@ -45,7 +45,7 @@ class SignUpActionTest extends WebTestCase
         $user = $em->getRepository(User::class)->findOneBy([]);
         self::assertNotNull($user);
         $credentials = ['username' => $user->username, 'password' => '1234', 'realm' => 'app1'];
-        $this->json()->request('POST', '/public/users/sign_up', $credentials);
+        $this->json()->request('POST', '/app/users/sign_up', $credentials);
         $this->assertResponseIsSuccessful();
     }
 
