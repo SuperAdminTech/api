@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Action;
+namespace App\Tests\Dto;
 
 use App\Entity\User;
 use App\Tests\Utils\ApiUtilsTrait;
