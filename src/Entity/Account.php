@@ -23,7 +23,7 @@ use App\Dto\NewUserAccount;
  *              "method"="POST",
  *              "input"=NewUserAccount::class,
  *              "openapi_context"={
- *                  "summary"="The creation accounts endpoint",
+ *                  "summary"="Existing users can create new accounts here",
  *                  "description"="Creates a new Account for the current user, with manager permissions."
  *              },
  *              "security"="is_granted('ROLE_USER')"

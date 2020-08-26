@@ -22,7 +22,7 @@ use App\Dto\SignUp;
  *              "path"="/users/sign_up",
  *              "input"=SignUp::class,
  *              "openapi_context"={
- *                  "summary"="The registration endpoint",
+ *                  "summary"="Call to register users",
  *                  "description"="Creates a new User in the system, with default account and permissions."
  *              }
  *          },
