@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Dto\NewUserAccount;
 
 /**
  * @ORM\Entity
@@ -16,7 +17,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     collectionOperations={
  *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
- *          "post"={"security"="is_granted('ROLE_USER')"}
+ *          "post"={"security"="is_granted('ROLE_ADMIN')"},
+ *          "post_new_user_account"={
+ *              "path"="/accounts/new",
+ *              "method"="POST",
+ *              "input"=NewUserAccount::class,
+ *              "openapi_context"={
+ *                  "summary"="The creation accounts endpoint",
+ *                  "description"="Creates a new Account for the current user, with manager permissions."
+ *              },
+ *              "security"="is_granted('ROLE_USER')"
+ *          }
  *     },
  *     itemOperations={
  *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user)"},

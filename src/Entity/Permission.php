@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use App\Dto\PermissionWithUsername;
 
 /**
  * @ORM\Entity
@@ -15,7 +16,17 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ApiResource(
  *     collectionOperations={
  *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
- *          "post"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
+ *          "post"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
+ *          "post_with_username"={
+ *              "path"="/permissions/with_username",
+ *              "method"="POST",
+ *              "input"=PermissionWithUsername::class,
+ *              "openapi_context"={
+ *                  "summary"="The permissions endpoint",
+ *                  "description"="Gives permission to a user identified by username to an account owned by the authenticated user."
+ *              },
+ *              "security"="is_granted('ROLE_USER')"
+ *          },
  *     },
  *     itemOperations={
  *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user))"},
@@ -45,6 +56,7 @@ class Permission extends Base implements Restricted {
     public $account;
 
     /**
+     * @var string[]
      * @ORM\Column(type="json")
      * @Groups({"user:read", "user:write"})
      */

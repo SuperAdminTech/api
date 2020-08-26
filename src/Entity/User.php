@@ -3,25 +3,29 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Annotation\ApplicationAware;
-use App\Annotation\ReaderAware;
-use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Application;
-use App\Entity\Permission;
+use App\Dto\SignUp;
 
 /**
  * @ORM\Entity
  * @UniqueEntity(fields={"username", "application"}, message="Username already taken")
  * @ApiResource(
  *     collectionOperations={
- *          "get"={"security"="is_granted('ROLE_ADMIN')"}
+ *          "get"={"security"="is_granted('ROLE_ADMIN')"},
+ *          "post"={
+ *              "path"="/users/sign_up",
+ *              "input"=SignUp::class,
+ *              "openapi_context"={
+ *                  "summary"="The registration endpoint",
+ *                  "description"="Creates a new User in the system, with default account and permissions."
+ *              }
+ *          },
  *     },
  *     itemOperations={
  *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || (is_granted('ROLE_USER') && object == user)"},
