@@ -11,13 +11,25 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ORM\Entity
  * @ApiResource(
  *     collectionOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
- *          "post"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
+ *          "get"={
+ *              "path"="/sadmin/applications"
+ *          },
+ *          "post"={
+ *              "path"="/sadmin/applications"
+ *          }
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object == user.application)"},
- *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object == user.application)"},
- *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
+ *          "get"={
+ *              "path"="/admin/applications/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user.application"
+ *          },
+ *          "put"={
+ *              "path"="/admin/applications/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user.application"
+ *          },
+ *          "delete"={
+ *              "path"="/sadmin/applications/{id}"
+ *          }
  *     }
  * )
  */
@@ -43,6 +55,6 @@ class Application extends Base {
      * @Groups({"super:read", "super:write"})
      * @MaxDepth(1)
      */
-    public $users;
+    public $users = [];
 
 }

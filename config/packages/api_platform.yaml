@@ -1,5 +1,5 @@
 api_platform:
-    title: 'dfnder AUTH REST API'
+    title: 'AUTH REST API'
     description: 'https://api.auth.dfnder.com'
     version: 1.0.0
     mapping:

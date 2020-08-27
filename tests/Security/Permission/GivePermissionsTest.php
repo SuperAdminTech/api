@@ -20,31 +20,31 @@ class GivePermissionsTest extends WebTestCase
 
     public function testUserGivesPermissionSuccessfully(){
         $params = [
-            'account' => "/accounts/05E88714-8FB3-46B0-893D-97CBCA859002",
+            'account' => "/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002",
             'username' => 'super@example.com',
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
-        $this->request('POST', '/permissions/with_username', $params);
+        $this->request('POST', '/user/permissions', $params);
         self::assertResponseIsSuccessful();
     }
 
     public function testUserGivesPermissionAlreadyAllowed(){
         $params = [
-            'account' => "/accounts/05E88714-8FB3-46B0-893D-97CBCA859002",
+            'account' => "/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002",
             'username' => 'test@example.com',
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
-        $this->request('POST', '/permissions/with_username', $params);
+        $this->request('POST', '/user/permissions', $params);
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
     public function testUserGivesPermissionForbidden(){
         $params = [
-            'account' => "/accounts/05E88714-8FB3-46B0-893D-97CBCA859000",
+            'account' => "/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859000",
             'username' => 'admin@example.com',
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
-        $this->request('POST', '/permissions/with_username', $params);
+        $this->request('POST', '/user/permissions', $params);
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 

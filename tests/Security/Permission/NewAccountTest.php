@@ -18,7 +18,7 @@ class NewAccountTest extends WebTestCase
 
     public function testUserHaveRequiredInfo(): void {
         $id = "AD779175-76D1-466A-99BF-536AA3F5E002";
-        $resp = $this->request('GET', "/users/$id");
+        $resp = $this->request('GET', "/user/users/$id");
         self::assertResponseIsSuccessful();
         $user = json_decode($resp->getContent());
         foreach ($user->permissions as $permission){
@@ -30,12 +30,12 @@ class NewAccountTest extends WebTestCase
     }
 
     public function testUserCreatesNewAccountSuccessfully(){
-        $this->request('POST', '/accounts/new', ['name' => 'my new account']);
+        $this->request('POST', '/user/accounts', ['name' => 'my new account']);
         self::assertResponseIsSuccessful();
     }
 
     public function testUserCreatesNewAccountAlreadyTaken(){
-        $this->request('POST', '/accounts/new', ['name' => 'account_admin']);
+        $this->request('POST', '/user/accounts', ['name' => 'account_admin']);
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 }

@@ -17,9 +17,11 @@ use App\Dto\SignUp;
  * @UniqueEntity(fields={"username", "application"}, message="Username already taken")
  * @ApiResource(
  *     collectionOperations={
- *          "get"={"security"="is_granted('ROLE_ADMIN')"},
+ *          "get"={
+ *              "path"="/admin/users"
+ *          },
  *          "post"={
- *              "path"="/app/users/sign_up",
+ *              "path"="/public/users",
  *              "input"=SignUp::class,
  *              "openapi_context"={
  *                  "summary"="Call to register users",
@@ -28,9 +30,17 @@ use App\Dto\SignUp;
  *          },
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || (is_granted('ROLE_USER') && object == user)"},
- *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || (is_granted('ROLE_USER') && object == user)"},
- *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
+ *          "get"={
+ *              "path"="/user/users/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || object == user"
+ *          },
+ *          "put"={
+ *              "path"="/user/users/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || object == user"
+ *          },
+ *          "delete"={
+ *              "path"="/sadmin/users/{id}"
+ *          }
  *     }
  * )
  * @ApplicationAware(applicationFieldName="application_id")
@@ -71,7 +81,7 @@ class User extends Base implements UserInterface {
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      * @MaxDepth(1)
      */
-    public $permissions;
+    public $permissions = [];
 
     /**
      * @var string The plain password

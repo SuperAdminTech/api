@@ -18,7 +18,7 @@ class AdminTest extends WebTestCase
 
     public function testAdminListEntitiesShouldSuccess(): void {
         $uris = [
-            '/users',
+            '/admin/users',
         ];
 
         foreach ($uris as $uri){
@@ -30,8 +30,8 @@ class AdminTest extends WebTestCase
 
     public function testAdminListEntitiesShouldForbid(): void {
         $uris = [
-            '/accounts',
-            '/permissions',
+            '/sadmin/accounts',
+            '/sadmin/permissions',
         ];
 
         foreach ($uris as $uri){

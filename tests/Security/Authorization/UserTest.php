@@ -20,10 +20,10 @@ class UserTest extends WebTestCase
 
     public function testUserListEntitiesShouldDeny(): void {
         $uris = [
-            '/users',
-            '/accounts',
-            '/permissions',
-            '/applications'
+            '/admin/users',
+            '/sadmin/accounts',
+            '/sadmin/permissions',
+            '/sadmin/applications'
         ];
 
         foreach ($uris as $uri) {
@@ -35,13 +35,13 @@ class UserTest extends WebTestCase
 
     public function testUserCanRetrieveItself(): void {
         $id = "AD779175-76D1-466A-99BF-536AA3F5E002";
-        $this->request('GET', "/users/$id");
+        $this->request('GET', "/user/users/$id");
         self::assertResponseIsSuccessful();
     }
 
     public function testUserCannotRetrieveOthers(): void {
         $id = "AD779175-76D1-466A-99BF-536AA3F5E000";
-        $this->request('GET', "/users/$id");
+        $this->request('GET', "/user/users/$id");
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 

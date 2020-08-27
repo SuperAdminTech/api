@@ -65,7 +65,7 @@ class ApplicationAuthenticator extends AbstractGuardAuthenticator {
      */
     public function supports(Request $request)
     {
-        return $request->getPathInfo() === "/app/token" &&
+        return $request->getPathInfo() === "/public/token" &&
             $request->getMethod() === 'POST' &&
             in_array($request->getContentType(), ['json', 'jsonld']);
     }

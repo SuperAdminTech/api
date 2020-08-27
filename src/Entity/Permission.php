@@ -15,23 +15,34 @@ use App\Dto\PermissionWithUsername;
  * @UniqueEntity(fields={"user", "account"}, message="Permission for this user and account already exists")
  * @ApiResource(
  *     collectionOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
- *          "post"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
+ *          "get"={
+ *              "path"="/sadmin/permissions"
+ *          },
+ *          "post"={
+ *              "path"="/sadmin/permissions"
+ *          },
  *          "post_with_username"={
- *              "path"="/permissions/with_username",
+ *              "path"="/user/permissions",
  *              "method"="POST",
  *              "input"=PermissionWithUsername::class,
  *              "openapi_context"={
- *                  "summary"="The permissions endpoint",
+ *                  "summary"="Gives permissions to your Account to another User",
  *                  "description"="Gives permission to a user identified by username to an account owned by the authenticated user."
- *              },
- *              "security"="is_granted('ROLE_USER')"
+ *              }
  *          },
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user))"},
- *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsWrite(user))"},
- *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN')"}
+ *          "get"={
+ *              "path"="/user/permissions/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsRead(user)"
+ *          },
+ *          "put"={
+ *              "path"="/user/permissions/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsWrite(user)"
+ *          },
+ *          "delete"={
+ *              "path"="/sadmin/permissions/{id}"
+ *          }
  *     }
  * )
  */

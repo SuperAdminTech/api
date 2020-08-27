@@ -14,15 +14,15 @@ class SuperTest extends WebTestCase
     use ApiUtilsTrait;
 
     public function setUp(): void {
-        $this->json()->login('super@example.com', 'secret');
+        $this->json()->login('super@example.com');
     }
 
-    public function testAdminListEntitiesShouldSuccess(): void {
+    public function testSuperdminListEntitiesShouldSuccess(): void {
         $uris = [
-            '/users',
-            '/accounts',
-            '/applications',
-            '/permissions',
+            '/admin/users',
+            '/sadmin/accounts',
+            '/sadmin/applications',
+            '/sadmin/permissions',
         ];
 
         foreach ($uris as $uri){

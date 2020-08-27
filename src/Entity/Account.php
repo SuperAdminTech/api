@@ -16,23 +16,35 @@ use App\Dto\NewUserAccount;
  * @UniqueEntity(fields={"name"}, message="Account name already taken.")
  * @ApiResource(
  *     collectionOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN')"},
- *          "post"={"security"="is_granted('ROLE_ADMIN')"},
+ *          "get"={
+ *              "path"="/sadmin/accounts"
+ *          },
+ *          "post"={
+ *              "path"="/admin/accounts"
+ *          },
  *          "post_new_user_account"={
- *              "path"="/accounts/new",
+ *              "path"="/user/accounts",
  *              "method"="POST",
  *              "input"=NewUserAccount::class,
  *              "openapi_context"={
- *                  "summary"="Existing users can create new accounts here",
+ *                  "summary"="Creates a Account linked to the authenticated user",
  *                  "description"="Creates a new Account for the current user, with manager permissions."
- *              },
- *              "security"="is_granted('ROLE_USER')"
+ *              }
  *          }
  *     },
  *     itemOperations={
- *          "get"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsRead(user)"},
- *          "put"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsWrite(user))"},
- *          "delete"={"security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_USER') && object.allowsWrite(user))"}
+ *          "get"={
+ *              "path"="/user/accounts/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsRead(user)"
+ *          },
+ *          "put"={
+ *              "path"="/user/accounts/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsWrite(user)"
+ *          },
+ *          "delete"={
+ *              "path"="/user/accounts/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsWrite(user)"
+ *          }
  *     }
  * )
  */
@@ -44,7 +56,7 @@ class Account extends Base implements Restricted {
      * @MaxDepth(1)
      * @Groups({"user:read", "user:write"})
      */
-    public $permissions;
+    public $permissions = [];
 
     /**
      * @var string
