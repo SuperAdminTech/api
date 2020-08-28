@@ -54,7 +54,7 @@ class Account extends Base implements Restricted {
 
     /**
      * @var Permission[]
-     * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="account")
+     * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="account", cascade={"remove"})
      * @MaxDepth(1)
      * @Groups({"user:read", "user:write"})
      */
