@@ -39,7 +39,9 @@ use App\Dto\SignUp;
  *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || object == user"
  *          },
  *          "delete"={
- *              "path"="/sadmin/users/{id}"
+ *              "path"="/sadmin/users/{id}",
+ *              "security"="object != user",
+ *              "security_message"="User cannot delete itself"
  *          }
  *     }
  * )
@@ -77,7 +79,7 @@ class User extends Base implements UserInterface {
 
     /**
      * @var Permission[]
-     * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      * @MaxDepth(1)
      */
