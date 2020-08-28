@@ -31,4 +31,10 @@ class SuperTest extends WebTestCase
         }
     }
 
+
+    public function testSuperdminCanDeleteSelfAccount(): void {
+        $this->request('DELETE', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859000');
+        self::assertResponseIsSuccessful();
+    }
+
 }

@@ -3,9 +3,12 @@
 
 namespace App\Security;
 
-
 use App\Entity\User;
 
+/**
+ * Interface Restricted
+ * @package App\Security
+ */
 interface Restricted {
 
     /**

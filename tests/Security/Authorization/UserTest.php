@@ -45,4 +45,10 @@ class UserTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
+
+    public function testSuperdminCanDeleteSelfAccount(): void {
+        $this->request('DELETE', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002');
+        self::assertResponseIsSuccessful();
+    }
+
 }
