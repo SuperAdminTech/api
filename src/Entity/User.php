@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 use App\Annotation\ApplicationAware;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -45,6 +48,7 @@ use App\Dto\SignUp;
  *          }
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact", "username": "partial"})
  * @ApplicationAware(applicationFieldName="application_id")
  */
 class User extends Base implements UserInterface {
