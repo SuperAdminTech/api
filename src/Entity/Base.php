@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\MappedSuperclass()
  */
-class Base
+abstract class Base
 {
     /**
      * @ORM\Id()
