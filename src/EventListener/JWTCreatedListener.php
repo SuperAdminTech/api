@@ -40,7 +40,15 @@ class JWTCreatedListener {
             'name' => $user->application->name,
             'realm' => $user->application->realm
         ];
-        $payload['permissions'] = $user->permissions;
+        $payload['permissions'] = [];
+        foreach ($user->permissions as $permission){
+            $payload['permissions'] []= [
+                'grants' => $permission->grants,
+                'account' => [
+                    'id' => $permission->account->id
+                ]
+            ];
+        }
 
         $event->setData($payload);
     }
