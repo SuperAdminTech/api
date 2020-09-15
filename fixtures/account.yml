@@ -19,3 +19,8 @@ App\Entity\Account:
         id: '05E88714-8FB3-46B0-893D-97CBCA859003'
         name: 'account_test0'
         permissions: ['@perm_test0']
+
+    account_test1:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859004'
+        name: 'account_test1'
+        permissions: [ '@perm_test1' ]

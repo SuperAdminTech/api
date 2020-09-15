@@ -16,10 +16,16 @@ App\Entity\Permission:
         id: '05E88714-8FB3-46B0-893D-97CBCA859002'
         user: '@user_test'
         account: '@account_test'
-        grants: [ 'ACCOUNT_MANAGER' ]
+        grants: [ 'ACCOUNT_MANAGER', 'ACCOUNT_INVESTOR' ]
 
     perm_test0:
         id: '05E88714-8FB3-46B0-893D-97CBCA859003'
         user: '@user_test0'
         account: '@account_test0'
         grants: [ 'ACCOUNT_MANAGER' ]
+
+    perm_test1:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859004'
+        user: '@user_test1'
+        account: '@account_test1'
+        grants: [ 'ACCOUNT_MANAGER', 'ACCOUNT_TRADER' ]

@@ -15,7 +15,7 @@ class UserTest extends WebTestCase
     use ApiUtilsTrait;
 
     public function setUp(): void {
-        $this->json()->login('test@example.com', 'secret');
+        $this->json()->login('test@example.com');
     }
 
     public function testUserListEntitiesShouldDeny(): void {

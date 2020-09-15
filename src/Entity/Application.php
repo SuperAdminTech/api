@@ -35,6 +35,10 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Application extends Base {
 
+    const USERNAME_IS_EMAIL = 'username_is_email';
+    const VALIDATE_EMAIL = 'validate_email';
+    const ACCOUNT_ACTIVATED_BY_DEFAULT = 'account_activated_by_default';
+
     /**
      * @var string $name
      * @ORM\Column(type="string")
@@ -56,5 +60,19 @@ class Application extends Base {
      * @MaxDepth(1)
      */
     public $users = [];
+
+    /**
+     * @var array
+     * @ORM\Column(type="json")
+     * @Groups({"admin:read", "admin:write"})
+     */
+    public $config = [];
+
+    /**
+     * @var string[]
+     * @ORM\Column(type="json")
+     * @Groups({"admin:read", "admin:write"})
+     */
+    public $grants = [];
 
 }
