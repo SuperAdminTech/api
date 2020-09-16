@@ -2,9 +2,7 @@
 
 namespace App\Tests\Security;
 
-use App\Entity\User;
 use App\Tests\Utils\ApiUtilsTrait;
-use Doctrine\ORM\EntityManagerInterface;
 use Hautelook\AliceBundle\PhpUnit\RecreateDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -45,7 +43,7 @@ class SignInTest extends WebTestCase
     }
 
     public function testSignInOkApp0ShouldSuccess(): void {
-        $credentials = ['username' => 'test@example.com', 'password' => 'secret0', 'realm' => 'app0'];
+        $credentials = ['username' => 'test@example.com', 'password' => 'secret', 'realm' => 'app0'];
         $this->json()->request('POST', '/public/token', $credentials);
         $this->assertResponseIsSuccessful();
     }
@@ -57,7 +55,7 @@ class SignInTest extends WebTestCase
     }
 
     public function testSignInBadRealmShouldFail(): void {
-        $credentials = ['username' => 'test@example.com', 'password' => 'secret', 'realm' => 'app0'];
+        $credentials = ['username' => 'test@example.com', 'password' => 'secret', 'realm' => 'app1'];
         $this->json()->request('POST', '/public/token', $credentials);
         $this->assertResponseStatusCodeSame(401);
     }
