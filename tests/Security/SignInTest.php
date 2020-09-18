@@ -36,6 +36,8 @@ class SignInTest extends WebTestCase
         self::assertGreaterThan(0, count($decoded->permissions));
         self::assertObjectHasAttribute('grants', $decoded->permissions[0]);
         self::assertObjectHasAttribute('account', $decoded->permissions[0]);
+        self::assertObjectHasAttribute('id', $decoded->permissions[0]->account);
+        self::assertObjectHasAttribute('name', $decoded->permissions[0]->account);
     }
 
     private static function decodeJWT($token){

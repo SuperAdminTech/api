@@ -45,7 +45,8 @@ class JWTCreatedListener {
             $payload['permissions'] []= [
                 'grants' => $permission->grants,
                 'account' => [
-                    'id' => $permission->account->id
+                    'id' => $permission->account->id,
+                    'name' => $permission->account->name
                 ]
             ];
         }
