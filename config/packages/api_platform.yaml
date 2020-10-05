@@ -6,6 +6,11 @@ api_platform:
         paths: ['%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/Dto']
     patch_formats:
         json: ['application/merge-patch+json']
+
+    collection:
+        pagination:
+            client_items_per_page: true
+            maximum_items_per_page: 100
     swagger:
         versions: [3]
         api_keys:
