@@ -22,7 +22,7 @@ use App\Dto\NewUserAccount;
  * @ApiResource(
  *     collectionOperations={
  *          "get"={
- *              "path"="/sadmin/accounts"
+ *              "path"="/admin/accounts"
  *          },
  *          "post"={
  *              "path"="/admin/accounts"
