@@ -20,9 +20,9 @@ class UserTest extends WebTestCase
 
     public function testUserListEntitiesShouldDeny(): void {
         $uris = [
-            '/admin/users',
             '/admin/applications',
             '/admin/accounts',
+            '/sadmin/users',
             '/sadmin/permissions',
         ];
 
