@@ -17,7 +17,7 @@ trait IdTrait {
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
-     * @Groups({"public:read"})
+     * @Groups({"user:read"})
      */
     public $id;
 }
