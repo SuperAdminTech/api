@@ -30,12 +30,12 @@ class NewAccountTest extends WebTestCase
     }
 
     public function testUserCreatesNewAccountSuccessfully(){
-        $this->request('POST', '/user/accounts', ['name' => 'my new account']);
+        $this->request('POST', '/user/accounts', ['name' => 'my new account', 'realm' => 'default']);
         self::assertResponseIsSuccessful();
     }
 
     public function testUserCreatesNewAccountAlreadyTaken(){
-        $this->request('POST', '/user/accounts', ['name' => 'account_admin']);
+        $this->request('POST', '/user/accounts', ['name' => 'account_admin', 'realm' => 'default']);
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 }

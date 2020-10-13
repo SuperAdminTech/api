@@ -24,7 +24,7 @@ class GivePermissionsTest extends WebTestCase
             'username' => 'super@example.com',
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
-        $this->request('POST', '/user/permissions', $params);
+        $resp = $this->request('POST', '/user/permissions', $params);
         self::assertResponseIsSuccessful();
     }
 

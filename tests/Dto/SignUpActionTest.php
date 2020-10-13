@@ -35,8 +35,8 @@ class SignUpActionTest extends WebTestCase
         $credentials = ['username' => $user->username, 'password' => '1234', 'realm' => 'default'];
         $resp = $this->json()->request('POST', '/public/users', $credentials);
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
-        $err = json_decode($resp->getContent())->violations[0]->message;
-        self::assertEquals("Username already taken", $err);
+        $err = json_decode($resp->getContent())->{'hydra:description'};
+        self::assertEquals("Username already taken.", $err);
     }
 
     public function testSignUpAlreadyRegisteredInOtherAppShouldSuccess(): void {

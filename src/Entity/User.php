@@ -6,9 +6,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
-use App\Annotation\ApplicationAware;
+use App\Entity\Compose\Base;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -17,7 +16,6 @@ use App\Dto\SignUp;
 
 /**
  * @ORM\Entity
- * @UniqueEntity(fields={"username", "application"}, message="Username already taken")
  * @ApiResource(
  *     collectionOperations={
  *          "get"={
@@ -35,11 +33,11 @@ use App\Dto\SignUp;
  *     itemOperations={
  *          "get"={
  *              "path"="/user/users/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || object == user"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user"
  *          },
  *          "put"={
  *              "path"="/user/users/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.application == user.application) || object == user"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user"
  *          },
  *          "delete"={
  *              "path"="/sadmin/users/{id}",
@@ -49,7 +47,6 @@ use App\Dto\SignUp;
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "username": "partial"})
- * @ApplicationAware(applicationFieldName="application_id")
  */
 class User extends Base implements UserInterface {
 
@@ -72,14 +69,6 @@ class User extends Base implements UserInterface {
      * @Groups({"super:read", "super:write"})
      */
     public $password;
-
-    /**
-     * @var Application
-     * @ORM\ManyToOne(targetEntity=Application::class, inversedBy="users")
-     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
-     * @MaxDepth(1)
-     */
-    public $application;
 
     /**
      * @var Permission[]

@@ -7,6 +7,7 @@ namespace App\DataTransformer;
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Entity\Account;
+use App\Entity\Application;
 use App\Entity\Permission;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,6 +54,10 @@ class NewUserAccountDataTransformer implements DataTransformerInterface
         # Creating account
         $account = new Account();
         $account->name = $object->name;
+
+        $app = $this->em->getRepository(Application::class)->findOneBy(['realm' => $object->realm]);
+        if(!$app) throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid realm");
+        $account->application = $app;
 
         $this->validator->validate($account);
         $this->em->persist($account);

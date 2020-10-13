@@ -87,12 +87,17 @@ class ApplicationAuthenticator extends AbstractGuardAuthenticator {
         $application = $this->em
             ->getRepository(Application::class)
             ->findOneBy(['realm' => $credentials->realm]);
-        return $this->em
-            ->getRepository(User::class)
-            ->findOneBy([
-                'username' => $credentials->username,
-                'application' => $application,
-            ]);
+
+        $users = $this->em->getRepository(User::class)->findBy(['username' => $credentials->username]);
+        /** @var User $user */
+        foreach ($users as $user) {
+            foreach ($user->permissions as $permission){
+                if ($permission->account->application->id == $application->id){
+                    return $user;
+                }
+            }
+        }
+        return null;
     }
 
     /**

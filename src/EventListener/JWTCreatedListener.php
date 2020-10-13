@@ -36,9 +36,12 @@ class JWTCreatedListener {
         /** @var User $user */
         $user = $event->getUser();
         $payload['id'] = $user->id;
+        if (count($user->permissions) <= 0)
+            throw new \LogicException("User cannot have zero accounts.");
+        $app = $user->permissions[0]->account->application;
         $payload['application'] = [
-            'name' => $user->application->name,
-            'realm' => $user->application->realm
+            'name' => $app->name,
+            'realm' => $app->realm
         ];
         $payload['permissions'] = [];
         foreach ($user->permissions as $permission){
