@@ -1,36 +1,30 @@
 <?php
 
-namespace App\Entity;
+
+namespace App\Entity\Compose;
+
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\MappedSuperclass()
+ * Trait TimestampableTrait
+ * @package App\Entity
  */
-abstract class Base
-{
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="guid")
-     * @Groups({"public:read"})
-     */
-    public $id;
+trait TimestampableTrait {
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @Groups({"public:read"})
+     * @Groups({"timestamp:read"})
      */
     public $created_at;
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="update")
-     * @Groups({"public:read"})
+     * @Groups({"timestamp:read"})
      */
     public $updated_at;
-
 }
