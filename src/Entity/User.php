@@ -19,7 +19,7 @@ use App\Dto\SignUp;
  * @ApiResource(
  *     collectionOperations={
  *          "get"={
- *              "path"="/admin/users"
+ *              "path"="/sadmin/users"
  *          },
  *          "post"={
  *              "path"="/public/users",
