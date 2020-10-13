@@ -14,7 +14,7 @@ trait NameTrait {
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @Groups({"name:read"})
+     * @Groups({"public:read"})
      */
     public $name;
 

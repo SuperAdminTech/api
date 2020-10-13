@@ -17,14 +17,14 @@ trait TimestampableTrait {
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @Groups({"timestamp:read"})
+     * @Groups({"public:read"})
      */
     public $created_at;
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="update")
-     * @Groups({"timestamp:read"})
+     * @Groups({"public:read"})
      */
     public $updated_at;
 }
