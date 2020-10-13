@@ -21,7 +21,7 @@ class SuperTest extends WebTestCase
         $uris = [
             '/admin/users',
             '/admin/applications',
-            '/sadmin/accounts',
+            '/admin/accounts',
             '/sadmin/permissions',
         ];
 
