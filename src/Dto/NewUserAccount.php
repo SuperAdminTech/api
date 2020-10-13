@@ -15,4 +15,12 @@ class NewUserAccount {
      */
     public $name;
 
+    /**
+     * @var string
+     * @Groups({"user:write"})
+     * @Assert\Length(allowEmptyString="false", max="64")
+     * @Assert\NotNull()
+     */
+    public $realm;
+
 }

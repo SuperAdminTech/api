@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
+use App\Annotation\ApplicationAware;
 use App\Entity\Compose\Base;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +18,7 @@ use App\Dto\NewUserAccount;
 
 /**
  * @ORM\Entity
- * @UniqueEntity(fields={"name"}, message="Account name already taken.")
+ * @UniqueEntity(fields={"name", "application"}, message="Account name already taken.")
  * @ApiResource(
  *     collectionOperations={
  *          "get"={
@@ -52,6 +53,7 @@ use App\Dto\NewUserAccount;
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "name": "partial"})
+ * @ApplicationAware(applicationFieldName="application_id")
  */
 class Account extends Base implements Restricted {
 
@@ -70,6 +72,14 @@ class Account extends Base implements Restricted {
      * @Groups({"user:read", "user:write"})
      */
     public $name;
+
+    /**
+     * @var Application
+     * @ORM\ManyToOne(targetEntity=Application::class, inversedBy="accounts")
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @MaxDepth(1)
+     */
+    public $application;
 
     /**
      * @inheritDoc

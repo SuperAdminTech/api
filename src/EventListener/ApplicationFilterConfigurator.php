@@ -49,7 +49,13 @@ final class ApplicationFilterConfigurator
 
 
         $filter = $this->em->getFilters()->enable('application_filter');
-        $filter->setParameter('application', $user->application->id);
+
+        $apps = [];
+        foreach ($user->permissions as $permission){
+            $apps []= $permission->account->application->id;
+        }
+
+        $filter->setParameter('applications', base64_encode(json_encode($apps)));
         $filter->setAnnotationReader($this->reader);
     }
 

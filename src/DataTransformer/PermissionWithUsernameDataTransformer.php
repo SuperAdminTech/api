@@ -6,6 +6,7 @@ namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use App\Entity\Account;
+use App\Entity\Application;
 use App\Entity\Permission;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,15 +51,33 @@ class PermissionWithUsernameDataTransformer implements DataTransformerInterface
         if (!$account->allowsWrite($currentUser))
             throw new HttpException(Response::HTTP_FORBIDDEN, "User not manager");
 
-        $repo = $this->em->getRepository(User::class);
+        $user = $this->findUserInApplication($object->username, $account->application);
 
-        $user = $repo->findOneBy(['username' => $object->username, 'application' => $currentUser->application]);
         if (!$user) throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid username");
         $permission->user = $user;
 
-
         return $permission;
     }
+
+    /**
+     * @param $username
+     * @param Application $application
+     * @return User|null
+     */
+    private function findUserInApplication($username, Application $application): ?User {
+        $repo = $this->em->getRepository(User::class);
+        $users = $repo->findBy(['username' => $username]);
+        /** @var User $user */
+        foreach ($users as $user){
+            foreach ($user->permissions as $permission){
+                if ($permission->account->application->id == $application->id) {
+                    return $user;
+                }
+            }
+        }
+        return null;
+    }
+
 
     /**
      * @inheritDoc

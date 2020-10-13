@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Compose\Base;
+use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -13,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ApiResource(
  *     collectionOperations={
  *          "get"={
- *              "path"="/sadmin/applications"
+ *              "path"="/admin/applications"
  *          },
  *          "post"={
  *              "path"="/sadmin/applications"
@@ -22,11 +23,11 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     itemOperations={
  *          "get"={
  *              "path"="/admin/applications/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user.application"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsRead(user)"
  *          },
  *          "put"={
  *              "path"="/admin/applications/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user.application"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsWrite(user)"
  *          },
  *          "delete"={
  *              "path"="/sadmin/applications/{id}"
@@ -34,7 +35,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     }
  * )
  */
-class Application extends Base {
+class Application extends Base implements Restricted {
 
     const USERNAME_IS_EMAIL = 'username_is_email';
     const VALIDATE_EMAIL = 'validate_email';
@@ -55,12 +56,12 @@ class Application extends Base {
     public $realm;
 
     /**
-     * @var User
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="application")
+     * @var Account
+     * @ORM\OneToMany(targetEntity=Account::class, mappedBy="application")
      * @Groups({"super:read", "super:write"})
      * @MaxDepth(1)
      */
-    public $users = [];
+    public $accounts = [];
 
     /**
      * @var array
@@ -76,4 +77,21 @@ class Application extends Base {
      */
     public $grants = [];
 
+    function allowsRead(User $user): bool {
+        foreach ($user->permissions as $permission) {
+            if ($this->id == $permission->account->application->id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function allowsWrite(User $user): bool {
+        foreach ($user->permissions as $permission) {
+            if (in_array(Permission::ACCOUNT_MANAGER, $permission->grants) && $this->id == $permission->account->application->id){
+                return true;
+            }
+        }
+        return false;
+    }
 }

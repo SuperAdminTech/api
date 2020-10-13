@@ -50,18 +50,33 @@ class SignUpDataTransformer implements DataTransformerInterface
         $app = $this->em
             ->getRepository(Application::class)
             ->findOneBy(['realm' => $object->realm]);
-        if(!$app) throw new HttpException(400, "Application realm empty or invalid");
+        if(!$app) throw new HttpException(Response::HTTP_BAD_REQUEST, "Application realm empty or invalid");
+
+        $users = $this->em
+            ->getRepository(User::class)
+            ->findBy(['username' => $object->username]);
+
+        /** @var User $user */
+        foreach ($users as $user){
+            foreach ($user->permissions as $permission){
+                if ($permission->account->application->id == $app->id){
+                    throw new HttpException(Response::HTTP_BAD_REQUEST, "Username already taken.");
+                }
+            }
+        }
 
         # Creating user
         $user = new User();
-        $user->application = $app;
         $user->username = $object->username;
         $user->plain_password = $object->password;
+        $this->validator->validate($user);
         $this->em->persist($user);
 
         # Creating account
         $account = new Account();
+        $account->application = $app;
         $account->name = $object->username;
+        $this->validator->validate($account);
         $this->em->persist($account);
 
         # Creating permission between user and account
@@ -69,6 +84,7 @@ class SignUpDataTransformer implements DataTransformerInterface
         $permission->user = $user;
         $permission->account = $account;
         $permission->grants = [Permission::ACCOUNT_MANAGER];
+        $this->validator->validate($permission);
         $this->em->persist($permission);
 
         # Link users and accounts

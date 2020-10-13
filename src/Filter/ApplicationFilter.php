@@ -38,17 +38,26 @@ class ApplicationFilter extends SQLFilter
         $fieldName = $applicationAware->applicationFieldName;
         try {
             // Don't worry, getParameter automatically escapes parameters
-            $applicationId = $this->getParameter('application');
+            $encodedApplications = $this->getParameter('applications');
+            if (empty($encodedApplications)) {
+                return '';
+            }
+            // Decoding parameter
+            $applications = json_decode(base64_decode($encodedApplications));
         } catch (\InvalidArgumentException $e) {
             // No user id has been defined
             return '';
         }
 
-        if (empty($fieldName) || empty($applicationId)) {
+        if (empty($fieldName) || empty($applications)) {
             return '';
         }
 
-        return sprintf('%s.%s = %s', $targetTableAlias, $fieldName, $applicationId);
+        $sqlParts = [];
+        foreach ($applications as $application) {
+            $sqlParts []= sprintf("%s.%s = '%s'", $targetTableAlias, $fieldName, $application);
+        }
+        return implode(" OR ", $sqlParts);
     }
 
     public function setAnnotationReader(Reader $reader): void

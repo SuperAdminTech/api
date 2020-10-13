@@ -4,10 +4,13 @@
 namespace App\Security;
 
 
+use App\Entity\Account;
 use App\Entity\Application;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\PayloadAwareUserProviderInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -27,20 +30,21 @@ class ApplicationUserProvider implements PayloadAwareUserProviderInterface {
         $this->em = $em;
     }
 
-
     /**
      * @inheritDoc
      */
-    public function loadUserByUsernameAndPayload($username, array $payload)
-    {
-        $appsRepo = $this->em->getRepository(Application::class);
-        $app = $appsRepo->findOneBy(['realm' => $payload['application']->realm]);
-        if (!$app) throw new UsernameNotFoundException("Realm not belongs to any in application");
-
+    public function loadUserByUsernameAndPayload($username, array $payload) {
         $usersRepo = $this->em->getRepository(User::class);
-        $user = $usersRepo->findOneBy(['username' => $username, 'application' => $app]);
-        if (!$user) throw new UsernameNotFoundException("Username and Realm not found");
-        return $user;
+        $users = $usersRepo->findBy(['username' => $username]);
+        /** @var User $user */
+        foreach ($users as $user){
+            foreach ($user->permissions as $permission){
+                if ($permission->account->application->realm == $payload['application']->realm) {
+                    return $user;
+                }
+            }
+        }
+        return null;
     }
 
     /**
