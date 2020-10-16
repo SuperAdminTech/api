@@ -37,14 +37,10 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Application extends Base implements Restricted {
 
-    const USERNAME_IS_EMAIL = 'username_is_email';
-    const VALIDATE_EMAIL = 'validate_email';
-    const ACCOUNT_ACTIVATED_BY_DEFAULT = 'account_activated_by_default';
-
     /**
      * @var string $name
      * @ORM\Column(type="string")
-     * @Groups({"public:read", "super:write"})
+     * @Groups({"user:read", "super:write"})
      */
     public $name;
 
@@ -64,11 +60,11 @@ class Application extends Base implements Restricted {
     public $accounts = [];
 
     /**
-     * @var array
-     * @ORM\Column(type="json")
+     * @var Config
+     * @ORM\OneToOne(targetEntity=Config::class)
      * @Groups({"admin:read", "admin:write"})
      */
-    public $config = [];
+    public $config;
 
     /**
      * @var string[]

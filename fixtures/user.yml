@@ -6,6 +6,7 @@ App\Entity\User:
         plain_password: secret
         roles: [ 'ROLE_SUPER_ADMIN' ]
         permissions: [ '@perm_super' ]
+        email_validated: true
 
     user_admin:
         id: "AD779175-76D1-466A-99BF-536AA3F5E001"
@@ -13,21 +14,33 @@ App\Entity\User:
         plain_password: secret
         roles: ['ROLE_ADMIN']
         permissions: ['@perm_admin']
+        email_validated: true
 
     user_test:
         id: "AD779175-76D1-466A-99BF-536AA3F5E002"
         username: test@example.com
         plain_password: secret
         permissions: ['@perm_test']
+        email_validated: true
 
     user_test0:
         id: "AD779175-76D1-466A-99BF-536AA3F5E003"
         username: test@example.com
         plain_password: secret
         permissions: [ '@perm_test0' ]
+        email_validated: true
 
     user_test1:
         id: "AD779175-76D1-466A-99BF-536AA3F5E004"
         username: test1@example.com
         plain_password: secret
         permissions: ['@perm_test1']
+        email_validated: true
+
+    user_nonverified:
+        id: "AD779175-76D1-466A-99BF-536AA3F5E005"
+        username: nonverified@example.com
+        permissions: [ '@perm_nonverified' ]
+        plain_password: secret
+        email_verification_code: "096a7868-9b59-4fcb-88a2-d6a4476066a7"
+        email_validated: false

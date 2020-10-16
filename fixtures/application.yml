@@ -4,6 +4,7 @@ App\Entity\Application:
         id: '05E88714-8FB3-46B0-893D-97CBCA859000'
         name: "Default app"
         realm: default
+        config: "@config_default"
         grants:
             - ACCOUNT_INVESTOR
             - ACCOUNT_TRADER
@@ -12,8 +13,10 @@ App\Entity\Application:
         id: '05E88714-8FB3-46B0-893D-97CBCA859001'
         name: "Application 0"
         realm: app0
+        config: "@config_app0"
 
     app1:
         id: '05E88714-8FB3-46B0-893D-97CBCA859002'
         name: "Application 1"
         realm: app1
+        config: "@config_app1"

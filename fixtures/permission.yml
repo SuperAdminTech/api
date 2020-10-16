@@ -29,3 +29,9 @@ App\Entity\Permission:
         user: '@user_test1'
         account: '@account_test1'
         grants: [ 'ACCOUNT_MANAGER', 'ACCOUNT_TRADER' ]
+
+    perm_nonverified:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859005'
+        user: '@user_nonverified'
+        account: '@account_nonverified'
+        grants: [ 'ACCOUNT_MANAGER' ]

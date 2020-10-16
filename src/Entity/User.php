@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Dto\SignUp;
+use App\Dto\VerifyEmail;
 
 /**
  * @ORM\Entity
@@ -21,14 +22,15 @@ use App\Dto\SignUp;
  *          "get"={
  *              "path"="/sadmin/users"
  *          },
- *          "post"={
+ *          "sign_up"={
+ *              "method"="post",
  *              "path"="/public/users",
  *              "input"=SignUp::class,
  *              "openapi_context"={
  *                  "summary"="Call to register users",
  *                  "description"="Creates a new User in the system, with default account and permissions."
  *              }
- *          },
+ *          }
  *     },
  *     itemOperations={
  *          "get"={
@@ -38,6 +40,15 @@ use App\Dto\SignUp;
  *          "put"={
  *              "path"="/user/users/{id}",
  *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user"
+ *          },
+ *          "verify_email"={
+ *              "method"="put",
+ *              "path"="/public/users/{id}/verify",
+ *              "input"=VerifyEmail::class,
+ *              "openapi_context"={
+ *                  "summary"="Verifies user email",
+ *                  "description"="Verifies user email with the email sent code."
+ *              }
  *          },
  *          "delete"={
  *              "path"="/sadmin/users/{id}",
@@ -52,10 +63,25 @@ class User extends Base implements UserInterface {
 
     /**
      * @ORM\Column(type="string", length=180)
-     * @Assert\Length(allowEmptyString="false", max="180")
+     * @Assert\Email(mode="strict")
+     * @Assert\NotNull()
      * @Groups({"public:read", "admin:read", "admin:write", "super:read", "super:write"})
      */
     public $username;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     * @Groups({"public:read", "admin:write", "super:write"})
+     */
+    public $email_validated = false;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     * @Groups({"super:read", "super:write"})
+     */
+    public $email_verification_code;
 
     /**
      * @ORM\Column(type="json")
