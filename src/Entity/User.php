@@ -78,7 +78,7 @@ class User extends Base implements UserInterface {
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
+     * @ORM\Column(type="guid", nullable=true)
      * @Groups({"super:read", "super:write"})
      */
     public $email_verification_code;
