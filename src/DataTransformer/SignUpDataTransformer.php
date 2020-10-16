@@ -6,6 +6,8 @@ namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use ApiPlatform\Core\Validator\ValidatorInterface;
+use App\Dto\SignUp;
+use App\Dto\VerifyEmail;
 use App\Entity\Account;
 use App\Entity\Application;
 use App\Entity\Permission;
@@ -106,6 +108,6 @@ class SignUpDataTransformer implements DataTransformerInterface
             return false;
         }
 
-        return User::class === $to && null !== ($context['input']['class'] ?? null);
+        return User::class === $to && SignUp::class == $context['input']['class'];
     }
 }

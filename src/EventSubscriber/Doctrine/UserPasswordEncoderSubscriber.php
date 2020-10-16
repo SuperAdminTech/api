@@ -7,6 +7,7 @@ namespace App\EventSubscriber\Doctrine;
 use App\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -31,9 +32,15 @@ class UserPasswordEncoderSubscriber implements EventSubscriber
 
     public function getSubscribedEvents()
     {
-        return ['preUpdate', 'prePersist'];
+        return [
+            Events::preUpdate,
+            Events::prePersist
+        ];
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args){
         $user = $args->getEntity();
         if($user instanceof User){
@@ -41,6 +48,9 @@ class UserPasswordEncoderSubscriber implements EventSubscriber
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function preUpdate(LifecycleEventArgs $args){
         $user = $args->getEntity();
         if($user instanceof User){
@@ -53,7 +63,11 @@ class UserPasswordEncoderSubscriber implements EventSubscriber
         }
     }
 
-    private function encodePassword(User $user) {
+    /**
+     * @param User $user
+     * @return User
+     */
+    private function encodePassword(User $user): User {
         $encoded = $this->encoder->encodePassword($user, $user->plain_password);
         $user->setPassword($encoded);
         $user->eraseCredentials();

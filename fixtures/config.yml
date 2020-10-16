@@ -1,0 +1,16 @@
+
+App\Entity\Config:
+    config_default:
+        id: '05E88714-8FB3-46B0-893D-97CBCA8590A0'
+        application: "@default"
+        mailer_dsn: "null://null"
+        mailer_from: "no-reply@logictraders.com"
+        frontend_url: "http://localhost:3000"
+
+    config_app0:
+        id: '05E88714-8FB3-46B0-893D-97CBCA8590A1'
+        application: "@app0"
+
+    config_app1:
+        id: '05E88714-8FB3-46B0-893D-97CBCA8590A2'
+        application: "@app1"

@@ -1,0 +1,10 @@
+Welcome to {{ application.name }}!
+
+To fully activate your account, we need verify you own the email address you used.
+
+Please copy & paste the following link in your browser
+[{{ application.config.frontend_url }}/verify/{{ user.id }}?code={{ user.email_verification_code }}]
+
+
+Cheers,
+{{ application.name }}

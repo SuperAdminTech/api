@@ -8,12 +8,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 use App\Annotation\ApplicationAware;
 use App\Entity\Compose\Base;
+use App\Entity\Compose\NameTrait;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Dto\NewUserAccount;
 
 /**
@@ -57,6 +57,8 @@ use App\Dto\NewUserAccount;
  */
 class Account extends Base implements Restricted {
 
+    use NameTrait;
+
     /**
      * @var Permission[]
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="account", cascade={"remove"})
@@ -64,14 +66,6 @@ class Account extends Base implements Restricted {
      * @Groups({"user:read", "user:write"})
      */
     public $permissions = [];
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\Length(allowEmptyString="false", max="64")
-     * @Groups({"user:read", "user:write"})
-     */
-    public $name;
 
     /**
      * @var Application
