@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 use App\Entity\Compose\Base;
 use App\Security\Restricted;
@@ -37,7 +36,6 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *          }
  *     }
  * )
- * @ApiFilter(OrderFilter::class)
  */
 class Application extends Base implements Restricted {
 

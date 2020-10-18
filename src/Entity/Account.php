@@ -5,7 +5,6 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 use App\Annotation\ApplicationAware;
 use App\Entity\Compose\Base;
@@ -54,7 +53,6 @@ use App\Dto\NewUserAccount;
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "name": "partial"})
- * @ApiFilter(OrderFilter::class)
  * @ApplicationAware(applicationFieldName="application_id")
  */
 class Account extends Base implements Restricted {
