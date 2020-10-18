@@ -93,6 +93,8 @@ class SignUpDataTransformer implements DataTransformerInterface
         $user->permissions = [$permission];
         $account->permissions = [$permission];
 
+        $this->em->flush();
+
         return $user;
 
     }
