@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 use App\Entity\Compose\Base;
 use App\Security\Restricted;
@@ -27,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *          }
  *     }
  * )
+ * @ApiFilter(OrderFilter::class)
  */
 class Config extends Base implements Restricted {
     public const NULL_DSN = "null://null";

@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+
 use App\Entity\Compose\Base;
 use App\Security\Restricted;
 use Doctrine\ORM\Mapping as ORM;
@@ -46,6 +49,7 @@ use App\Dto\PermissionWithUsername;
  *          }
  *     }
  * )
+ * @ApiFilter(OrderFilter::class)
  */
 class Permission extends Base implements Restricted {
     const ACCOUNT_WORKER = "ACCOUNT_WORKER";

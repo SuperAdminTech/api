@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 use App\Entity\Compose\Base;
 use Doctrine\ORM\Mapping as ORM;
@@ -59,6 +60,7 @@ use App\Dto\VerifyEmail;
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "username": "partial"})
+ * @ApiFilter(OrderFilter::class)
  */
 class User extends Base implements UserInterface {
 
