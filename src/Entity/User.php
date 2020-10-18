@@ -26,6 +26,7 @@ use App\Dto\VerifyEmail;
  *              "method"="post",
  *              "path"="/public/users",
  *              "input"=SignUp::class,
+ *              "write"=false,
  *              "openapi_context"={
  *                  "summary"="Call to register users",
  *                  "description"="Creates a new User in the system, with default account and permissions."

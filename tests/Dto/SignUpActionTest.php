@@ -15,7 +15,7 @@ class SignUpActionTest extends WebTestCase
     use ApiUtilsTrait;
 
     public function testSignUpOkShouldSuccess(): void {
-        $credentials = ['username' => 'lluis@ngynx.com', 'password' => '1234', 'realm' => 'default'];
+        $credentials = ['username' => 'unused@example.com', 'password' => '1234', 'realm' => 'default'];
         $this->json()->request('POST', '/public/users', $credentials);
         $this->assertResponseIsSuccessful();
     }
