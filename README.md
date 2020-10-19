@@ -1,7 +1,9 @@
-Caste REST API
-=================
+SuperAdmin REST API
+===================
 
-Welcome to the Caste REST API
+Welcome to the SuperAdmin REST API
+
+![Code Coverate](https://img.shields.io/badge/coverage-82%25-green)
 
 # Development
 
