@@ -14,6 +14,8 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Dto\SignUp;
 use App\Dto\VerifyEmail;
+use App\Dto\RecoverPasswordRequest;
+use App\Dto\RecoverPassword;
 
 /**
  * @ORM\Entity
@@ -30,6 +32,16 @@ use App\Dto\VerifyEmail;
  *              "openapi_context"={
  *                  "summary"="Call to register users",
  *                  "description"="Creates a new User in the system, with default account and permissions."
+ *              }
+ *          },
+ *          "recover_password_request"={
+ *              "method"="post",
+ *              "path"="/public/users/recover",
+ *              "input"=RecoverPasswordRequest::class,
+ *              "write"=false,
+ *              "openapi_context"={
+ *                  "summary"="Requests a user recover password",
+ *                  "description"="Initiates password recovery for a user."
  *              }
  *          }
  *     },
@@ -51,6 +63,15 @@ use App\Dto\VerifyEmail;
  *                  "description"="Verifies user email with the email sent code."
  *              }
  *          },
+ *          "recover_password"={
+ *              "method"="put",
+ *              "path"="/public/users/{id}/recover",
+ *              "input"=RecoverPassword::class,
+ *              "openapi_context"={
+ *                  "summary"="Changes the user's password",
+ *                  "description"="Uses email provided code to change the user's password, also validates the user's email too if not valid yet."
+ *              }
+ *          },
  *          "delete"={
  *              "path"="/sadmin/users/{id}",
  *              "security"="object != user",
@@ -61,6 +82,8 @@ use App\Dto\VerifyEmail;
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "username": "partial"})
  */
 class User extends Base implements UserInterface {
+
+    public const RECOVER_PASSWORD_EXPIRES_IN = 1800; // 30 min
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -83,6 +106,20 @@ class User extends Base implements UserInterface {
      * @Groups({"super:read", "super:write"})
      */
     public $email_verification_code;
+
+    /**
+     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"super:read", "super:write"})
+     */
+    public $recover_password_requested_at;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", nullable=true)
+     * @Groups({"super:read", "super:write"})
+     */
+    public $recover_password_code;
 
     /**
      * @ORM\Column(type="json")

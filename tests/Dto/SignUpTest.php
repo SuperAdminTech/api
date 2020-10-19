@@ -9,7 +9,7 @@ use Hautelook\AliceBundle\PhpUnit\RecreateDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class SignUpActionTest extends WebTestCase
+class SignUpTest extends WebTestCase
 {
     use RecreateDatabaseTrait;
     use ApiUtilsTrait;
@@ -17,15 +17,6 @@ class SignUpActionTest extends WebTestCase
     public function testSignUpOkShouldSuccess(): void {
         $credentials = ['username' => 'unused@example.com', 'password' => '1234', 'realm' => 'default'];
         $this->json()->request('POST', '/public/users', $credentials);
-        $this->assertResponseIsSuccessful();
-    }
-
-    public function testEmailVerificationShouldSuccess(): void {
-        $this->json()->request(
-            'PUT',
-            '/public/users/AD779175-76D1-466A-99BF-536AA3F5E005/verify',
-            ['code' => '096a7868-9b59-4fcb-88a2-d6a4476066a7']
-        );
         $this->assertResponseIsSuccessful();
     }
 

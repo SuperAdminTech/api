@@ -10,12 +10,21 @@ use App\Dto\SignUp;
 use App\Dto\VerifyEmail;
 use App\Entity\Account;
 use App\Entity\Application;
+use App\Entity\Config;
 use App\Entity\Permission;
 use App\Entity\User;
+use App\Utils\EmailUtils;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Exception\RfcComplianceException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Environment;
 
 class SignUpDataTransformer implements DataTransformerInterface
 {
@@ -28,18 +37,23 @@ class SignUpDataTransformer implements DataTransformerInterface
     /** @var ValidatorInterface */
     private $validator;
 
+    /** @var EmailUtils */
+    private $mailing;
+
 
     /**
      * PermissionWithUsernameDataTransformer constructor.
      * @param EntityManagerInterface $em
      * @param TokenStorageInterface $tokenStorage
      * @param ValidatorInterface $validator
+     * @param EmailUtils $mailing
      */
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, ValidatorInterface $validator)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, ValidatorInterface $validator, EmailUtils $mailing)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->validator = $validator;
+        $this->mailing = $mailing;
     }
 
 
@@ -71,6 +85,7 @@ class SignUpDataTransformer implements DataTransformerInterface
         $user = new User();
         $user->username = $object->username;
         $user->plain_password = $object->password;
+        $user->email_verification_code = Uuid::uuid4()->toString();
         $this->validator->validate($user);
         $this->em->persist($user);
 
@@ -93,6 +108,11 @@ class SignUpDataTransformer implements DataTransformerInterface
         $user->permissions = [$permission];
         $account->permissions = [$permission];
 
+        $this->mailing->sendEmail(
+            $user,
+            'sign_up',
+            'Welcome to {{ application.name }}'
+        );
         $this->em->flush();
 
         return $user;

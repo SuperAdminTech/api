@@ -44,3 +44,5 @@ App\Entity\User:
         plain_password: secret
         email_verification_code: "096a7868-9b59-4fcb-88a2-d6a4476066a7"
         email_validated: false
+        recover_password_requested_at: '<(new \DateTime())>'
+        recover_password_code: "096a7868-9b59-4fcb-88a2-d6a4476066a8"
