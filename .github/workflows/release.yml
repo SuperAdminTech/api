@@ -1,0 +1,35 @@
+name: Deploy [RELEASE]
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtaining the code
+        uses: actions/checkout@v1
+
+      - name: Building the docker images
+        env:
+          REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+        run: make build DOCKER_REGISTRY=${REGISTRY} DOCKER_IMAGE=api-superadmin DOCKER_TAG=latest DOCKERFILE_DIR=docker/prod/api
+
+      - name: Login into the registry
+        env:
+          REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+          USER: ${{ secrets.DOCKER_USERNAME }}
+          PASS: ${{ secrets.DOCKER_PASSWORD }}
+        run: make login DOCKER_REGISTRY=${REGISTRY} DOCKER_USERNAME=${USER} DOCKER_PASSWORD=${PASS}
+
+      - name: Pushing images to the registry
+        env:
+          REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+        run: make push DOCKER_REGISTRY=${REGISTRY} DOCKER_IMAGE=api-superadmin DOCKER_TAG=latest
+
+      - name: Deploy
+        uses: joelwmale/webhook-action@1.0.1
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_API_RELEASE }}
+          data: "Deploy is on the way"
