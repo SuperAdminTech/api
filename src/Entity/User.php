@@ -96,7 +96,7 @@ class User extends Base implements UserInterface {
     /**
      * @var bool
      * @ORM\Column(type="boolean")
-     * @Groups({"public:read", "admin:write", "super:write"})
+     * @Groups({"user:read", "admin:write", "super:write"})
      */
     public $email_validated = false;
 
