@@ -11,6 +11,8 @@ use App\Entity\User;
 use App\Utils\EmailUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Address;
@@ -60,9 +62,10 @@ class RecoverPasswordRequestDataTransformer implements DataTransformerInterface
                 'Password recover request for {{ application.name }}'
             );
             $this->em->flush();
+            return $user;
         }
 
-        return $user;
+        throw new HttpException(Response::HTTP_NOT_FOUND, "Username not found.");
     }
 
     /**
