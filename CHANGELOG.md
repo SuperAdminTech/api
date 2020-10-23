@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/QbitArtifacts/caste/compare/v1.1.0...v1.1.1) (2020-10-23)
+
+
+### Bug Fixes
+
+* **recover_password:** fixed bug when username doesn't exist ([eb2e249](https://github.com/QbitArtifacts/caste/commit/eb2e24945cd3c14f9693998254a185ee1543e095))
+* **recover_password:** hide email validated from public and improve email html design ([d67642d](https://github.com/QbitArtifacts/caste/commit/d67642d77b4a09c3b7ed8c55f9cfb80080aa5dc5))
+* **register:** avoid duplicate account name errors ([24d3d45](https://github.com/QbitArtifacts/caste/commit/24d3d456c28b7bdab506df4c5bc41bcdff63d75c))
+
 ## 1.1.0 (2020-10-20)
 
 
