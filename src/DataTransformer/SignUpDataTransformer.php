@@ -62,15 +62,16 @@ class SignUpDataTransformer implements DataTransformerInterface
      */
     public function transform($object, string $to, array $context = [])
     {
+        $appsRepo = $this->em->getRepository(Application::class);
+        $usersRepo = $this->em->getRepository(User::class);
+        $accsRepo = $this->em->getRepository(Account::class);
+
         /** @var Application $app */
-        $app = $this->em
-            ->getRepository(Application::class)
-            ->findOneBy(['realm' => $object->realm]);
+        $app = $appsRepo->findOneBy(['realm' => $object->realm]);
         if(!$app) throw new HttpException(Response::HTTP_BAD_REQUEST, "Application realm empty or invalid");
 
-        $users = $this->em
-            ->getRepository(User::class)
-            ->findBy(['username' => $object->username]);
+        $users = $usersRepo->findBy(['username' => $object->username]);
+
 
         /** @var User $user */
         foreach ($users as $user){
@@ -93,6 +94,9 @@ class SignUpDataTransformer implements DataTransformerInterface
         $account = new Account();
         $account->application = $app;
         $account->name = $object->username;
+        while ($accsRepo->findOneBy(['name' => $account->name])) {
+            $account->name = "{$object->username}#" . rand(1000, 9999);
+        }
         $this->validator->validate($account);
         $this->em->persist($account);
 
