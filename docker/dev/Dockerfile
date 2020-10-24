@@ -7,6 +7,7 @@ RUN apt update && apt install -y \
     php-mysql \
     php-xml \
     php-curl \
+    php-bcmath \
     composer \
     curl
 
