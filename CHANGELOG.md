@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/QbitArtifacts/caste/compare/v1.1.1...v1.2.0) (2020-10-30)
+
+
+### Features
+
+* **version:** added version call to api ([4a9252a](https://github.com/QbitArtifacts/caste/commit/4a9252ad042cfb8061156705e3004a58969f4502))
+
+
+### Bug Fixes
+
+* **deps:** udated composer deps ([ee83361](https://github.com/QbitArtifacts/caste/commit/ee83361fef0dcb9489280a3c059a58465a7e3c54))
+
 ### [1.1.1](https://github.com/QbitArtifacts/caste/compare/v1.1.0...v1.1.1) (2020-10-23)
 
 
