@@ -6,6 +6,7 @@ namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use App\Dto\RecoverPasswordRequest;
+use App\Entity\Application;
 use App\Entity\Config;
 use App\Entity\User;
 use App\Utils\EmailUtils;
@@ -53,16 +54,29 @@ class RecoverPasswordRequestDataTransformer implements DataTransformerInterface
             ->getRepository(User::class)
             ->findOneBy(['username' => $object->username]);
 
+
+        /** @var Application $user */
+        $app = $this->em
+            ->getRepository(Application::class)
+            ->findOneBy(['realm' => $object->realm]);
+
+        if(!$app)
+            throw new HttpException(Response::HTTP_NOT_FOUND, "Username not found.");
+
         if($user){
-            $user->recover_password_code = Uuid::uuid4()->toString();
-            $user->recover_password_requested_at = new \DateTime();
-            $this->mailing->sendEmail(
-                $user,
-                'recover_password',
-                'Password recover request for {{ application.name }}'
-            );
-            $this->em->flush();
-            return $user;
+            foreach ($user->permissions as $permission) {
+                if ($permission->account->application->id == $app->id) {
+                    $user->recover_password_code = Uuid::uuid4()->toString();
+                    $user->recover_password_requested_at = new \DateTime();
+                    $this->mailing->sendEmail(
+                        $user,
+                        'recover_password',
+                        'Password recover request for {{ application.name }}'
+                    );
+                    $this->em->flush();
+                    return $user;
+                }
+            }
         }
 
         throw new HttpException(Response::HTTP_NOT_FOUND, "Username not found.");

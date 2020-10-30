@@ -31,7 +31,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Config extends Base implements Restricted {
     public const NULL_DSN = "null://null";
-    public const DEFAULT_MAILER_FROM = "no-reply@auth.dfnder.com";
+    public const DEFAULT_MAILER_FROM = "no-reply@superadmin.org";
 
     /**
      * @var Application

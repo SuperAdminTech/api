@@ -16,9 +16,21 @@ class RecoverPasswordRequestTest extends WebTestCase
         $this->json()->request(
             'POST',
             '/public/users/recover',
-            ['username' => 'test@example.com']
+            [
+                'username' => 'test@example.com',
+                'realm' => 'default'
+            ]
         );
         $this->assertResponseIsSuccessful();
+    }
+
+    public function testRecoverPasswordRequestWithoutRealmShouldFail(): void {
+        $this->json()->request(
+            'POST',
+            '/public/users/recover',
+            ['username' => 'test@example.com']
+        );
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 
     public function testRecoverPasswordRequestWithUnexistentUsernameShouldFail(): void {

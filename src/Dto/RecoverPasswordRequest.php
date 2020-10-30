@@ -15,4 +15,10 @@ class RecoverPasswordRequest {
      * @Groups({"public:write"})
      */
     public $username;
+
+    /**
+     * @var string
+     * @Groups({"public:write"})
+     */
+    public $realm;
 }
