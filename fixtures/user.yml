@@ -13,7 +13,7 @@ App\Entity\User:
         username: admin@example.com
         plain_password: secret
         roles: ['ROLE_ADMIN']
-        permissions: ['@perm_admin']
+        permissions: ['@perm_admin', '@perm_admin2']
         email_validated: true
 
     user_test:

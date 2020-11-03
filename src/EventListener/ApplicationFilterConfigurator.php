@@ -53,6 +53,8 @@ final class ApplicationFilterConfigurator
         $apps = [];
         foreach ($user->permissions as $permission){
             $apps []= $permission->account->application->id;
+            //TODO: malfunction with mysql (apparent), some objects are not filled, so using the first one only
+            break;
         }
 
         $filter->setParameter('applications', base64_encode(json_encode($apps)));

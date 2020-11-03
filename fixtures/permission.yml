@@ -12,6 +12,12 @@ App\Entity\Permission:
         account: '@account_admin'
         grants: [ 'ACCOUNT_MANAGER' ]
 
+    perm_admin2:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859011'
+        user: '@user_admin'
+        account: '@account_admin2'
+        grants: [ 'ACCOUNT_MANAGER' ]
+
     perm_test:
         id: '05E88714-8FB3-46B0-893D-97CBCA859002'
         user: '@user_test'

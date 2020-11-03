@@ -12,6 +12,12 @@ App\Entity\Account:
         application: '@default'
         permissions: [ '@perm_admin' ]
 
+    account_admin2:
+        id: '05E88714-8FB3-46B0-893D-97CBCA859111'
+        name: 'account_admin2'
+        application: '@default'
+        permissions: [ '@perm_admin2' ]
+
     account_test:
         id: '05E88714-8FB3-46B0-893D-97CBCA859002'
         name: 'account_test'
