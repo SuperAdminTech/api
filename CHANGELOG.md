@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/QbitArtifacts/caste/compare/v1.2.2...v1.3.0) (2020-11-06)
+
+
+### Features
+
+* **permissions:** added default permissions to applications ([655d1ab](https://github.com/QbitArtifacts/caste/commit/655d1ab729069f4d72a6ed1a0a49700a5c109ede))
+
+
+### Bug Fixes
+
+* **permissions:** set app default permissions to users at register ([6115099](https://github.com/QbitArtifacts/caste/commit/6115099203e461d5c374492f051488037b48ce30))
+
 ### [1.2.2](https://github.com/QbitArtifacts/caste/compare/v1.2.1...v1.2.2) (2020-11-06)
 
 
