@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/QbitArtifacts/caste/compare/v1.2.1...v1.2.2) (2020-11-06)
+
+
+### Bug Fixes
+
+* **deps:** updated deps ([cccc414](https://github.com/QbitArtifacts/caste/commit/cccc4148edcd7e5e64625209e8c8de6ca4d76983))
+* **recover_password:** added some asserts & tested ([ace26fe](https://github.com/QbitArtifacts/caste/commit/ace26fe82dd20d3539907460ad4d10dc2517dc00))
+
 ### [1.2.1](https://github.com/QbitArtifacts/caste/compare/v1.2.0...v1.2.1) (2020-11-03)
 
 
