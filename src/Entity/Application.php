@@ -75,6 +75,13 @@ class Application extends Base implements Restricted {
      */
     public $grants = [];
 
+    /**
+     * @var string[]
+     * @ORM\Column(type="json")
+     * @Groups({"admin:read", "admin:write"})
+     */
+    public $default_grants = [];
+
     function allowsRead(User $user): bool {
         foreach ($user->permissions as $permission) {
             if ($this->id == $permission->account->application->id){
