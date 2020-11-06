@@ -24,8 +24,18 @@ class GivePermissionsTest extends WebTestCase
             'username' => 'super@example.com',
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
-        $resp = $this->request('POST', '/user/permissions', $params);
+        $this->request('POST', '/user/permissions', $params);
         self::assertResponseIsSuccessful();
+    }
+
+    public function testUserGivesWrongPermissionShouldFail(){
+        $params = [
+            'account' => "/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002",
+            'username' => 'super@example.com',
+            'grants' => [Permission::ACCOUNT_WORKER, 'ACCOUNT_INVALID']
+        ];
+        $this->request('POST', '/user/permissions', $params);
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
     public function testUserGivesPermissionAlreadyAllowed(){

@@ -52,6 +52,7 @@ use App\Dto\PermissionWithUsername;
 class Permission extends Base implements Restricted {
     const ACCOUNT_WORKER = "ACCOUNT_WORKER";
     const ACCOUNT_MANAGER = "ACCOUNT_MANAGER";
+    const ACCOUNT_ALL = ["ACCOUNT_WORKER", "ACCOUNT_MANAGER"];
 
     /**
      * @var User

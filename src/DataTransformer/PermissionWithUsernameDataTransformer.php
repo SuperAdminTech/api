@@ -51,6 +51,13 @@ class PermissionWithUsernameDataTransformer implements DataTransformerInterface
         if (!$account->allowsWrite($currentUser))
             throw new HttpException(Response::HTTP_FORBIDDEN, "User not manager");
 
+        array_unique($object->grants);
+        $allowed_grants = array_merge(Permission::ACCOUNT_ALL, $account->application->grants);
+        foreach ($object->grants as $grant){
+            if (!in_array($grant, $allowed_grants))
+                throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid grant '$grant' for this application");
+        }
+
         $user = $this->findUserInApplication($object->username, $account->application);
 
         if (!$user) throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid username");

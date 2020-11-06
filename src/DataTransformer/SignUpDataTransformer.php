@@ -7,10 +7,8 @@ namespace App\DataTransformer;
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Dto\SignUp;
-use App\Dto\VerifyEmail;
 use App\Entity\Account;
 use App\Entity\Application;
-use App\Entity\Config;
 use App\Entity\Permission;
 use App\Entity\User;
 use App\Utils\EmailUtils;
@@ -18,13 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Mailer\Mailer;
-use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mime\Exception\RfcComplianceException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Twig\Environment;
 
 class SignUpDataTransformer implements DataTransformerInterface
 {
@@ -95,7 +87,8 @@ class SignUpDataTransformer implements DataTransformerInterface
         $account->application = $app;
         $account->name = $object->username;
         while ($accsRepo->findOneBy(['name' => $account->name])) {
-            $account->name = "{$object->username}#" . rand(1000, 9999);
+            $mailUsername = explode('@', $object->username);
+            $account->name = "{$mailUsername}#" . rand(1000, 9999);
         }
         $this->validator->validate($account);
         $this->em->persist($account);
@@ -104,7 +97,7 @@ class SignUpDataTransformer implements DataTransformerInterface
         $permission = new Permission();
         $permission->user = $user;
         $permission->account = $account;
-        $permission->grants = [Permission::ACCOUNT_MANAGER];
+        $permission->grants = $app->default_grants;
         $this->validator->validate($permission);
         $this->em->persist($permission);
 

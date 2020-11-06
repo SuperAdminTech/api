@@ -55,6 +55,7 @@ class NewUserAccountDataTransformer implements DataTransformerInterface
         $account = new Account();
         $account->name = $object->name;
 
+        /** @var Application $app */
         $app = $this->em->getRepository(Application::class)->findOneBy(['realm' => $object->realm]);
         if(!$app) throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid realm");
         $account->application = $app;
@@ -66,7 +67,7 @@ class NewUserAccountDataTransformer implements DataTransformerInterface
         $permission = new Permission();
         $permission->user = $user;
         $permission->account = $account;
-        $permission->grants = [Permission::ACCOUNT_MANAGER];
+        $permission->grants = $app->default_grants;
 
         $this->validator->validate($permission);
         $this->em->persist($permission);
