@@ -5,6 +5,7 @@ namespace App\DataTransformer;
 
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Dto\RecoverPasswordRequest;
 use App\Entity\Application;
 use App\Entity\Config;
@@ -32,15 +33,20 @@ class RecoverPasswordRequestDataTransformer implements DataTransformerInterface
     /** @var EmailUtils */
     private $mailing;
 
+    /** @var ValidatorInterface */
+    private $validator;
+
     /**
      * PermissionWithUsernameDataTransformer constructor.
      * @param EntityManagerInterface $em
      * @param EmailUtils $mailing
+     * @param ValidatorInterface $validator
      */
-    public function __construct(EntityManagerInterface $em, EmailUtils $mailing)
+    public function __construct(EntityManagerInterface $em, EmailUtils $mailing, ValidatorInterface $validator)
     {
         $this->em = $em;
         $this->mailing = $mailing;
+        $this->validator = $validator;
     }
 
 
@@ -49,6 +55,8 @@ class RecoverPasswordRequestDataTransformer implements DataTransformerInterface
      */
     public function transform($object, string $to, array $context = [])
     {
+        $this->validator->validate($object);
+
         /** @var User $user */
         $user = $this->em
             ->getRepository(User::class)
