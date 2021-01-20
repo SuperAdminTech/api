@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt install -y \
     php \
@@ -22,14 +22,8 @@ RUN sed 's/^ServerTokens OS/ServerTokens Prod/' -i /etc/apache2/conf-available/s
 RUN sed 's/^ServerSignature On/ServerSignature Off/' -i /etc/apache2/conf-available/security.conf
 
 WORKDIR /api
-
-COPY composer.lock /api/composer.lock
-COPY composer.json /api/composer.json
-RUN composer global require hirak/prestissimo --no-plugins --no-scripts
-RUN composer install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-autoloader && rm -rf /root/.composer
-
 COPY . /api
 
-RUN composer dump-autoload --no-ansi --no-interaction --no-scripts --no-dev --optimize
+RUN composer install --no-ansi --no-interaction --no-scripts --no-dev
 
 CMD docker/prod/api/docker-entrypoint.sh
