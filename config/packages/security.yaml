@@ -25,6 +25,8 @@ security:
             guard:
                 authenticators:
                     - App\Security\ApplicationAuthenticator
+                    - App\Security\Authenticator\ApiKeyAuthenticator
+                entry_point: App\Security\ApplicationAuthenticator
 
         main:
             pattern: ^/

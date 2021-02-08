@@ -135,6 +135,14 @@ class User extends Base implements UserInterface {
     public $password;
 
     /**
+     * @var ApiKey[]
+     * @ORM\OneToMany(targetEntity=ApiKey::class, mappedBy="user", cascade={"remove"})
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @MaxDepth(1)
+     */
+    public $api_keys = [];
+
+    /**
      * @var Permission[]
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
