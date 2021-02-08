@@ -60,7 +60,7 @@ class EmailUtils
                 ->subject($stringTwig->render('subject', $templateVars))
                 ->text($text)
                 ->html($html);
-            $this->sendEmail($email);
+            $this->sendEmail($user, $email);
         } catch (RfcComplianceException $ignored) { }
     }
 

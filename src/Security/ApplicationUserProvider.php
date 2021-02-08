@@ -39,7 +39,7 @@ class ApplicationUserProvider implements PayloadAwareUserProviderInterface {
         /** @var User $user */
         foreach ($users as $user){
             foreach ($user->permissions as $permission){
-                if ($permission->account->application->realm == $payload['application']->realm) {
+                if ($permission->account->application->realm == $payload['application']['realm']) {
                     return $user;
                 }
             }

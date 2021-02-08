@@ -30,7 +30,7 @@ class RecoverPasswordRequestTest extends WebTestCase
             '/public/users/recover',
             ['username' => 'test@example.com']
         );
-        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testRecoverPasswordRequestWithUnexistentUsernameShouldFail(): void {

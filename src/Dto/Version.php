@@ -22,7 +22,7 @@ class Version {
      * @Groups({"public:read"})
      * @ApiProperty(identifier=true)
      */
-    public $version = 'current';
+    public $id = 'current';
 
     /**
      * @var string

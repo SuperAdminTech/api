@@ -17,7 +17,7 @@ RUN apt update && apt install -y \
     wget
 
 # apache2 config
-RUN a2enmod rewrite php7.3
+RUN a2enmod rewrite php7.4
 RUN sed 's/^ServerTokens OS/ServerTokens Prod/' -i /etc/apache2/conf-available/security.conf
 RUN sed 's/^ServerSignature On/ServerSignature Off/' -i /etc/apache2/conf-available/security.conf
 

@@ -45,7 +45,7 @@ class GivePermissionsTest extends WebTestCase
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
         $this->request('POST', '/user/permissions', $params);
-        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testUserGivesPermissionForbidden(){

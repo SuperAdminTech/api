@@ -36,6 +36,6 @@ class NewAccountTest extends WebTestCase
 
     public function testUserCreatesNewAccountAlreadyTaken(){
         $this->request('POST', '/user/accounts', ['name' => 'account_admin', 'realm' => 'default']);
-        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
