@@ -7,6 +7,8 @@ namespace App\Utils;
 use App\Entity\Config;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Exception\InvalidDataException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
@@ -37,11 +39,12 @@ class EmailUtils
     /**
      * @param User $user
      * @param string $emailTemplateName
-     * @param string $subjectTemplate
-     * @throws TransportExceptionInterface
+     * @param string $subject
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     * @throws InvalidDataException
      */
     public function sendEmailTemplate(User $user, $emailTemplateName = 'sign_up', $subject = 'Welcome to {{ application.name }}') {
         $application = $user->permissions[0]->account->application;
@@ -61,12 +64,15 @@ class EmailUtils
                 ->text($text)
                 ->html($html);
             $this->sendEmail($user, $email);
-        } catch (RfcComplianceException $ignored) { }
+        } catch (RfcComplianceException $e) {
+            throw new InvalidDataException("Mailing error: " . $e->getMessage());
+        }
     }
 
     /**
      * @param User $to
      * @param Email $email
+     * @throws TransportExceptionInterface
      */
     public function sendEmail(User $to, Email $email) {
         $application = $to->permissions[0]->account->application;
@@ -79,23 +85,20 @@ class EmailUtils
 
     /**
      * @param Message $message
+     * @throws InvalidDataException|TransportExceptionInterface
      */
     public function sendMessage(Message $message) {
         $application = $message->user->permissions[0]->account->application;
         $config = $application->config;
-        $transport = Transport::fromDsn($config->mailer_dsn);
-        $mailer = new Mailer($transport);
 
         $email = new Email();
-        try {
-            $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
-            $email->from(new Address($from, $application->name))
-                ->to($message->user->getUsername())
-                ->subject($message->subject)
-                ->text($message->body)
-                ->html($message->body_html);
-            $this->sendEmail($email);
-        } catch (RfcComplianceException $ignored) { }
+        $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
+        $email->from(new Address($from, $application->name))
+            ->to($message->user->getUsername())
+            ->subject($message->subject)
+            ->text($message->body)
+            ->html($message->body_html);
+        $this->sendEmail($message->user, $email);
     }
 
 }
