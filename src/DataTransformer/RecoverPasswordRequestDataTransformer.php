@@ -76,7 +76,7 @@ class RecoverPasswordRequestDataTransformer implements DataTransformerInterface
                 if ($permission->account->application->id == $app->id) {
                     $user->recover_password_code = Uuid::uuid4()->toString();
                     $user->recover_password_requested_at = new \DateTime();
-                    $this->mailing->sendEmail(
+                    $this->mailing->sendEmailTemplate(
                         $user,
                         'recover_password',
                         'Password recover request for {{ application.name }}'

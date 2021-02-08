@@ -5,6 +5,7 @@ namespace App\Utils;
 
 
 use App\Entity\Config;
+use App\Entity\Message;
 use App\Entity\User;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Mailer;
@@ -42,11 +43,8 @@ class EmailUtils
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function sendEmail(User $user, $emailTemplateName = 'sign_up', $subject = 'Welcome to {{ application.name }}') {
+    public function sendEmailTemplate(User $user, $emailTemplateName = 'sign_up', $subject = 'Welcome to {{ application.name }}') {
         $application = $user->permissions[0]->account->application;
-        $config = $application->config;
-        $transport = Transport::fromDsn($config->mailer_dsn);
-        $mailer = new Mailer($transport);
         $templateVars = [
             'user' => $user,
             'application' => $application
@@ -62,9 +60,42 @@ class EmailUtils
                 ->subject($stringTwig->render('subject', $templateVars))
                 ->text($text)
                 ->html($html);
-            $mailer->send($email);
+            $this->sendEmail($email);
         } catch (RfcComplianceException $ignored) { }
     }
 
+    /**
+     * @param User $to
+     * @param Email $email
+     */
+    public function sendEmail(User $to, Email $email) {
+        $application = $to->permissions[0]->account->application;
+        $config = $application->config;
+        $transport = Transport::fromDsn($config->mailer_dsn);
+        $mailer = new Mailer($transport);
+        $mailer->send($email);
+    }
+
+
+    /**
+     * @param Message $message
+     */
+    public function sendMessage(Message $message) {
+        $application = $message->user->permissions[0]->account->application;
+        $config = $application->config;
+        $transport = Transport::fromDsn($config->mailer_dsn);
+        $mailer = new Mailer($transport);
+
+        $email = new Email();
+        try {
+            $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
+            $email->from(new Address($from, $application->name))
+                ->to($message->user->getUsername())
+                ->subject($message->subject)
+                ->text($message->body)
+                ->html($message->body_html);
+            $this->sendEmail($email);
+        } catch (RfcComplianceException $ignored) { }
+    }
 
 }

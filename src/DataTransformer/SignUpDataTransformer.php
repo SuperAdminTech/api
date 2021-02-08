@@ -105,7 +105,7 @@ class SignUpDataTransformer implements DataTransformerInterface
         $user->permissions = [$permission];
         $account->permissions = [$permission];
 
-        $this->mailing->sendEmail(
+        $this->mailing->sendEmailTemplate(
             $user,
             'sign_up',
             'Welcome to {{ application.name }}'

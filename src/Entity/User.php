@@ -143,6 +143,14 @@ class User extends Base implements UserInterface {
     public $permissions = [];
 
     /**
+     * @var Message[]
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="user", cascade={"remove"})
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @MaxDepth(1)
+     */
+    public $messages = [];
+
+    /**
      * @var string The plain password
      * @Groups({"user:write", "admin:write", "super:read", "super:write"})
      */
