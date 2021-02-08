@@ -113,6 +113,9 @@
     "fig/link-util": {
         "version": "1.1.1"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.41"
     },
@@ -141,6 +144,18 @@
     },
     "jean85/pretty-package-versions": {
         "version": "1.5.0"
+    },
+    "laminas/laminas-code": {
+        "version": "4.0.0"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
+    "lcobucci/clock": {
+        "version": "2.0.0"
     },
     "lcobucci/jwt": {
         "version": "3.3.2"
@@ -351,6 +366,9 @@
     "symfony/dependency-injection": {
         "version": "v4.4.10"
     },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
+    },
     "symfony/doctrine-bridge": {
         "version": "v4.4.10"
     },
@@ -514,6 +532,9 @@
     },
     "symfony/property-info": {
         "version": "v4.4.10"
+    },
+    "symfony/proxy-manager-bridge": {
+        "version": "v4.4.19"
     },
     "symfony/routing": {
         "version": "4.2",
