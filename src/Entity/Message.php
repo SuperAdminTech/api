@@ -12,7 +12,24 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * Class Message
  * @package App\Entity
  * @ORM\Entity
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "path"="/admin/messages"
+ *          },
+ *          "post"={
+ *              "path"="/admin/messages"
+ *          }
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "path"="/admin/messages/{id}"
+ *          },
+ *          "delete"={
+ *              "path"="/admin/messages/{id}"
+ *          }
+ *     }
+ * )
  */
 class Message extends Base {
 
