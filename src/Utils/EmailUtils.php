@@ -48,6 +48,8 @@ class EmailUtils
      */
     public function sendEmailTemplate(User $user, $emailTemplateName = 'sign_up', $subject = 'Welcome to {{ application.name }}') {
         $application = $user->permissions[0]->account->application;
+        $config = $application->config;
+
         $templateVars = [
             'user' => $user,
             'application' => $application
