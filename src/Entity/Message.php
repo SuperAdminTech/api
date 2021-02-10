@@ -7,6 +7,7 @@ use App\Entity\Compose\Base;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use App\Dto\MessageToUsername;
 
 /**
  * Class Message
@@ -18,7 +19,8 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *              "path"="/admin/messages"
  *          },
  *          "post"={
- *              "path"="/admin/messages"
+ *              "path"="/admin/messages",
+ *              "input"=MessageToUsername::class
  *          }
  *     },
  *     itemOperations={
