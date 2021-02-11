@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use App\Dto\MessageToUsername;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Message
@@ -44,38 +45,46 @@ class Message extends Base {
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
-     * @Groups({"user:read", "user:write"})
-     * @MaxDepth(1)
+     * @Groups({"admin:write"})
      */
     public $user;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Groups({"user:read"})
      */
     public $status;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Groups({"user:read"})
      */
     public $channel = self::CHANNEL_EMAIL;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Groups({"user:read"})
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     public $subject;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Groups({"user:read"})
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     public $body;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * @Groups({"user:read"})
      */
     public $body_html;
 }

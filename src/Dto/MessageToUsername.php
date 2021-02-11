@@ -16,6 +16,8 @@ class MessageToUsername  {
      * @var string
      * @Groups({"admin:write"})
      * @Assert\Email()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     public $username;
 
@@ -28,12 +30,16 @@ class MessageToUsername  {
     /**
      * @var string
      * @Groups({"admin:write"})
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     public $subject;
 
     /**
      * @var string
      * @Groups({"admin:write"})
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     public $body;
 

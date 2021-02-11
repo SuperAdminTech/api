@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use ApiPlatform\Core\Validator\ValidatorInterface;
 
 class MessageToUsernameDataTransformer implements DataTransformerInterface
 {
@@ -24,15 +25,20 @@ class MessageToUsernameDataTransformer implements DataTransformerInterface
     /** @var TokenStorageInterface */
     private $tokenStorage;
 
+    /** @var ValidatorInterface */
+    private ValidatorInterface $validator;
+
     /**
      * PermissionWithUsernameDataTransformer constructor.
      * @param EntityManagerInterface $em
      * @param TokenStorageInterface $tokenStorage
+     * @param ValidatorInterface $validator
      */
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, ValidatorInterface $validator)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
+        $this->validator = $validator;
     }
 
 
@@ -42,26 +48,27 @@ class MessageToUsernameDataTransformer implements DataTransformerInterface
      */
     public function transform($object, string $to, array $context = []) {
 
+        $this->validator->validate($object);
+
         $userRepo = $this->em->getRepository(User::class);
         $sameUsernameUsers = $userRepo->findBy(['username' => $object->username]);
 
             /** @var User $currentUser */
         $currentUser = $this->tokenStorage->getToken()->getUser();
 
+        $message = new Message();
         foreach ($currentUser->permissions as $permission) {
             $user = $this->findUserInApplication($sameUsernameUsers, $permission->account->application);
             if ($user) {
-                $message = new Message();
                 $message->user = $user;
-                $message->subject = $object->subject;
-                $message->channel = $object->channel;
-                $message->body = $object->body;
-                $message->body_html = $object->body_html;
-                return $message;
+                break;
             }
         }
-
-        throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid username");
+        $message->subject = $object->subject;
+        $message->channel = $object->channel;
+        $message->body = $object->body;
+        $message->body_html = $object->body_html;
+        return $message;
     }
 
     /**

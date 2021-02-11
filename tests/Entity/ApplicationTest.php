@@ -25,7 +25,7 @@ class ApplicationTest extends WebTestCase
     }
 
     public function testUserCannotCreateApplications(): void {
-        $this->login('test@example.com');
+        $this->login();
         $this->json()->request('POST', '/sadmin/applications', ['name' => 'test', 'realm' => 'test']);
         $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
