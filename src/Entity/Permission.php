@@ -37,14 +37,15 @@ use App\Dto\PermissionWithUsername;
  *     itemOperations={
  *          "get"={
  *              "path"="/user/permissions/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsRead(user)"
+ *              "security"="is_granted('ROLE_ADMIN') || object.allowsRead(user)"
  *          },
  *          "put"={
  *              "path"="/user/permissions/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsWrite(user)"
+ *              "security"="is_granted('ROLE_ADMIN') || object.allowsWrite(user)"
  *          },
  *          "delete"={
- *              "path"="/sadmin/permissions/{id}"
+ *              "path"="/user/permissions/{id}",
+ *              "security"="is_granted('ROLE_ADMIN') || object.allowsWrite(user)"
  *          }
  *     }
  * )

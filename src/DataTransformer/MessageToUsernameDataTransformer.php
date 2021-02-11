@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class PermissionWithUsernameDataTransformer implements DataTransformerInterface
+class MessageToUsernameDataTransformer implements DataTransformerInterface
 {
     /** @var EntityManagerInterface */
     private $em;
