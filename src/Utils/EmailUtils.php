@@ -101,6 +101,7 @@ class EmailUtils
 
                 $vars = [
                     'user' => $user,
+                    'account' => $permission->account,
                     'application' => $application
                 ];
 
