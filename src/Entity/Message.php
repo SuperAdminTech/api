@@ -73,7 +73,7 @@ class Message extends Base {
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Groups({"user:read", "admin:write"})
      * @Assert\NotNull()
      * @Assert\NotBlank()
@@ -82,7 +82,7 @@ class Message extends Base {
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Groups({"user:read", "admin:write"})
      */
     public $body_html;
