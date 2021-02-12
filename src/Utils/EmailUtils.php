@@ -6,6 +6,7 @@ namespace App\Utils;
 
 use App\Entity\Config;
 use App\Entity\Message;
+use App\Entity\Permission;
 use App\Entity\User;
 use App\Exception\InvalidDataException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -56,8 +57,8 @@ class EmailUtils
         ];
         $text = $this->twig->render("email/{$emailTemplateName}.txt.twig", $templateVars);
         $html = $this->twig->render("email/{$emailTemplateName}.html.twig", $templateVars);
-        $email = new Email();
         try {
+            $email = new Email();
             $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
             $stringTwig = new Environment(new ArrayLoader(['subject' => $subject]));
             $email->from(new Address($from, $application->name))
@@ -87,20 +88,25 @@ class EmailUtils
 
     /**
      * @param Message $message
-     * @throws InvalidDataException|TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function sendMessage(Message $message) {
-        $application = $message->user->permissions[0]->account->application;
-        $config = $application->config;
+        foreach ($message->account->permissions as $permission) {
+            if (in_array(Permission::ACCOUNT_MANAGER, $permission->grants)) {
+                $user = $permission->user;
+                $application = $user->permissions[0]->account->application;
+                $config = $application->config;
 
-        $email = new Email();
-        $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
-        $email->from(new Address($from, $application->name))
-            ->to($message->user->getUsername())
-            ->subject($message->subject)
-            ->text($message->body)
-            ->html($message->body_html);
-        $this->sendEmail($message->user, $email);
+                $email = new Email();
+                $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
+                $email->from(new Address($from, $application->name))
+                    ->to($user->getUsername())
+                    ->subject($message->subject)
+                    ->text($message->body)
+                    ->html($message->body_html);
+                $this->sendEmail($user, $email);
+            }
+        }
     }
 
 }

@@ -44,7 +44,6 @@ class MessageSubscriber implements EventSubscriber
 
     /**
      * @param LifecycleEventArgs $args
-     * @throws InvalidDataException
      */
     public function prePersist(LifecycleEventArgs $args){
         $message = $args->getEntity();

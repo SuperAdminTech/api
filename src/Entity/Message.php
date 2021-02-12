@@ -7,7 +7,7 @@ use App\Entity\Compose\Base;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-use App\Dto\MessageToUsername;
+use App\Dto\MessageToAccount;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,8 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "path"="/admin/messages"
  *          },
  *          "post"={
- *              "path"="/admin/messages",
- *              "input"=MessageToUsername::class
+ *              "path"="/admin/messages"
  *          }
  *     },
  *     itemOperations={
@@ -43,16 +42,16 @@ class Message extends Base {
     public const CHANNEL_EMAIL = "email";
 
     /**
-     * @var User
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @var Account
+     * @ORM\ManyToOne(targetEntity=Account::class, inversedBy="messages")
      * @Groups({"admin:write"})
      */
-    public $user;
+    public $account;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "admin:write"})
      */
     public $status;
 
@@ -66,7 +65,7 @@ class Message extends Base {
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "admin:write"})
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
@@ -75,7 +74,7 @@ class Message extends Base {
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "admin:write"})
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
@@ -84,7 +83,7 @@ class Message extends Base {
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "admin:write"})
      */
     public $body_html;
 }

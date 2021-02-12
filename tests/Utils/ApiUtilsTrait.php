@@ -112,7 +112,7 @@ trait ApiUtilsTrait {
     private function getJsonHeaders($data = null): array {
         $headers = [];
         if($this->acceptJson) $headers = ['HTTP_Accept' => 'application/ld+json'];
-        if ($data) $headers['CONTENT_TYPE'] = "application/ld+json";
+        if ($data) $headers['CONTENT_TYPE'] = "application/json";
         return $headers;
     }
 

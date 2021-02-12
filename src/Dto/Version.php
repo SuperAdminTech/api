@@ -12,7 +12,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={
  *              "path"="/public/versions/{id}"
  *          }
- *     }
+ *     },
+ *     collectionOperations={}
  * )
  */
 class Version {

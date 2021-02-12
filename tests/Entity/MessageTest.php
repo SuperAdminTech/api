@@ -12,13 +12,13 @@ class MessageTest extends WebTestCase
     use RecreateDatabaseTrait;
     use ApiUtilsTrait;
 
-    public function testSendMessageToUser(): void {
+    public function testSendMessageToUserAccount(): void {
         $this->login('admin@example.com');
         $this->json()->request(
             'POST',
             '/admin/messages',
             [
-                'username' => 'test@example.com',
+                'account' => '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859001',
                 'subject' => 'test subject',
                 'body' => 'test body'
             ]
@@ -26,13 +26,13 @@ class MessageTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testSendMessageToUserFromApiKey(): void {
+    public function testSendMessageToUserAccountFromApiKey(): void {
         $this->headers(['HTTP_X-Auth-Key' => 'key_admin']);
         $this->json()->request(
             'POST',
             '/admin/messages',
             [
-                'username' => 'test@example.com',
+                'account' => '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859001',
                 'subject' => 'test subject',
                 'body' => 'test body'
             ]
@@ -40,13 +40,13 @@ class MessageTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testSendMessageToUserFromApiKeyUserShouldFail(): void {
+    public function testSendMessageToUserAccountFromApiKeyUserShouldFail(): void {
         $this->headers(['HTTP_X-Auth-Key' => 'key_test']);
         $this->json()->request(
             'POST',
             '/admin/messages',
             [
-                'username' => 'test@example.com',
+                'account' => '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859001',
                 'subject' => 'test subject',
                 'body' => 'test body'
             ]

@@ -68,6 +68,14 @@ class Account extends Base implements Restricted {
     public $permissions = [];
 
     /**
+     * @var Message[]
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="account", cascade={"remove"})
+     * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @MaxDepth(1)
+     */
+    public $messages = [];
+
+    /**
      * @var Application
      * @ORM\ManyToOne(targetEntity=Application::class, inversedBy="accounts")
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
