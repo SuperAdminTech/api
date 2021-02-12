@@ -8,16 +8,26 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
+/**
+ * Trait ApiUtilsTrait
+ * @package App\Tests\Utils
+ */
 trait ApiUtilsTrait {
 
     /** @var boolean $acceptJson */
     private $acceptJson = false;
+
+    /** @var array $moreHeaders */
+    private $moreHeaders = [];
 
     /** @var string $token */
     private $token = null;
 
     /** @var KernelBrowser $client  */
     private $client = null;
+
+    /** @var array */
+    private $mocks = [];
 
     /**
      * @param string $email
@@ -57,6 +67,15 @@ trait ApiUtilsTrait {
     }
 
     /**
+     * @return string
+     */
+    protected function getToken(string $grant): string
+    {
+        return $_ENV[$grant];
+    }
+
+
+    /**
      * @param $token
      * @return $this
      */
@@ -70,6 +89,11 @@ trait ApiUtilsTrait {
      */
     protected function json(): self {
         $this->acceptJson = true;
+        return $this;
+    }
+
+    protected function headers(array $headers): self {
+        $this->moreHeaders = $headers;
         return $this;
     }
 
@@ -105,6 +129,7 @@ trait ApiUtilsTrait {
         $server = $this->getJsonHeaders($json);
         $auth = $this->getAuthenticationHeaders();
         $headers = array_merge($server, $auth);
+        $headers = array_merge($headers, $this->moreHeaders);
 
         if ($json) $client->request($method, $uri, [], [], $headers, json_encode($json));
         else $client->request($method, $uri, [], [], $headers);
@@ -137,15 +162,31 @@ trait ApiUtilsTrait {
             );
             $files_upload[$param] = $uf;
         }
+
+        $server = $this->getJsonHeaders();
+        $auth = $this->getAuthenticationHeaders();
+        $headers = array_merge($server, $auth);
+        $headers = array_merge($headers, $this->moreHeaders);
+
         $client->request(
             $method,
             $uri,
             [],
-            $files_upload
+            $files_upload,
+            $headers
         );
         return $client->getResponse();
     }
 
+    /**
+     * @param $service
+     * @param $mock
+     * @return $this
+     */
+    protected function setMock($service, $mock): self {
+        $this->mocks[$service] = $mock;
+        return $this;
+    }
 
     /**
      * @return KernelBrowser
@@ -154,6 +195,10 @@ trait ApiUtilsTrait {
         self::ensureKernelShutdown();
         $client = self::createClient();
         $this->client = $client;
+        $container = self::$kernel->getContainer();
+        foreach ($this->mocks as $service => $mock) {
+            $container->set($service, $mock);
+        }
         return $client;
     }
 
@@ -165,7 +210,7 @@ trait ApiUtilsTrait {
         return $this->client;
     }
 
-
-
-
+    private static function decodeJWT($token){
+        return json_decode(base64_decode(explode(".", $token)[1]));
+    }
 }

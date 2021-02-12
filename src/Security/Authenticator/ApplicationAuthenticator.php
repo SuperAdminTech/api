@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Security;
+namespace App\Security\Authenticator;
 
 use App\Entity\Application;
 use App\Entity\User;

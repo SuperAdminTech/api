@@ -1,0 +1,31 @@
+
+App\Entity\ApiKey:
+    key_super:
+        id: "29d54cc7-814b-45a6-9a46-51cb2a85ab62"
+        name: "key_super"
+        user: '@user_super'
+        secret: 'key_super'
+
+    key_admin:
+        id: "747a4bc8-58da-4a91-b0dd-b52b1d927e02"
+        name: "key_admin"
+        user: '@user_admin'
+        secret: 'key_admin'
+
+    key_test:
+        id: "6fc05110-6a9a-4db2-9a5e-9dc841001fa3"
+        name: "key_test"
+        user: '@user_test'
+        secret: 'key_test'
+
+    key_test0:
+        id: "09458a01-d957-4808-8bd1-8b67d99e378c"
+        name: "key_test0"
+        user: '@user_test0'
+        secret: 'key_test0'
+
+    key_test1:
+        id: "e3fe7298-36bd-4649-beb9-832a54593066"
+        name: "key_test1"
+        user: '@user_test1'
+        secret: 'key_test1'
