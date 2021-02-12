@@ -39,4 +39,18 @@ class MessageTest extends WebTestCase
         );
         $this->assertResponseIsSuccessful();
     }
+
+    public function testSendMessageToUserFromApiKeyUserShouldFail(): void {
+        $this->headers(['HTTP_X-Auth-Key' => 'key_test']);
+        $this->json()->request(
+            'POST',
+            '/admin/messages',
+            [
+                'username' => 'test@example.com',
+                'subject' => 'test subject',
+                'body' => 'test body'
+            ]
+        );
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
 }
