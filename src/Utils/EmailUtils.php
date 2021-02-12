@@ -89,22 +89,40 @@ class EmailUtils
     /**
      * @param Message $message
      * @throws TransportExceptionInterface
+     * @throws InvalidDataException
      */
     public function sendMessage(Message $message) {
+
         foreach ($message->account->permissions as $permission) {
             if (in_array(Permission::ACCOUNT_MANAGER, $permission->grants)) {
                 $user = $permission->user;
                 $application = $user->permissions[0]->account->application;
                 $config = $application->config;
 
-                $email = new Email();
-                $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
-                $email->from(new Address($from, $application->name))
-                    ->to($user->getUsername())
-                    ->subject($message->subject)
-                    ->text($message->body)
-                    ->html($message->body_html);
-                $this->sendEmail($user, $email);
+                $vars = [
+                    'user' => $user,
+                    'application' => $application
+                ];
+
+                $template = new Environment(new ArrayLoader([
+                    'subject' => $message->subject,
+                    'body' => $message->body,
+                    'body_html' => $message->body_html
+                ]));
+
+                try {
+                    $email = new Email();
+                    $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
+                    $email->from(new Address($from, $application->name))
+                        ->to($user->getUsername())
+                        ->subject($template->render('subject', $vars))
+                        ->text($template->render('body', $vars));
+                    if ($message->body_html)
+                        $email->html($template->render('body_html', $vars));
+                    $this->sendEmail($user, $email);
+                } catch (LoaderError | RuntimeError | SyntaxError $e) {
+                    throw new InvalidDataException("Invalid e-mail template data: {$e->getMessage()}");
+                }
             }
         }
     }
