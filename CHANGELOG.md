@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/QbitArtifacts/caste/compare/v1.4.0...v1.4.1) (2021-02-14)
+
+
+### Bug Fixes
+
+* **deps:** upgraded sentry ([58e9687](https://github.com/QbitArtifacts/caste/commit/58e968714fe03bc04c20c78af32248bd7762bec1))
+* removed bad dependency ([400bbaf](https://github.com/QbitArtifacts/caste/commit/400bbaf9b39fdf41c41c0b23c16ebe64df7cee93))
+
 ## [1.4.0](https://github.com/QbitArtifacts/caste/compare/v1.3.0...v1.4.0) (2021-02-14)
 
 
