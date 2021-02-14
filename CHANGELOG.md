@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.3](https://github.com/QbitArtifacts/caste/compare/v1.4.2...v1.4.3) (2021-02-14)
+
+
+### Bug Fixes
+
+* **filter:** fixed filter bad behaviour ([dd9fe47](https://github.com/QbitArtifacts/caste/commit/dd9fe4783576ea5e9c37b4dbfbee4514f0e58aba))
+
 ### [1.4.2](https://github.com/QbitArtifacts/caste/compare/v1.4.1...v1.4.2) (2021-02-14)
 
 
