@@ -48,14 +48,13 @@ final class ApplicationFilterConfigurator
         if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) return;
 
 
-        $filter = $this->em->getFilters()->enable('application_filter');
 
         $apps = [];
         foreach ($user->permissions as $permission){
             $apps []= $permission->account->application->id;
-            //TODO: malfunction with mysql (apparent), some objects are not filled, so using the first one only
-            break;
         }
+
+        $filter = $this->em->getFilters()->enable('application_filter');
 
         $filter->setParameter('applications', base64_encode(json_encode($apps)));
         $filter->setAnnotationReader($this->reader);
