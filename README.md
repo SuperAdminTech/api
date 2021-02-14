@@ -6,7 +6,7 @@ Welcome to the SuperAdmin REST API
 
 # Development
 
-![Code Coverate](https://img.shields.io/badge/coverage-84%25-green)
+![Code Coverate](https://img.shields.io/badge/coverage-83%25-green)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 ## Setup

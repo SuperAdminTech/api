@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/QbitArtifacts/caste/compare/v1.3.0...v1.4.0) (2021-02-14)
+
+
+### Features
+
+* **auth:** implemented api keys ([540d1ad](https://github.com/QbitArtifacts/caste/commit/540d1ad5bb9b98e0d621682cdb5da287ca095ffb))
+* **docker:** bumped docker image base to debian 11 ([1661e34](https://github.com/QbitArtifacts/caste/commit/1661e34cfb61c0428b415bad5d14eb8c6ea0c0df))
+* **messages:** added account tpl var ([ab79aba](https://github.com/QbitArtifacts/caste/commit/ab79aba227f8eb806ce0743dc2964cdc29359168))
+* **messages:** allowing email templates ([3f2283c](https://github.com/QbitArtifacts/caste/commit/3f2283cacd45c243c17304671b4f1a5e71abeddc))
+* **messaging,apikeys:** implemented messaging and api keys ([#35](https://github.com/QbitArtifacts/caste/issues/35)) ([175d59c](https://github.com/QbitArtifacts/caste/commit/175d59c804496a87e986e5eb2c3af7fb7e1fd5d9))
+* **messenger:** created way to comunicate with users ([ac4772a](https://github.com/QbitArtifacts/caste/commit/ac4772a8736f92e2f299ba77e06404885d424d9d))
+* **messenger:** restricting messages to admins ([6f3fbf9](https://github.com/QbitArtifacts/caste/commit/6f3fbf93c6232d2653a9e9c40275a7526b5db4ae))
+
+
+### Bug Fixes
+
+* **deps:** bumped to php7.4 & updated deps ([0629bf8](https://github.com/QbitArtifacts/caste/commit/0629bf876c6ca96e948e4b95df6cb59db0553c04))
+* **deps:** updated composer deps ([a387a4b](https://github.com/QbitArtifacts/caste/commit/a387a4bc2b6d948d727af25985be5374452345ac))
+* **mailing:** added mailing errors ([a56844f](https://github.com/QbitArtifacts/caste/commit/a56844f0bd3d08ee037ba2a7dc36a2b7155c00f7))
+* **mailing:** fixed bug with mailer_from config var ([571cfea](https://github.com/QbitArtifacts/caste/commit/571cfeaaed450066c5d4caa910fd52c5b113103c))
+* **messages:** changed body to text ([9c44b08](https://github.com/QbitArtifacts/caste/commit/9c44b086797baafe1355a5fb2a9db4adfea9140a))
+* **messages:** changed messaging to accounts ([4b82204](https://github.com/QbitArtifacts/caste/commit/4b8220438ad84b5ebb9a7532a6364846abdd229a))
+* **tests:** upgraded tests ([deaf4e7](https://github.com/QbitArtifacts/caste/commit/deaf4e7f65a6aaaba9d258479ae5acc34bf5137e))
+
 ## [1.3.0](https://github.com/QbitArtifacts/caste/compare/v1.2.2...v1.3.0) (2020-11-06)
 
 
