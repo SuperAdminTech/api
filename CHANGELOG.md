@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.4](https://github.com/QbitArtifacts/caste/compare/v1.4.3...v1.4.4) (2021-02-19)
+
+
+### Bug Fixes
+
+* **account:** allowing account access + write to admins ([7b1ed88](https://github.com/QbitArtifacts/caste/commit/7b1ed88b284da0f724c60f1116af298f008cb8a8))
+* **deps:** updated composer deps ([145a6df](https://github.com/QbitArtifacts/caste/commit/145a6df83d7a83ce50b254e932d6c7b9b617d51f))
+
 ### [1.4.3](https://github.com/QbitArtifacts/caste/compare/v1.4.2...v1.4.3) (2021-02-14)
 
 
