@@ -40,15 +40,15 @@ use App\Dto\NewUserAccount;
  *     itemOperations={
  *          "get"={
  *              "path"="/user/accounts/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsRead(user)"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object.allowsRead(user)"
  *          },
  *          "put"={
  *              "path"="/user/accounts/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsWrite(user)"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object.allowsWrite(user)"
  *          },
  *          "delete"={
  *              "path"="/user/accounts/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object.allowsWrite(user)"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object.allowsWrite(user)"
  *          }
  *     }
  * )
@@ -106,5 +106,18 @@ class Account extends Base implements Restricted {
         }
         return false;
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    function sameApplication(User $user): bool {
+        foreach ($user->permissions as $permission) {
+            if ($this->application->id == $permission->account->application->id)
+                return true;
+        }
+        return false;
+    }
+
 
 }
