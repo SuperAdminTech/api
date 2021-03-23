@@ -52,7 +52,11 @@ use App\Dto\NewUserAccount;
  *          }
  *     }
  * )
- * @ApiFilter(SearchFilter::class, properties={"id": "exact", "name": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "id": "exact",
+ *     "name": "partial",
+ *     "application.id": "exact"
+ * })
  * @ApplicationAware(applicationFieldName="application_id")
  */
 class Account extends Base implements Restricted {

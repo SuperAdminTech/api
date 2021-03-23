@@ -58,4 +58,14 @@ class GivePermissionsTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
+    public function testSuperAdminGivesPermissionsSuccessfully(){
+        $this->json()->login('super@example.com');
+        $params = [
+            'account' => "/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002",
+            'username' => 'test@example.com',
+            'grants' => [Permission::ACCOUNT_WORKER]
+        ];
+        $this->request('POST', '/sadmin/permissions', $params);
+        self::assertResponseIsSuccessful();
+    }
 }
