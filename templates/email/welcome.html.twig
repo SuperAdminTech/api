@@ -1,0 +1,14 @@
+{% extends 'email/email.html.twig' %}
+
+        {% block body %}
+            <h1 style="text-align: center">Welcome to {{ application.name }}!</h1>
+
+            <div style="text-align: center">
+                <p>
+                    Set your password following the instructions below.
+                </p>
+                <p>
+                    [<a href="{{ application.config.frontend_url }}/recover/{{ user.id }}?code={{ user.recover_password_code }}">Click here to set your password</a>]
+                </p>
+            </div>
+        {% endblock %}

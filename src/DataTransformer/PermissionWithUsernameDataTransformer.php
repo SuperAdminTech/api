@@ -5,11 +5,14 @@ namespace App\DataTransformer;
 
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Entity\Account;
 use App\Entity\Application;
 use App\Entity\Permission;
 use App\Entity\User;
+use App\Utils\EmailUtils;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -22,15 +25,25 @@ class PermissionWithUsernameDataTransformer implements DataTransformerInterface
     /** @var TokenStorageInterface */
     private $tokenStorage;
 
+    /** @var ValidatorInterface */
+    private $validator;
+
+    /** @var EmailUtils */
+    private $mailing;
+
     /**
      * PermissionWithUsernameDataTransformer constructor.
      * @param EntityManagerInterface $em
      * @param TokenStorageInterface $tokenStorage
+     * @param ValidatorInterface $validator
+     * @param EmailUtils $mailing
      */
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, ValidatorInterface $validator, EmailUtils $mailing)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
+        $this->validator = $validator;
+        $this->mailing = $mailing;
     }
 
 
@@ -60,7 +73,24 @@ class PermissionWithUsernameDataTransformer implements DataTransformerInterface
 
         $user = $this->findUserInApplication($object->username, $account->application);
 
-        if (!$user) throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid username");
+        //if (!$user) throw new HttpException(Response::HTTP_BAD_REQUEST, "Invalid username");
+        if(!$user){
+            $user = new User();
+            $user->username = $object->username;
+            $user->email_verification_code = Uuid::uuid4()->toString();
+            $user->recover_password_code = Uuid::uuid4()->toString();
+            $user->recover_password_requested_at = new \DateTime();
+            $this->validator->validate($user);
+            $this->em->persist($user);
+
+            $this->mailing->sendEmailTemplate(
+                $user,
+                'welcome',
+                'Welcome to {{ application.name }}'
+            );
+
+        }
+
         $permission->user = $user;
 
         return $permission;
