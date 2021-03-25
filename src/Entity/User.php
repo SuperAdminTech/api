@@ -79,7 +79,11 @@ use App\Dto\RecoverPassword;
  *          }
  *     }
  * )
- * @ApiFilter(SearchFilter::class, properties={"id": "exact", "username": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "id": "exact",
+ *     "username": "partial",
+ *     "permissions.account.application.id": "exact"
+ * })
  */
 class User extends Base implements UserInterface {
 
