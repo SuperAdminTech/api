@@ -52,7 +52,9 @@ use App\Dto\PermissionWithUsername;
  * )
  * @ApiFilter(SearchFilter::class, properties={
  *      "user.id": "exact",
- *      "account.id": "exact"
+ *      "account.id": "exact",
+ *      "user.name" : "ipartial",
+ *      "account.name" : "ipartial"
  * })
  */
 class Permission extends Base implements Restricted {
