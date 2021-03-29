@@ -22,6 +22,7 @@ security:
             pattern: ^/public/token$
             stateless: true
             anonymous: true
+            user_checker: App\Security\Authenticator\UserVerifiedChecker
             guard:
                 authenticators:
                     - App\Security\Authenticator\ApplicationAuthenticator

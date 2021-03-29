@@ -88,6 +88,13 @@ class Account extends Base implements Restricted {
     public $application;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     * @Groups({"user:read", "admin:write", "super:write"})
+     */
+    public $enabled = true;
+
+    /**
      * @inheritDoc
      */
     function allowsRead(User $user): bool
@@ -121,6 +128,11 @@ class Account extends Base implements Restricted {
                 return true;
         }
         return false;
+    }
+
+    public function isEnabled(){
+
+        return $this->enabled;
     }
 
 

@@ -45,13 +45,17 @@ class JWTCreatedListener {
         ];
         $payload['permissions'] = [];
         foreach ($user->permissions as $permission){
-            $payload['permissions'] []= [
-                'grants' => $permission->grants,
-                'account' => [
-                    'id' => $permission->account->id,
-                    'name' => $permission->account->name
-                ]
-            ];
+            //check if account is enabled
+            if($permission->account->isEnabled()){
+                $payload['permissions'] []= [
+                    'grants' => $permission->grants,
+                    'account' => [
+                        'id' => $permission->account->id,
+                        'name' => $permission->account->name
+                    ]
+                ];
+            }
+
         }
 
         $event->setData($payload);

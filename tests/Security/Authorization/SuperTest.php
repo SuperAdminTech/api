@@ -55,4 +55,36 @@ class SuperTest extends WebTestCase
         }
 
     }
+
+    public function testSuperadminCanDisableAccountShouldWork(): void{
+
+        $params = [
+            'enabled'   => false
+        ];
+
+        $resp = $this->request('PUT', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002', $params);
+
+        $content = json_decode($resp->getContent(),true);
+        self::assertResponseIsSuccessful();
+
+        self::assertEquals(false, $content['enabled']);
+
+
+    }
+
+    public function testSuperadminCanDisableUserShouldWork(): void{
+
+        $params = [
+            'enabled'   => false
+        ];
+
+        $resp = $this->request('PUT', '/user/users/AD779175-76D1-466A-99BF-536AA3F5E003', $params);
+
+        $content = json_decode($resp->getContent(),true);
+        self::assertResponseIsSuccessful();
+
+        self::assertEquals(false, $content['enabled']);
+
+
+    }
 }

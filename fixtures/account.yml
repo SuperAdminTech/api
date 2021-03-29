@@ -41,3 +41,16 @@ App\Entity\Account:
         name: 'account_nonverified'
         application: '@default'
         permissions: ['@perm_nonverified']
+
+    account_user_disabled:
+        id: '563d7a54-449d-43fd-9c16-44b433c3142b'
+        name: 'account_user_disabled'
+        application: '@default'
+        permissions: [ '@perm_user_disabled' ]
+
+    account_disabled:
+        id: 'ff53a064-a8ab-48eb-a60b-3c75e6586866'
+        name: 'account_disabled'
+        application: '@default'
+        permissions: [ '@perm_account_disabled' ]
+        enabled: false

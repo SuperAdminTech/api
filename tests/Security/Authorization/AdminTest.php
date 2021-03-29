@@ -27,7 +27,6 @@ class AdminTest extends WebTestCase
         }
     }
 
-
     public function testAdminListEntitiesShouldForbid(): void {
         $uris = [
             '/sadmin/users',
@@ -38,6 +37,44 @@ class AdminTest extends WebTestCase
             $this->request('GET', $uri);
             self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
         }
+    }
+
+    public function testAdminCanDisableAccountInSameApplicationShouldWork(): void{
+
+        $params = [
+            'enabled'   => false
+        ];
+
+        $resp = $this->request('PUT', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002', $params);
+
+        $content = json_decode($resp->getContent(),true);
+        self::assertResponseIsSuccessful();
+
+        self::assertEquals(false, $content['enabled']);
+
+    }
+
+    public function testAdminCanDisableAccountInOtherApplicationShouldFail(): void{
+
+        $params = [
+            'enabled'   => false
+        ];
+
+        $this->request('PUT', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859003', $params);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testAdminCanDisableAccountSelfShouldFail(): void{
+
+        $params = [
+            'enabled'   => false
+        ];
+
+        $this->request('PUT', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859001', $params);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
     }
 
 }

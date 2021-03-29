@@ -37,6 +37,13 @@ App\Entity\User:
         permissions: ['@perm_test1']
         email_validated: true
 
+    user_test2:
+        id: "610e13f1-1235-4bef-9a4a-f93787d40d1d"
+        username: test2@example.com
+        plain_password: secret
+        permissions: [ '@perm_test2' ]
+        email_validated: true
+
     user_nonverified:
         id: "AD779175-76D1-466A-99BF-536AA3F5E005"
         username: nonverified@example.com
@@ -46,3 +53,18 @@ App\Entity\User:
         email_validated: false
         recover_password_requested_at: '<(new \DateTime())>'
         recover_password_code: "096a7868-9b59-4fcb-88a2-d6a4476066a8"
+
+    user_disabled:
+        id: "5a4ea553-e6a5-41ea-91c0-2ad396a18091"
+        username: disabled@example.com
+        permissions: [ '@perm_user_disabled' ]
+        plain_password: secret
+        email_validated: true
+        enabled: false
+
+    user_test_account_disabled:
+        id: "7149e0d2-d7df-487c-9f20-6cc050139529"
+        username: disabled_account@example.com
+        permissions: [ '@perm_account_disabled' ]
+        plain_password: secret
+        email_validated: true

@@ -161,6 +161,13 @@ class User extends Base implements UserInterface {
     public $plain_password;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     * @Groups({"user:read", "admin:write", "super:write"})
+     */
+    public $enabled = true;
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -218,6 +225,16 @@ class User extends Base implements UserInterface {
     public function eraseCredentials()
     {
         $this->plain_password = null;
+    }
+
+    public function isValidated(){
+
+        return $this->email_validated;
+    }
+
+    public function isEnabled(){
+
+        return $this->enabled;
     }
 
 }
