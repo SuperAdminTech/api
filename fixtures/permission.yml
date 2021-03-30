@@ -48,6 +48,12 @@ App\Entity\Permission:
         account: '@account_nonverified'
         grants: [ 'ACCOUNT_MANAGER' ]
 
+    perm_nonverified2:
+        id: '2a114df8-32f0-4351-9bca-236dc1dc2a74'
+        user: '@user_nonverified2'
+        account: '@account_nonverified'
+        grants: [ 'ACCOUNT_MANAGER' ]
+
     perm_user_disabled:
         id: 'd447190b-59fc-4a2d-b01f-7ed1078b973f'
         user: '@user_disabled'

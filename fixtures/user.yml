@@ -46,8 +46,20 @@ App\Entity\User:
 
     user_nonverified:
         id: "AD779175-76D1-466A-99BF-536AA3F5E005"
+        created_at: '<date_create("-1 days")>'
         username: nonverified@example.com
         permissions: [ '@perm_nonverified' ]
+        plain_password: secret
+        email_verification_code: "096a7868-9b59-4fcb-88a2-d6a4476066a7"
+        email_validated: false
+        recover_password_requested_at: '<(new \DateTime())>'
+        recover_password_code: "096a7868-9b59-4fcb-88a2-d6a4476066a8"
+
+    user_nonverified2:
+        id: "cbec17c3-be09-4f26-a023-3ee363dd09f4"
+        created_at: '<date_create("-1 days")>'
+        username: nonverified2@example.com
+        permissions: [ '@perm_nonverified2' ]
         plain_password: secret
         email_verification_code: "096a7868-9b59-4fcb-88a2-d6a4476066a7"
         email_validated: false
