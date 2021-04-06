@@ -59,6 +59,16 @@ class AccountSubscriber implements EventSubscriber
                     if($permision) throw new HttpException(403, 'You can not disable your own account');
                 }
             }
+
+            if($args->hasChangedField('application')){
+                //change application for all users inside account
+                $permissions = $account->permissions;
+                foreach ($permissions as $permission){
+                    $user = $permission->user;
+                    $app = $args->getNewValue('application');
+                    $user->application = $app;
+                }
+            }
         }
     }
 }

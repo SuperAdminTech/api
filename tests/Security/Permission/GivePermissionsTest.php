@@ -24,8 +24,10 @@ class GivePermissionsTest extends WebTestCase
             'username' => 'super@example.com',
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
-        $this->request('POST', '/user/permissions', $params);
+        $resp = $this->request('POST', '/user/permissions', $params);
         self::assertResponseIsSuccessful();
+        $content = json_decode($resp->getContent(),true);
+        self::assertEquals($content['account']['application']['id'], $content['user']['application']['id']);
     }
 
     public function testUserGivesWrongPermissionShouldFail(){
@@ -58,6 +60,7 @@ class GivePermissionsTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
+    //TODO check this test because is not asigning permision to user, is that right?
     public function testSuperAdminGivesPermissionsSuccessfully(){
         $this->json()->login('super@example.com');
         $params = [

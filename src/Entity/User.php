@@ -168,6 +168,13 @@ class User extends Base implements UserInterface {
     public $enabled = true;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Application::class)
+     * @ORM\JoinColumn()
+     * @Groups({"user:read", "super:write"})
+     */
+    public $application;
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
