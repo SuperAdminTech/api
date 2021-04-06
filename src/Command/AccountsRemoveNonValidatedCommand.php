@@ -51,23 +51,23 @@ class AccountsRemoveNonValidatedCommand extends Command
         $totalUsersRemoved = 0;
         $totalAccountsRemoved = 0;
         foreach ($nonValidatedUsers as $user){
-            //TODO if non validated for more than one hour remove them
+            //if non validated for more than one hour remove them
             if($this->hasExpired($user->created_at)){
                 $io->writeln('User '.$user->username.' has expired');
-                //TODO if user is only user in this account, remove account too
+                //if user is only user in this account, remove account too
                 $pRepo = $this->em->getRepository(Permission::class);
                 $userPermissions = $pRepo->findBy([
                     'user' => $user
                 ]);
                 foreach ($userPermissions as $permission){
                     $account = $permission->account;
-                    //TODO find other users in this account
+                    //find other users in this account
                     $usersInAccount = $pRepo->findBy([
                         'account' => $account
                     ]);
 
                     if(count($usersInAccount) == 1){
-                        //TODO remove account
+                        //remove account
                         $io->writeln('Only user in '.$account->name.'. Removing account');
                         $this->em->remove($account);
                         $totalAccountsRemoved++;

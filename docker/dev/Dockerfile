@@ -9,6 +9,7 @@ RUN apt update && apt install -y \
     php-curl \
     php-bcmath \
     composer \
+    mariadb-client \
     curl
 
 # DEV Deps

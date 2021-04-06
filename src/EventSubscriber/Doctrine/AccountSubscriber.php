@@ -50,12 +50,14 @@ class AccountSubscriber implements EventSubscriber
 
         if ($account instanceof Account) {
             if($args->hasChangedField('enabled')) {
-                //TODO check is is trying to disable its own account
+                //check is is trying to disable its own account
                 $em = $args->getObjectManager();
-                $user = $this->tokenStorage->getToken()->getUser();
-                $permision = $em->getRepository(Permission::class)->findOneBy(['account' => $account->id, 'user' => $user->id]);
-                if($permision) throw new HttpException(403, 'You can not disable your own account');
-
+                //if no token is because is executed from command or migrations, not logged user, we dont need this to check user
+                if($this->tokenStorage->getToken()){
+                    $user = $this->tokenStorage->getToken()->getUser();
+                    $permision = $em->getRepository(Permission::class)->findOneBy(['account' => $account->id, 'user' => $user->id]);
+                    if($permision) throw new HttpException(403, 'You can not disable your own account');
+                }
             }
         }
     }
