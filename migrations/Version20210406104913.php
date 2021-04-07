@@ -46,7 +46,8 @@ final class Version20210406104913 extends AbstractMigration implements Container
     {
         parent::preUp($schema);
         $this->runCommand([
-            'command' => 'app:database:dump'
+            'command' => 'app:database:dump',
+            'name'  => 'Version20210406104913.sql'
         ]);
     }
 

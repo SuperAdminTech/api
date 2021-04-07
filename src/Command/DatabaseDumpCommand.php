@@ -38,6 +38,7 @@ class DatabaseDumpCommand extends Command implements ContainerAwareInterface
     {
         $this
             ->setDescription(self::$defaultDescription)
+            ->addArgument('name', InputArgument::REQUIRED, 'Name of the sql file')
             ->addOption('restore', null, InputOption::VALUE_NONE, 'Restore database')
         ;
     }
@@ -52,7 +53,7 @@ class DatabaseDumpCommand extends Command implements ContainerAwareInterface
         $this->username = $parsedUrl['user'];
         $this->password = $parsedUrl['pass'];
         $this->host = $parsedUrl['host'];
-        $this->path = '/tmp/backup.sql';
+        $this->path = '/tmp/'.$input->getArgument('name');
         $this->fs = new Filesystem();
 
         if($input->getOption('restore')){
