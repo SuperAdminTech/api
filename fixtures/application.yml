@@ -20,3 +20,15 @@ App\Entity\Application:
         name: "Application 1"
         realm: app1
         config: "@config_app1"
+
+    app2:
+        id: '5df09443-8f43-4992-bc1b-075e300af61f'
+        name: "Application 2"
+        realm: app2
+        config: "@config_app2"
+
+    app3:
+        id: '89afcec8-1f8f-4993-9b13-fab2037287f2'
+        name: "Application 3"
+        realm: app3
+        config: "@config_app3"

@@ -14,3 +14,11 @@ App\Entity\Config:
     config_app1:
         id: '05E88714-8FB3-46B0-893D-97CBCA8590A2'
         application: "@app1"
+
+    config_app2:
+        id: '4848ea75-f26c-4c34-b120-4d6a573feac8'
+        application: "@app2"
+
+    config_app3:
+        id: '08af8a2d-1048-4fa7-bc3b-6422d5814b0a'
+        application: "@app3"

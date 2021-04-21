@@ -54,3 +54,17 @@ App\Entity\Account:
         application: '@default'
         permissions: [ '@perm_account_disabled' ]
         enabled: false
+
+    account_admin_app2:
+        id: 'e5e07f77-38d4-4d34-8599-de13e695f885'
+        name: 'account_admin_app2'
+        application: '@app2'
+        permissions: [ '@perm_account_admin_app2' ]
+        enabled: false
+
+    account_admin_app3:
+        id: '40235439-fbb2-428a-80e5-99300b1f1b77'
+        name: 'account_admin_app3'
+        application: '@app3'
+        permissions: [ '@perm_account_admin_app3' ]
+        enabled: false

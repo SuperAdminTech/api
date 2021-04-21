@@ -80,3 +80,11 @@ App\Entity\User:
         permissions: [ '@perm_account_disabled' ]
         plain_password: secret
         email_validated: true
+
+    user_admin_apps_2_3:
+        id: "0e66faa9-3c33-4342-bee1-c54d10bd8950"
+        username: admin@apps2_3.com
+        plain_password: secret
+        roles: [ 'ROLE_ADMIN' ]
+        permissions: [ '@perm_account_admin_app2', '@perm_account_admin_app3' ]
+        email_validated: true

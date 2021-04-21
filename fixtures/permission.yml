@@ -65,3 +65,15 @@ App\Entity\Permission:
         user: '@user_test_account_disabled'
         account: '@account_disabled'
         grants: [ 'ACCOUNT_MANAGER' ]
+
+    perm_account_admin_app2:
+        id: '8a9c3d73-eaf5-4548-bbec-f1e4c6386ad0'
+        user: '@user_admin_apps_2_3'
+        account: '@account_admin_app2'
+        grants: [ 'ACCOUNT_MANAGER' ]
+
+    perm_account_admin_app3:
+        id: '127faf01-b417-4cde-94d7-d4a85b969058'
+        user: '@user_admin_apps_2_3'
+        account: '@account_admin_app3'
+        grants: [ 'ACCOUNT_MANAGER' ]

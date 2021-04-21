@@ -40,4 +40,20 @@ class AccountTest extends WebTestCase
             $this->assertEquals($application_id, $account['application']['id']);
         }
     }
+
+    public function testGetAccountsFromAdminShouldReturnOnlyAccountsInHisApplication(){
+        $this->login('admin@apps2_3.com', 'secret', 'app2');
+        $resp = $this->json()->request('GET', '/admin/accounts');
+
+        $this->assertResponseIsSuccessful();
+
+        $content = json_decode($resp->getContent(),true);
+        $accounts = $content['hydra:member'];
+
+        foreach ($accounts as $account){
+            self::assertEquals('5df09443-8f43-4992-bc1b-075e300af61f', $account['application']['id']);
+        }
+
+
+    }
 }
