@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ApiResource(
  *     collectionOperations={
  *          "get"={
- *              "path"="/admin/applications"
+ *              "path"="/sadmin/applications"
  *          },
  *          "post"={
  *              "path"="/sadmin/applications"
