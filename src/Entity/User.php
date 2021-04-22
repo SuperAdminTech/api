@@ -6,6 +6,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
+use App\Annotation\ApplicationAware;
+
 use App\Entity\Compose\Base;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,6 +25,10 @@ use App\Dto\RecoverPassword;
  *     collectionOperations={
  *          "get"={
  *              "path"="/sadmin/users"
+ *          },
+ *          "get_app_users"={
+ *              "path"="/admin/users",
+ *              "method"="get"
  *          },
  *          "sign_up"={
  *              "method"="post",
@@ -84,6 +90,7 @@ use App\Dto\RecoverPassword;
  *     "username": "partial",
  *     "permissions.account.application.id": "exact"
  * })
+ * @ApplicationAware(applicationFieldName="application_id")
  */
 class User extends Base implements UserInterface {
 

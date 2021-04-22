@@ -30,5 +30,19 @@ class ApplicationTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
+    public function testAdminGetApplication(){
+        $this->login('admin@apps2_3.com', 'secret', 'app2');
+        $resp = $this->request('GET', 'admin/applications/5df09443-8f43-4992-bc1b-075e300af61f');
+
+        self::assertResponseIsSuccessful();
+    }
+
+    public function testAdminGetOtherApplication(){
+        $this->login('admin@apps2_3.com', 'secret', 'app2');
+        $this->request('GET', 'admin/applications/05E88714-8FB3-46B0-893D-97CBCA859000');
+
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
 
 }

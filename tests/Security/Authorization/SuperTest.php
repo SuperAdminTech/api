@@ -19,7 +19,7 @@ class SuperTest extends WebTestCase
 
     public function testSuperdminListEntitiesShouldSuccess(): void {
         $uris = [
-            '/admin/applications',
+            '/sadmin/applications',
             '/admin/accounts',
             '/sadmin/users',
             '/sadmin/permissions',

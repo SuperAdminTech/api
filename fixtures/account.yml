@@ -68,3 +68,16 @@ App\Entity\Account:
         application: '@app3'
         permissions: [ '@perm_account_admin_app3' ]
         enabled: false
+
+    account_admin_app_recogeme:
+        id: 'b2598d13-41fa-4de6-a1ff-641d8ddf26d0'
+        name: 'account_admin_app_recogeme'
+        application: '@app_recogeme'
+        permissions: [ '@perm_account_admin_app_recogeme' ]
+        enabled: true
+
+    account_test_app_recogeme:
+        id: '11a1ff76-0eec-4975-b5b4-a9dd4bf87d61'
+        name: 'account_test_app_recogeme'
+        application: '@app_recogeme'
+        permissions: [ '@perm_test_recogeme' ]

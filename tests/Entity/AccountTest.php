@@ -41,19 +41,46 @@ class AccountTest extends WebTestCase
         }
     }
 
-    public function testGetAccountsFromAdminShouldReturnOnlyAccountsInHisApplication(){
+    public function testGetAccountsFromAdminShouldReturnOnlyOwnedAccounts(){
+        //this test works also with app3 in realm
         $this->login('admin@apps2_3.com', 'secret', 'app2');
         $resp = $this->json()->request('GET', '/admin/accounts');
 
         $this->assertResponseIsSuccessful();
 
         $content = json_decode($resp->getContent(),true);
+
+        self::assertEquals(2, $content['hydra:totalItems']);
+
+    }
+
+    public function testGetAccountsFromAdminFilteredByApplicationShouldWork(){
+        //this test works also with app3 in realm
+        $this->login('admin@apps2_3.com', 'secret', 'app2');
+        $resp = $this->json()->request('GET', '/admin/accounts?application.id=89afcec8-1f8f-4993-9b13-fab2037287f2');
+
+        $this->assertResponseIsSuccessful();
+
+        $content = json_decode($resp->getContent(),true);
+
+        self::assertEquals(1, $content['hydra:totalItems']);
+
         $accounts = $content['hydra:member'];
 
         foreach ($accounts as $account){
-            self::assertEquals('5df09443-8f43-4992-bc1b-075e300af61f', $account['application']['id']);
+            self::assertEquals('89afcec8-1f8f-4993-9b13-fab2037287f2', $account['application']['id']);
         }
 
+    }
 
+    public function testGetAccountsFromAdminInRecogemeShouldWork(){
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+        $resp = $this->json()->request('GET', '/admin/accounts');
+
+        $this->assertResponseIsSuccessful();
+
+        $content = json_decode($resp->getContent(),true);
+
+        self::assertEquals(2, $content['hydra:totalItems']);
     }
 }

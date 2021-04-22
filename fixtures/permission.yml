@@ -77,3 +77,15 @@ App\Entity\Permission:
         user: '@user_admin_apps_2_3'
         account: '@account_admin_app3'
         grants: [ 'ACCOUNT_MANAGER' ]
+
+    perm_account_admin_app_recogeme:
+        id: '2cb18c97-ef9a-4878-be59-c738b2a9a1e4'
+        user: '@user_admin_app_recogeme'
+        account: '@account_admin_app_recogeme'
+        grants: [ 'ACCOUNT_MANAGER' ]
+
+    perm_test_recogeme:
+        id: '5b4f0d06-566f-43e9-90c6-9c490712929a'
+        user: '@user_test_recogeme'
+        account: '@account_test_app_recogeme'
+        grants: [ 'ACCOUNT_MANAGER' ]

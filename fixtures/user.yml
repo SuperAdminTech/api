@@ -88,3 +88,18 @@ App\Entity\User:
         roles: [ 'ROLE_ADMIN' ]
         permissions: [ '@perm_account_admin_app2', '@perm_account_admin_app3' ]
         email_validated: true
+
+    user_admin_app_recogeme:
+        id: "17874579-1a58-4b45-bd92-cdcc00684426"
+        username: admin@recogeme.com
+        plain_password: secret
+        roles: [ 'ROLE_ADMIN' ]
+        permissions: [ '@perm_account_admin_app_recogeme']
+        email_validated: true
+
+    user_test_recogeme:
+        id: "3f3f83aa-ec38-41fa-a0d6-2b7b4fec769d"
+        username: test@example.com
+        plain_password: secret
+        permissions: [ '@perm_test_recogeme' ]
+        email_validated: true

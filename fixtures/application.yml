@@ -32,3 +32,9 @@ App\Entity\Application:
         name: "Application 3"
         realm: app3
         config: "@config_app3"
+
+    app_recogeme:
+        id: 'f557d0fc-1421-4d47-9f84-8a30cafe939e'
+        name: "Application recogeme"
+        realm: recogeme
+        config: "@config_app_recogeme"
