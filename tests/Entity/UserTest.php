@@ -32,4 +32,21 @@ class UserTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
+
+    public function testGetSingleUserInSameApplicationShouldWork(){
+        $this->login('admin@example.com');
+        $this->request('GET', '/user/users/AD779175-76D1-466A-99BF-536AA3F5E002');
+
+        self::assertResponseIsSuccessful();
+
+    }
+
+    public function testGetSingleUserInOtherApplicationNotFound(){
+        $this->login('admin@example.com');
+        $this->request('GET', '/user/users/3f3f83aa-ec38-41fa-a0d6-2b7b4fec769d');
+
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+    }
+
 }

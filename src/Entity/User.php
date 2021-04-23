@@ -54,7 +54,7 @@ use App\Dto\RecoverPassword;
  *     itemOperations={
  *          "get"={
  *              "path"="/user/users/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object == user"
  *          },
  *          "put"={
  *              "path"="/user/users/{id}",
@@ -249,6 +249,18 @@ class User extends Base implements UserInterface {
     public function isEnabled(){
 
         return $this->enabled;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    function sameApplication(User $user): bool {
+        foreach ($user->permissions as $permission) {
+            if ($this->application->id == $permission->account->application->id)
+                return true;
+        }
+        return false;
     }
 
 }
