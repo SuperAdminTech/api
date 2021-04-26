@@ -79,6 +79,7 @@ class SignUpDataTransformer implements DataTransformerInterface
         $user->username = $object->username;
         $user->plain_password = $object->password;
         $user->email_verification_code = Uuid::uuid4()->toString();
+        $user->application = $app;
         $this->validator->validate($user);
         $this->em->persist($user);
 

@@ -106,12 +106,9 @@ class PermissionWithUsernameDataTransformer implements DataTransformerInterface
         $users = $repo->findBy(['username' => $username]);
         /** @var User $user */
         foreach ($users as $user){
-            foreach ($user->permissions as $permission){
-                if ($permission->account->application->id == $application->id) {
-                    return $user;
-                }
-            }
+            if($user->application == $application) return $user;
         }
+
         return null;
     }
 
