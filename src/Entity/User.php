@@ -58,7 +58,7 @@ use App\Dto\RecoverPassword;
  *          },
  *          "put"={
  *              "path"="/user/users/{id}",
- *              "security"="is_granted('ROLE_SUPER_ADMIN') || object == user"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object == user"
  *          },
  *          "verify_email"={
  *              "method"="put",

@@ -49,4 +49,32 @@ class UserTest extends WebTestCase
 
     }
 
+    public function testUpdateUserInSameApplicationShouldWork(){
+        $params = [
+            'username' => 'updated@example.com'
+        ];
+
+        $this->login('admin@example.com');
+        $response = $this->request('PUT', '/user/users/AD779175-76D1-466A-99BF-536AA3F5E002', $params);
+
+        self::assertResponseIsSuccessful();
+
+        $user = json_decode($response->getContent(), true);
+
+        self::assertEquals('updated@example.com', $user['username']);
+
+    }
+
+    public function testUpdateUserInOtherApplicationShouldFail(){
+        $params = [
+            'username' => 'updated@example.com'
+        ];
+
+        $this->login('admin@example.com');
+        $this->request('PUT', '/user/users/3f3f83aa-ec38-41fa-a0d6-2b7b4fec769d', $params);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+    }
+
 }
