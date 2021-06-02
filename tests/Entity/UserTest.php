@@ -77,4 +77,46 @@ class UserTest extends WebTestCase
 
     }
 
+    public function testCreateUserInsideAccountShouldWork(){
+        $params = [
+            'username' => 'test@testexample.com',
+            'account' => '/user/accounts/b2598d13-41fa-4de6-a1ff-641d8ddf26d0',
+            'application' => '/admin/applications/f557d0fc-1421-4d47-9f84-8a30cafe939e',
+            'permissions' => [ 'ACCOUNT_MANAGER' ],
+            'roles' => [ 'ROLE_USER' ]
+        ];
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+        $this->json()->request('POST', '/admin/users', $params);
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testCreateUserInsideAccountFromNonAdminShouldFail(){
+        $params = [
+            'username' => 'test@testexample.com',
+            'account' => '/user/accounts/b2598d13-41fa-4de6-a1ff-641d8ddf26d0',
+            'application' => '/admin/applications/f557d0fc-1421-4d47-9f84-8a30cafe939e',
+            'permissions' => [ 'ACCOUNT_MANAGER' ],
+            'roles' => [ 'ROLE_USER' ]
+        ];
+        $this->login('test@example.com', 'secret', 'recogeme');
+        $this->json()->request('POST', '/admin/users', $params);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
+    public function testCreateUserInsideAccountFromOtherAdminAccountShouldFail(){
+        $params = [
+            'username' => 'test@testexample.com',
+            'account' => '/user/accounts/b2598d13-41fa-4de6-a1ff-641d8ddf26d0',
+            'application' => '/admin/applications/05E88714-8FB3-46B0-893D-97CBCA859001',
+            'permissions' => [ 'ACCOUNT_MANAGER' ],
+            'roles' => [ 'ROLE_USER' ]
+        ];
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+        $this->json()->request('POST', '/admin/users', $params);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
 }

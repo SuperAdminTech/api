@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Dto\SignUp;
+use App\Dto\CreateUserInAccount;
 use App\Dto\VerifyEmail;
 use App\Dto\RecoverPasswordRequest;
 use App\Dto\RecoverPassword;
@@ -38,6 +39,16 @@ use App\Dto\RecoverPassword;
  *              "openapi_context"={
  *                  "summary"="Call to register users",
  *                  "description"="Creates a new User in the system, with default account and permissions."
+ *              }
+ *          },
+ *          "create_user"={
+ *              "method"="post",
+ *              "path"="/admin/users",
+ *              "input"=CreateUserInAccount::class,
+ *              "write"=false,
+ *              "openapi_context"={
+ *                  "summary"="Call to create users inside account",
+ *                  "description"="Creates a new User in the system inside an specified account."
  *              }
  *          },
  *          "recover_password_request"={
