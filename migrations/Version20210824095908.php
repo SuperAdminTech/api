@@ -14,7 +14,7 @@ final class Version20210824095908 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Add attachment file to message';
     }
 
     public function up(Schema $schema) : void
