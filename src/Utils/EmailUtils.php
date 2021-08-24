@@ -120,6 +120,10 @@ class EmailUtils
                         ->text($template->render('body', $vars));
                     if ($message->body_html)
                         $email->html($template->render('body_html', $vars));
+                    if($message->attachment_file){
+                        $decodedFile = base64_decode($message->attachment_file['base64']);
+                        $email->attach($decodedFile, $message->attachment_file['name']);
+                    }
                     $this->sendEmail($user, $email);
                 } catch (LoaderError | RuntimeError | SyntaxError $e) {
                     throw new InvalidDataException("Invalid e-mail template data: {$e->getMessage()}");
