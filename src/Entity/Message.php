@@ -85,4 +85,10 @@ class Message extends Base {
      * @Groups({"user:read", "admin:write"})
      */
     public $body_html;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    public $attachment_file = [];
+
 }

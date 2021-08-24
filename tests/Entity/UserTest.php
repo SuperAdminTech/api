@@ -116,7 +116,7 @@ class UserTest extends WebTestCase
         $this->login('admin@recogeme.com', 'secret', 'recogeme');
         $this->json()->request('POST', '/admin/users', $params);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
 }

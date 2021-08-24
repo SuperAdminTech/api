@@ -41,8 +41,28 @@ class ApplicationTest extends WebTestCase
         $this->login('admin@apps2_3.com', 'secret', 'app2');
         $this->request('GET', 'admin/applications/05E88714-8FB3-46B0-893D-97CBCA859000');
 
-        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
+
+    public function testSuperListApplications(){
+        $this->login('super@example.com');
+        $resp = $this->request('GET', 'sadmin/applications');
+        self::assertResponseIsSuccessful();
+        $content = json_decode($resp->getContent(),true);
+
+        self::assertGreaterThanOrEqual(6, $content['hydra:totalItems']);
+
+    }
+
+    public function testAdminListApplications(){
+        $this->login('admin@example.com');
+        $resp = $this->request('GET', 'admin/applications');
+        self::assertResponseIsSuccessful();
+        $content = json_decode($resp->getContent(),true);
+        self::assertEquals(1, $content['hydra:totalItems']);
+
+    }
+
 
 
 }

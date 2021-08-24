@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Annotation\ApplicationAware;
 
 use App\Entity\Compose\Base;
 use App\Security\Restricted;
@@ -17,6 +18,10 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     collectionOperations={
  *          "get"={
  *              "path"="/sadmin/applications"
+ *          },
+ *          "get_from_admins"={
+ *              "path"="/admin/applications",
+ *              "method"="GET"
  *          },
  *          "post"={
  *              "path"="/sadmin/applications"
@@ -36,6 +41,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *          }
  *     }
  * )
+ * @ApplicationAware(applicationFieldName="id")
  */
 class Application extends Base implements Restricted {
 
