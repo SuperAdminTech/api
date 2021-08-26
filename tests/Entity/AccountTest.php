@@ -83,4 +83,18 @@ class AccountTest extends WebTestCase
 
         self::assertEquals(2, $content['hydra:totalItems']);
     }
+
+    public function testUpdateAccountFromAdminInRecogemeShouldWork(){
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+        $params = [
+            'name' => 'testname'
+        ];
+
+        $resp = $this->json()->request('PUT', '/user/accounts/11a1ff76-0eec-4975-b5b4-a9dd4bf87d61', $params);
+
+        self::assertResponseIsSuccessful();
+
+        $content = json_decode($resp->getContent(),true);
+        self::assertEquals('testname' ,$content['name']);
+    }
 }

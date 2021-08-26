@@ -63,6 +63,4 @@ class ApplicationTest extends WebTestCase
 
     }
 
-
-
 }

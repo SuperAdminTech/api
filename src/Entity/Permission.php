@@ -42,7 +42,7 @@ use App\Dto\PermissionWithUsername;
  *          },
  *          "put"={
  *              "path"="/user/permissions/{id}",
- *              "security"="is_granted('ROLE_ADMIN') || object.allowsWrite(user)"
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object.allowsWrite(user)"
  *          },
  *          "delete"={
  *              "path"="/user/permissions/{id}",
@@ -99,5 +99,17 @@ class Permission extends Base implements Restricted {
     function allowsWrite(User $user): bool
     {
         return $this->allowsRead($user) && in_array(self::ACCOUNT_MANAGER, $this->grants);
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    function sameApplication(User $user): bool {
+        foreach ($user->permissions as $permission) {
+            if ($this->account->application->id == $permission->account->application->id)
+                return true;
+        }
+        return false;
     }
 }
