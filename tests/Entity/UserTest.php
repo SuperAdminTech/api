@@ -65,6 +65,18 @@ class UserTest extends WebTestCase
 
     }
 
+    public function testUpdateUserRoleWithInventedRoleShouldFail(){
+        $params = [
+            'roles' => ['ROLE_INVENTED']
+        ];
+
+        $this->login('admin@example.com');
+        $this->request('PUT', '/user/users/AD779175-76D1-466A-99BF-536AA3F5E002', $params);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+    }
+
     public function testUpdateUserInOtherApplicationShouldFail(){
         $params = [
             'username' => 'updated@example.com'

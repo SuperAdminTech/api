@@ -106,6 +106,7 @@ use App\Dto\RecoverPassword;
 class User extends Base implements UserInterface {
 
     public const RECOVER_PASSWORD_EXPIRES_IN = 1800; // 30 min
+    public const ALLOWED_ROLES = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER'];
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -146,6 +147,7 @@ class User extends Base implements UserInterface {
     /**
      * @ORM\Column(type="json")
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @Assert\Choice(choices=User::ALLOWED_ROLES, multiple=true)
      */
     public $roles = [];
 
