@@ -106,7 +106,7 @@ use App\Dto\RecoverPassword;
 class User extends Base implements UserInterface {
 
     public const RECOVER_PASSWORD_EXPIRES_IN = 1800; // 30 min
-    public const ALLOWED_ROLES = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER'];
+    public const ALLOWED_ROLES = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER', 'ROLE_READONLY', 'ROLE_SUPPORT'];
 
     /**
      * @ORM\Column(type="string", length=180)
