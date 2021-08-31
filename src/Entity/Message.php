@@ -92,4 +92,11 @@ class Message extends Base {
      */
     public $attachment_file = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "admin:write"})
+     */
+    public $email;
+
+
 }

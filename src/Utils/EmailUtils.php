@@ -113,9 +113,10 @@ class EmailUtils
 
                 try {
                     $email = new Email();
+                    $mail_to = $message->email ?? $user->getUsername();
                     $from = $config->mailer_from?? Config::DEFAULT_MAILER_FROM;
                     $email->from(new Address($from, $application->name))
-                        ->to($user->getUsername())
+                        ->to($mail_to)
                         ->subject($template->render('subject', $vars))
                         ->text($template->render('body', $vars));
                     if ($message->body_html)
