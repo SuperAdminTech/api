@@ -31,7 +31,7 @@ use App\Dto\PermissionWithUsername;
  *          },
  *          "post_app_permissiona"={
  *              "path"="/admin/permissions",
- *              "method"="get"
+ *              "method"="post"
  *          },
  *          "post_with_username"={
  *              "path"="/user/permissions",
