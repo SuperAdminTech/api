@@ -22,6 +22,10 @@ use App\Dto\PermissionWithUsername;
  *          "get"={
  *              "path"="/sadmin/permissions"
  *          },
+ *          "get_app_permissions"={
+ *              "path"="/admin/permissions",
+ *              "method"="get"
+ *          },
  *          "post"={
  *              "path"="/sadmin/permissions"
  *          },
