@@ -36,6 +36,13 @@ class JWTCreatedListener {
         /** @var User $user */
         $user = $event->getUser();
         $payload['id'] = $user->id;
+
+        //change expiration if configured for this application
+        $custom_ttl = $user->application->config->custom_jwt_ttl;
+        if($custom_ttl) {
+            $expiration = new \DateTime('+'.$custom_ttl.' seconds');
+            $payload['exp'] = $expiration->getTimestamp();
+        }
         if (count($user->permissions) <= 0)
             throw new \LogicException("User cannot have zero accounts.");
         $app = $user->permissions[0]->account->application;

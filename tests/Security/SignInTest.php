@@ -61,4 +61,16 @@ class SignInTest extends WebTestCase
         $this->json()->request('POST', '/public/token', $credentials);
         $this->assertResponseStatusCodeSame(401);
     }
+
+    public function testSignInWithRecogemeShouldHaveCustomTtl(): void {
+        $credentials = ['username' => 'admin@recogeme.com', 'password' => 'secret', 'realm' => 'recogeme'];
+        $resp = $this->json()->request('POST', '/public/token', $credentials);
+        $this->assertResponseIsSuccessful();
+
+        $token = json_decode($resp->getContent())->token;
+        $decoded = self::decodeJWT($token);
+
+        self::assertEquals(600, $decoded->exp - $decoded->iat);
+
+    }
 }

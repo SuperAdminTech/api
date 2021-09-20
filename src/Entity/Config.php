@@ -68,7 +68,7 @@ class Config extends Base implements Restricted {
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"admin:read", "admin:write", "super:read", "super:write"})
      */
-    private $custom_jwt_ttl = 3600;
+    public $custom_jwt_ttl = 3600;
 
     /**
      * @inheritDoc
@@ -95,15 +95,4 @@ class Config extends Base implements Restricted {
         return false;
     }
 
-    public function getCustomJwtTtl(): ?int
-    {
-        return $this->custom_jwt_ttl;
-    }
-
-    public function setCustomJwtTtl(?int $custom_jwt_ttl): self
-    {
-        $this->custom_jwt_ttl = $custom_jwt_ttl;
-
-        return $this;
-    }
 }
