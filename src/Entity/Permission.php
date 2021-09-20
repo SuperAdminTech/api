@@ -52,6 +52,11 @@ use App\Dto\PermissionWithUsername;
  *              "path"="/user/permissions/{id}",
  *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object.allowsWrite(user)"
  *          },
+ *          "put_from_admin"={
+ *              "path"="/admin/permissions/{id}",
+ *              "security"="is_granted('ROLE_SUPER_ADMIN') || (is_granted('ROLE_ADMIN') && object.sameApplication(user)) || object.allowsWrite(user)",
+ *              "method"="put"
+ *          },
  *          "delete"={
  *              "path"="/user/permissions/{id}",
  *              "security"="is_granted('ROLE_ADMIN') || object.allowsWrite(user)"
