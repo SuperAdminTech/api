@@ -26,3 +26,4 @@ App\Entity\Config:
     config_app_recogeme:
         id: '4ea0ba7c-85d4-4b2a-ab62-3deee8bcca46'
         application: "@app_recogeme"
+        custom_jwt_ttl: 600

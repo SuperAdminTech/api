@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -63,6 +64,13 @@ class Config extends Base implements Restricted {
     public $mailer_from;
 
     /**
+     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"admin:read", "admin:write", "super:read", "super:write"})
+     */
+    private $custom_jwt_ttl = 3600;
+
+    /**
      * @inheritDoc
      */
     function allowsRead(User $user): bool {
@@ -85,5 +93,17 @@ class Config extends Base implements Restricted {
             }
         }
         return false;
+    }
+
+    public function getCustomJwtTtl(): ?int
+    {
+        return $this->custom_jwt_ttl;
+    }
+
+    public function setCustomJwtTtl(?int $custom_jwt_ttl): self
+    {
+        $this->custom_jwt_ttl = $custom_jwt_ttl;
+
+        return $this;
     }
 }
