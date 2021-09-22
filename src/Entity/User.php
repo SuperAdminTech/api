@@ -195,6 +195,13 @@ class User extends Base implements UserInterface {
     public $application;
 
     /**
+     * Custom user data
+     * @ORM\Column(type="json", nullable=true)
+     * @Groups({"user:read", "user:write"})
+     */
+    public $data;
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
