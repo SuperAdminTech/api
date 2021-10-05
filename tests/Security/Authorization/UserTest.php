@@ -32,7 +32,6 @@ class UserTest extends WebTestCase
         }
     }
 
-
     public function testUserCanReadItself(): void {
         $id = "AD779175-76D1-466A-99BF-536AA3F5E002";
         $this->request('GET', "/user/users/$id");
@@ -80,6 +79,46 @@ class UserTest extends WebTestCase
         $this->request('PUT', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859004', $params);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
+    public function testUserDeleteAccountForbid(){
+        $this->json()->login('test2@example.com');
+
+        $this->request('DELETE', '/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859004');
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
+    }
+
+    public function testUserDeleteApiKeyForbid(){
+        $this->json()->login('test2@example.com');
+
+        $this->request('DELETE', '/admin/api_keys/29d54cc7-814b-45a6-9a46-51cb2a85ab62');
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
+    }
+
+    public function testUserDeleteApplicationForbid(){
+        $this->json()->login('test2@example.com');
+
+        $this->request('DELETE', '/sadmin/applications/05E88714-8FB3-46B0-893D-97CBCA859000');
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
+    }
+
+    public function testUserDeletePermissionForbid(){
+        $this->json()->login('test2@example.com');
+
+        $this->request('DELETE', '/user/permissions/22e625ac-fbe3-4635-b301-ef22beabee22');
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
+    }
+
+    public function testUserDeleteUserForbid(){
+        $this->json()->login('test2@example.com');
+
+        $this->request('DELETE', '/sadmin/users/AD779175-76D1-466A-99BF-536AA3F5E004');
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
     }
 
 }
