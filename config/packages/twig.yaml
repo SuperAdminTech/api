@@ -4,4 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     exception_controller: null
     globals:
-        frontend_url: '%env(resolve:FRONTEND_URL)%'
+        frontend_url: '%env(FRONTEND_URL)%'
