@@ -3,7 +3,7 @@ Welcome to {{ application.name }}!
 Set your password following the instructions below.
 
 Please copy & paste the following link in your browser
-{{ application.config.frontend_url }}/recover/{{ user.id }}?code={{ user.recover_password_code }}]
+{{ application.config.frontend_url ?: frontend_url }}/recover/{{ user.id }}?code={{ user.recover_password_code }}]
 
 
 Cheers,

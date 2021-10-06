@@ -8,7 +8,7 @@
                     To fully activate your account, we need verify you own the email address you used.
                 </p>
                 <p>
-                    [<a href="{{ application.config.frontend_url }}/verify/{{ user.id }}?code={{ user.email_verification_code }}">Click here to verify your email address</a>]
+                    [<a href="{{ application.config.frontend_url ?: frontend_url }}/verify/{{ user.id }}?code={{ user.email_verification_code }}">Click here to verify your email address</a>]
                 </p>
             </div>
         {% endblock %}

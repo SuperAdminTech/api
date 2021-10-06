@@ -8,7 +8,7 @@
                     Set your password following the instructions below.
                 </p>
                 <p>
-                    [<a href="{{ application.config.frontend_url }}/recover/{{ user.id }}?code={{ user.recover_password_code }}">Click here to set your password</a>]
+                    [<a href="{{ application.config.frontend_url ?: frontend_url }}/recover/{{ user.id }}?code={{ user.recover_password_code }}">Click here to set your password</a>]
                 </p>
             </div>
         {% endblock %}
