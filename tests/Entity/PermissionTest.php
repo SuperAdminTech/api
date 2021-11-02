@@ -43,4 +43,22 @@ class PermissionTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
     }
+
+    public function testDeletePermissionsFromAdminShouldWork(){
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+        $this->json()->request('DELETE', '/user/permissions/5b4f0d06-566f-43e9-90c6-9c490712929a');
+        self::assertResponseIsSuccessful();
+    }
+
+    public function testDeletePermissionsFromManagerInSameApplicationShouldWork(){
+        $this->login('test@example.com', 'secret', 'recogeme');
+        $this->json()->request('DELETE', '/user/permissions/5b4f0d06-566f-43e9-90c6-9c490712929a');
+        self::assertResponseIsSuccessful();
+    }
+
+    public function testDeletePermissionsFromManagerInOtherApplicationShouldFail(){
+        $this->login('test@example.com', 'secret', 'recogeme');
+        $this->json()->request('DELETE', '/user/permissions/05E88714-8FB3-46B0-893D-97CBCA859002');
+        self::assertResponseStatusCodeSame(403);
+    }
 }

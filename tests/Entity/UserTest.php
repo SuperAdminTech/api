@@ -13,7 +13,8 @@ class UserTest extends WebTestCase
     use ApiUtilsTrait;
 
 
-    public function testListUsersFromAdminShouldReturnUsersInsideApplication(){
+    public function testListUsersFromAdminShouldReturnUsersInsideApplication(): void
+    {
         $this->login('admin@recogeme.com', 'secret', 'recogeme');
         $resp = $this->request('GET', '/admin/users');
 
@@ -26,14 +27,16 @@ class UserTest extends WebTestCase
         }
     }
 
-    public function testListUsersFromUserForbidden(){
+    public function testListUsersFromUserForbidden(): void
+    {
         $this->login();
         $this->request('GET', '/admin/users');
 
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
-    public function testGetSingleUserInSameApplicationShouldWork(){
+    public function testGetSingleUserInSameApplicationShouldWork(): void
+    {
         $this->login('admin@example.com');
         $this->request('GET', '/user/users/AD779175-76D1-466A-99BF-536AA3F5E002');
 
@@ -41,7 +44,8 @@ class UserTest extends WebTestCase
 
     }
 
-    public function testGetSingleUserInOtherApplicationNotFound(){
+    public function testGetSingleUserInOtherApplicationNotFound(): void
+    {
         $this->login('admin@example.com');
         $this->request('GET', '/user/users/3f3f83aa-ec38-41fa-a0d6-2b7b4fec769d');
 
@@ -49,7 +53,8 @@ class UserTest extends WebTestCase
 
     }
 
-    public function testUpdateUserInSameApplicationShouldWork(){
+    public function testUpdateUserInSameApplicationShouldWork(): void
+    {
         $params = [
             'username' => 'updated@example.com'
         ];
@@ -65,7 +70,8 @@ class UserTest extends WebTestCase
 
     }
 
-    public function testUpdateUserRoleWithInventedRoleShouldFail(){
+    public function testUpdateUserRoleWithInventedRoleShouldFail(): void
+    {
         $params = [
             'roles' => ['ROLE_INVENTED']
         ];
@@ -77,7 +83,8 @@ class UserTest extends WebTestCase
 
     }
 
-    public function testUpdateUserInOtherApplicationShouldFail(){
+    public function testUpdateUserInOtherApplicationShouldFail(): void
+    {
         $params = [
             'username' => 'updated@example.com'
         ];
@@ -89,7 +96,8 @@ class UserTest extends WebTestCase
 
     }
 
-    public function testCreateUserInsideAccountShouldWork(){
+    public function testCreateUserInsideAccountShouldWork(): void
+    {
         $params = [
             'username' => 'test@testexample.com',
             'account' => '/user/accounts/b2598d13-41fa-4de6-a1ff-641d8ddf26d0',
@@ -103,7 +111,8 @@ class UserTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testCreateUserInsideAccountFromNonAdminShouldFail(){
+    public function testCreateUserInsideAccountFromNonAdminShouldFail(): void
+    {
         $params = [
             'username' => 'test@testexample.com',
             'account' => '/user/accounts/b2598d13-41fa-4de6-a1ff-641d8ddf26d0',
@@ -117,7 +126,8 @@ class UserTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
-    public function testCreateUserInsideAccountFromOtherAdminAccountShouldFail(){
+    public function testCreateUserInsideAccountFromOtherAdminAccountShouldFail(): void
+    {
         $params = [
             'username' => 'test@testexample.com',
             'account' => '/user/accounts/b2598d13-41fa-4de6-a1ff-641d8ddf26d0',
@@ -129,6 +139,16 @@ class UserTest extends WebTestCase
         $this->json()->request('POST', '/admin/users', $params);
 
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testDeleteUserFromSuperShouldWork(): void
+    {
+
+        $this->login('super@example.com');
+        $this->request('DELETE', '/sadmin/users/AD779175-76D1-466A-99BF-536AA3F5E002');
+
+        self::assertResponseIsSuccessful();
+
     }
 
 }

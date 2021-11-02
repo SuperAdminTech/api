@@ -97,4 +97,22 @@ class AccountTest extends WebTestCase
         $content = json_decode($resp->getContent(),true);
         self::assertEquals('testname' ,$content['name']);
     }
+
+    public function testDeleteAccountFromAdminInRecogemeShouldWork(){
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+
+        $this->json()->request('DELETE', '/user/accounts/11a1ff76-0eec-4975-b5b4-a9dd4bf87d61');
+
+        self::assertResponseIsSuccessful();
+
+    }
+
+    public function testDeleteAccountFromAdminInOtherAppShouldFail(){
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+
+        $this->json()->request('DELETE', '/user/accounts/40235439-fbb2-428a-80e5-99300b1f1b77');
+
+        self::assertResponseStatusCodeSame(404);
+
+    }
 }
