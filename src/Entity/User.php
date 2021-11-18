@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
@@ -170,6 +171,7 @@ class User extends Base implements UserInterface {
      * @var Permission[]
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
+     * @ApiProperty(readableLink=false, writableLink=false)
      * @MaxDepth(1)
      */
     public $permissions = [];

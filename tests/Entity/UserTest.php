@@ -27,6 +27,24 @@ class UserTest extends WebTestCase
         }
     }
 
+    public function testListUsersFromAdminShouldNotReturnTooMuchDepth(): void
+    {
+        $this->login('admin@recogeme.com', 'secret', 'recogeme');
+        $resp = $this->request('GET', '/admin/users');
+
+        self::assertResponseIsSuccessful();
+
+        $content = json_decode($resp->getContent(),true);
+        $users = $content['hydra:member'];
+        foreach ($users as $user){
+            self::assertEquals('f557d0fc-1421-4d47-9f84-8a30cafe939e', $user['application']['id']);
+            $permissions = $user['permissions'];
+            foreach ($permissions as $permission){
+                self::assertIsString($permission);
+            }
+        }
+    }
+
     public function testListUsersFromUserForbidden(): void
     {
         $this->login();
