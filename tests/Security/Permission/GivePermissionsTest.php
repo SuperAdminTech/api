@@ -27,7 +27,7 @@ class GivePermissionsTest extends WebTestCase
         $resp = $this->request('POST', '/user/permissions', $params);
         self::assertResponseIsSuccessful();
         $content = json_decode($resp->getContent(),true);
-        self::assertEquals($content['account']['application']['id'], $content['user']['application']['id']);
+        self::assertEquals($content['account']['application']['@id'], $content['user']['application']);
     }
 
     public function testUserGivesWrongPermissionShouldFail(){
@@ -70,5 +70,19 @@ class GivePermissionsTest extends WebTestCase
         ];
         $this->request('POST', '/sadmin/permissions', $params);
         self::assertResponseIsSuccessful();
+    }
+
+    public function testUserGivesPermissionInOtherAppShouldFail(){
+
+        $this->markTestIncomplete();
+        $params = [
+            'account' => "/user/accounts/05E88714-8FB3-46B0-893D-97CBCA859002",
+            'username' => 'default_app@example.com',
+            'grants' => [Permission::ACCOUNT_WORKER]
+        ];
+        $resp = $this->request('POST', '/user/permissions', $params);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
     }
 }

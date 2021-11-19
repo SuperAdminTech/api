@@ -172,7 +172,6 @@ class User extends Base implements UserInterface {
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      * @ApiProperty(readableLink=false, writableLink=false)
-     * @MaxDepth(1)
      */
     public $permissions = [];
 
@@ -193,6 +192,7 @@ class User extends Base implements UserInterface {
      * @ORM\ManyToOne(targetEntity=Application::class)
      * @ORM\JoinColumn()
      * @Groups({"user:read", "super:write"})
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $application;
 

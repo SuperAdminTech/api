@@ -23,7 +23,7 @@ class UserTest extends WebTestCase
         $content = json_decode($resp->getContent(),true);
         $users = $content['hydra:member'];
         foreach ($users as $user){
-            self::assertEquals('f557d0fc-1421-4d47-9f84-8a30cafe939e', $user['application']['id']);
+            self::assertEquals('/admin/applications/f557d0fc-1421-4d47-9f84-8a30cafe939e', $user['application']);
         }
     }
 
@@ -37,7 +37,7 @@ class UserTest extends WebTestCase
         $content = json_decode($resp->getContent(),true);
         $users = $content['hydra:member'];
         foreach ($users as $user){
-            self::assertEquals('f557d0fc-1421-4d47-9f84-8a30cafe939e', $user['application']['id']);
+            self::assertEquals('/admin/applications/f557d0fc-1421-4d47-9f84-8a30cafe939e', $user['application']);
             $permissions = $user['permissions'];
             foreach ($permissions as $permission){
                 self::assertIsString($permission);

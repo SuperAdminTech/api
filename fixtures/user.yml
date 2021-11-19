@@ -103,3 +103,11 @@ App\Entity\User:
         plain_password: secret
         permissions: [ '@perm_test_recogeme' ]
         email_validated: true
+
+    user_recogeme_app:
+        id: "3f3f83aa-ec30-41fa-a0d6-2b7b4fac769d"
+        username: default_app@example.com
+        plain_password: secret
+        permissions: [ '@perm_test_recogeme' ]
+        email_validated: true
+        application: '@app_recogeme'

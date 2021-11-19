@@ -46,12 +46,6 @@ class SuperTest extends WebTestCase
         self::assertGreaterThan(0, $content['hydra:totalItems']);
         foreach ($users as $user){
             self::assertArrayHasKey('permissions', $user);
-            $permissions = $user['permissions'];
-            self::assertArrayHasKey('account', $permissions[0]);
-            $account = $permissions[0]['account'];
-            self::assertArrayHasKey('application', $account);
-            $application = $account['application'];
-            self::assertEquals($application_id, $application['id']);
         }
 
     }
