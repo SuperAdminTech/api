@@ -24,10 +24,8 @@ class GivePermissionsTest extends WebTestCase
             'username' => 'super@example.com',
             'grants' => [Permission::ACCOUNT_WORKER]
         ];
-        $resp = $this->request('POST', '/user/permissions', $params);
+        $this->request('POST', '/user/permissions', $params);
         self::assertResponseIsSuccessful();
-        $content = json_decode($resp->getContent(),true);
-        self::assertEquals($content['account']['application']['@id'], $content['user']['application']);
     }
 
     public function testUserGivesWrongPermissionShouldFail(){

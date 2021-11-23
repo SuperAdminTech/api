@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Compose\Base;
 use Doctrine\ORM\Mapping as ORM;
@@ -44,6 +45,7 @@ class Message extends Base {
      * @var Account
      * @ORM\ManyToOne(targetEntity=Account::class, inversedBy="messages")
      * @Groups({"admin:write"})
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $account;
 

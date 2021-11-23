@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Compose\Base;
@@ -59,6 +60,7 @@ class ApiKey extends Base {
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="api_keys")
      * @Groups({"user:read", "user:write"})
      * @MaxDepth(1)
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $user;
 

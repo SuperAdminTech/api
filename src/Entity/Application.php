@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Annotation\ApplicationAware;
 
@@ -64,6 +65,7 @@ class Application extends Base implements Restricted {
      * @ORM\OneToMany(targetEntity=Account::class, mappedBy="application")
      * @Groups({"super:read", "super:write"})
      * @MaxDepth(1)
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $accounts = [];
 

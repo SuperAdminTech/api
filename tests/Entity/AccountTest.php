@@ -37,7 +37,7 @@ class AccountTest extends WebTestCase
         $accounts = $content['hydra:member'];
         foreach ($accounts as $account){
             $this->assertArrayHasKey('application', $account);
-            $this->assertEquals($application_id, $account['application']['id']);
+            $this->assertEquals('/admin/applications/'.$application_id, $account['application']);
         }
     }
 
@@ -68,7 +68,7 @@ class AccountTest extends WebTestCase
         $accounts = $content['hydra:member'];
 
         foreach ($accounts as $account){
-            self::assertEquals('89afcec8-1f8f-4993-9b13-fab2037287f2', $account['application']['id']);
+            self::assertEquals('/admin/applications/89afcec8-1f8f-4993-9b13-fab2037287f2', $account['application']);
         }
 
     }

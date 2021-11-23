@@ -23,7 +23,7 @@ class ApplicationFilterTest extends WebTestCase
         self::assertGreaterThan(0, count($accounts));
         $app0 = $accounts[0]->application;
         foreach ($accounts as $account) {
-            self::assertEquals($app0->id, $account->application->id);
+            self::assertEquals($app0, $account->application);
         }
     }
 }

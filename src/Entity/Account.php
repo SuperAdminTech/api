@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 use App\Annotation\ApplicationAware;
@@ -68,6 +69,7 @@ class Account extends Base implements Restricted {
      * @ORM\OneToMany(targetEntity=Permission::class, mappedBy="account", cascade={"remove"})
      * @MaxDepth(1)
      * @Groups({"user:read", "user:write"})
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $permissions = [];
 
@@ -76,6 +78,7 @@ class Account extends Base implements Restricted {
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="account", cascade={"remove"})
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      * @MaxDepth(1)
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $messages = [];
 
@@ -84,6 +87,7 @@ class Account extends Base implements Restricted {
      * @ORM\ManyToOne(targetEntity=Application::class, inversedBy="accounts")
      * @Groups({"user:read", "admin:read", "admin:write", "super:read", "super:write"})
      * @MaxDepth(1)
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $application;
 

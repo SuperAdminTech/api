@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 
@@ -80,6 +81,7 @@ class Permission extends Base implements Restricted {
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="permissions")
      * @Groups({"user:read", "user:write"})
      * @MaxDepth(1)
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $user;
 
@@ -88,6 +90,7 @@ class Permission extends Base implements Restricted {
      * @ORM\ManyToOne(targetEntity=Account::class, inversedBy="permissions")
      * @Groups({"user:read", "user:write"})
      * @MaxDepth(1)
+     * @ApiProperty(readableLink=false, writableLink=false)
      */
     public $account;
 
