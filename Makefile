@@ -17,8 +17,8 @@ ps:
 shell:
 	@docker-compose -f docker/dev/docker-compose.yml -p $(STACK) exec $(word 2,$(MAKECMDGOALS)) bash
 
-debug-shell:
-	docker-compose -f docker/dev/docker-compose.yml -p $(STACK) run api bash
+debug:
+	docker-compose -f docker/dev/docker-compose.yml -p $(STACK) run $(word 2,$(MAKECMDGOALS)) bash
 
 login:
 	if ! test -d $$HOME/.docker;then mkdir -p $$HOME/.docker; fi
