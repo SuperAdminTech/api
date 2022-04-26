@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/QbitArtifacts/caste/compare/v1.4.4...v1.5.0) (2022-04-26)
+
+
+### Features
+
+* **config:** add parameter to manage jwt token ttl ([f866a3f](https://github.com/QbitArtifacts/caste/commit/f866a3fdd53fba9b7cf0246d46582447a0868331))
+* **jwt:** now we can manage different ttl by application ([4233eb1](https://github.com/QbitArtifacts/caste/commit/4233eb1fd1363a8b39a92b976efafdc99f0ec872))
+* **system:** upgrading php 7.4 to 8.1 ([2c962fe](https://github.com/QbitArtifacts/caste/commit/2c962fe509de3356822b836504475242c5f636d0))
+* **user:** add new field data to save user info ([2e4e118](https://github.com/QbitArtifacts/caste/commit/2e4e1182418343cade2eb4386031569bdc71267b))
+* **users:** allow list users inside application ([32a1c07](https://github.com/QbitArtifacts/caste/commit/32a1c077e483171dbe276b488b982af8c8b72766))
+* **users:** Create users from admin ([f754379](https://github.com/QbitArtifacts/caste/commit/f75437903ea4d7fa28f884c409a4d0ecec5d6668))
+
+
+### Bug Fixes
+
+* **accounts:** Now accounts can be filtered by application ([ad95d2b](https://github.com/QbitArtifacts/caste/commit/ad95d2bb5d91204909a1b8328cac06ab06980014))
+* **application:** change get path to sadmin ([85292ed](https://github.com/QbitArtifacts/caste/commit/85292edc73cbf074c3870d0ac1b726700606c8fe))
+* **command:** Add argument name to dump command ([522c263](https://github.com/QbitArtifacts/caste/commit/522c26339c3be7c697effe790b55302a8ca07164))
+* **command:** Add command to dump/restore database ([a227f01](https://github.com/QbitArtifacts/caste/commit/a227f016d6ca15e108f930509a43aa413d98846c))
+* **command:** Add command to remove non validated accounts after 1h ([d7d88d8](https://github.com/QbitArtifacts/caste/commit/d7d88d814e5adcdd422c60d80e4c92d32dbbf755))
+* **iris:** return application IRI instead of nested object to improve performance ([52f5c81](https://github.com/QbitArtifacts/caste/commit/52f5c8119c3b61abe0a6df94199ba12cb5e64787))
+* **permission:** allow endpoint from admin ([5a1c48d](https://github.com/QbitArtifacts/caste/commit/5a1c48d83a24912e809274c611d27b5a7bd24009))
+* **permission:** create permision ([1781c2c](https://github.com/QbitArtifacts/caste/commit/1781c2cae90685edd10832c0b7c98e4a3ed0541d))
+* **permission:** create permision ([9958636](https://github.com/QbitArtifacts/caste/commit/99586365ce0167614950eba59777ab51de9fd46a))
+* **tests:** adding tests and more fixtures ([92e5324](https://github.com/QbitArtifacts/caste/commit/92e53241df2b711fcfd1613db8a386953626c08a))
+* **tests:** created test for delete method in all endpoints ([8184fde](https://github.com/QbitArtifacts/caste/commit/8184fdebd688f042527e4ee0a4c1de15cc936bc6))
+* **user, application:** Connect user with application ([52d1c65](https://github.com/QbitArtifacts/caste/commit/52d1c6528802dddacf59299f2c51862856896266))
+* **user,account:** Manage enable/disable users/accounts ([53aae08](https://github.com/QbitArtifacts/caste/commit/53aae087ed5921e6aadd5b2481eaeb8115290d64))
+* **user:** Allow filter users by application ([3fe2f46](https://github.com/QbitArtifacts/caste/commit/3fe2f463e8db3ebac22e369f9fced859c13615cf))
+* **users:** Add application to user when register ([10f0a37](https://github.com/QbitArtifacts/caste/commit/10f0a372a82325f61870f5aad034e9719794e9a7))
+* **users:** Admins are able to retrieve a single user in same application ([d792ace](https://github.com/QbitArtifacts/caste/commit/d792ace6bd36458281975aac7374c02ee152b988))
+* **users:** return application IRI instead of nested object to improve performance ([08d4727](https://github.com/QbitArtifacts/caste/commit/08d47278b1645efd282262d1dc4c5c2b1a8c5832))
+* **users:** return permissions IRI instead of nested object to improve performance ([972d400](https://github.com/QbitArtifacts/caste/commit/972d4006569929c59771c8d35917404259ae4caf))
+* **users:** Update users allowed to admins in same application ([d1b73f1](https://github.com/QbitArtifacts/caste/commit/d1b73f12859d4ae765ff39fbabacb1bb99dffff5))
+
 ### [1.4.4](https://github.com/QbitArtifacts/caste/compare/v1.4.3...v1.4.4) (2021-02-19)
 
 
