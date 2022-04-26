@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 ENV DEBIAN_FRONTEND=noninteractive
 
 # PROD Deps
@@ -10,7 +10,8 @@ RUN apt update && apt install -y \
     php-bcmath \
     composer \
     mariadb-client \
-    curl
+    curl \
+    npm
 
 # DEV Deps
 RUN apt install -y \
@@ -18,12 +19,10 @@ RUN apt install -y \
     php-xdebug
 
 # Install standard-version to manage conventional commits
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install -y nodejs
 RUN npm i -g standard-version
 
 # To have composer and sf cache
-RUN mkdir /.composer /.symfony && chmod -R 777 /.composer /.symfony
+RUN mkdir /.composer /.symfony /.cache && chmod -R 777 /.composer /.symfony /.cache
 RUN echo "#!/usr/bin/env bash\n cd /api\n bin/console \"\$@\"\n cd -" > /usr/bin/app && chmod +x /usr/bin/app
 
 RUN curl -sL https://get.symfony.com/cli/installer | bash -
