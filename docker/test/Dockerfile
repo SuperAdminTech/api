@@ -14,7 +14,7 @@ RUN apt update && apt install -y \
     composer \
     gettext-base \
     apache2 \
-    wget \
+    wget
 
 # DEV Deps
 RUN apt install -y \
