@@ -5,8 +5,7 @@ Welcome to the SuperAdmin REST API
 
 
 # Development
-
-![Code Coverate](https://img.shields.io/badge/coverage-83%25-green)
+[![codecov](https://codecov.io/gh/QbitArtifacts/caste/branch/master/graph/badge.svg?token=DXQI5GR8CM)](https://codecov.io/gh/QbitArtifacts/caste)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 ## Setup
@@ -65,7 +64,7 @@ docker exec -it rec-api_api_1 bash
 ### Run API image only (troubleshooting)
 Using **GNU Make** (recommended)
 ```
-make debug 
+make debug api
 ```
 
 Using docker directly
@@ -87,7 +86,7 @@ make coverage
 
 Using phpunit (must run previously `make shell` to have a project shell)
 ```
-bin/phpunit
+vendor/bin/phpunit
 ```
 Integrating with your IDE (VisualStudio, PhpStorm, etc...)
 
