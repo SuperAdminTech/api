@@ -12,7 +12,7 @@ case $1 in
     vendor/bin/phpunit
     ;;
   coverage)
-    XDEBUG_MODE=coverage vendor/bin/phpunit -d memory_limit=1G --coverage-clover coverage.xml --do-not-cache-result --process-isolation
+    XDEBUG_MODE=coverage vendor/bin/phpunit -d memory_limit=1G --coverage-clover coverage.xml
     ;;
   *)
     exec "$@"
