@@ -50,7 +50,7 @@ class BootstrapCommand extends Command
         $this->em->persist($app);
         $io->text("Name: {$app->name}");
         $io->text("Realm: {$app->realm}");
-        $io->success("OK");
+        $io->success("Done");
 
         $io->text("Creating User");
         $user = new User();
@@ -61,7 +61,7 @@ class BootstrapCommand extends Command
         $this->em->persist($user);
         $io->text("Username: {$username}");
         $io->text("Password: {$password}");
-        $io->success("OK");
+        $io->success("Done");
 
         $io->text("Creating Account");
         $account = new Account();
@@ -69,7 +69,7 @@ class BootstrapCommand extends Command
         $account->application = $app;
         $this->em->persist($account);
         $io->text("Name: {$account->name}");
-        $io->success("OK");
+        $io->success("Done");
 
         $io->text("Creating Permission");
         $perm = new Permission();
@@ -78,11 +78,11 @@ class BootstrapCommand extends Command
         $perm->user = $user;
         $this->em->persist($perm);
         $io->text("Grants: [{$perm->grants[0]}]");
-        $io->success("OK");
+        $io->success("Done");
 
         $this->em->flush();
 
-        $io->success('SUCCESS');
+        $io->success('Success');
 
         return 0;
     }

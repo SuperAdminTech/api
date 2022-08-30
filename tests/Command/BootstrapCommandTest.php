@@ -28,6 +28,6 @@ class BootstrapCommandTest extends WebTestCase
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('SUCCESS', $output);
+        $this->assertStringContainsString('Success', $output);
     }
 }

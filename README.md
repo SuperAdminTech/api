@@ -124,27 +124,35 @@ This takes care of using the correct passphrase to encrypt the private key, and 
 ### Create first admin and application
 You need to create at least one admin and application to make other projects be able to authenticate using SuperAdmin API.
 
-#### Create admin
 ```sh
 make shell api
-app sa:user:create --role ROLE_ADMIN --name Me --password secret --email 
-Creating new user ...
-User created successfully!
-User details:
-  - Id: xxxxxxxxx-yyyyyy-zzzzzzzzzz-ttttt
-  - Name: Me
-```
+app app:bootstrap
 
-#### Create application
-```sh
-make shell api
-app sa:application:create --admin xxxxxxxxx-yyyyyy-zzzzzzzzzz-ttttt --name MyApp --realm myapp
-Creating new application ...
-Application created successfully!
-Application details:
-  - Name: MyApp
-  - Realm: myapp
-  - JWT Public key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==
+ Creating first user and application
+ Creating Application
+ Name: Default Application
+ Realm: default
+
+ [OK] Done                                                                      
+
+ Creating User
+ Username: admin630e9310c635c
+ Password: secret630e9310c635f
+
+ [OK] Done                                                                      
+
+ Creating Account
+ Name: admin630e9310c635c
+
+ [OK] Done                                                                      
+
+ Creating Permission
+ Grants: [ACCOUNT_MANAGER]
+
+ [OK] Done                                                                      
+
+ [OK] Success                                                                   
+
 ```
 
 ### Considerations and known issues
