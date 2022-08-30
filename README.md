@@ -5,23 +5,13 @@ Welcome to the SuperAdmin REST API
 
 
 # Development
-[![codecov](https://codecov.io/gh/QbitArtifacts/caste/branch/master/graph/badge.svg?token=DXQI5GR8CM)](https://codecov.io/gh/QbitArtifacts/caste)
+[![codecov](https://codecov.io/gh/QbitArtifacts/caste/branch/master/graph/badge.svg?token=DXQI5GR8CM)](https://codecov.io/gh/SuperAdminTech/api)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 ## Setup
 ### Install Docker
 Install **docker** and **docker-compose** using the [official documentation](https://docs.docker.com/install/).
 Make sure having added your user to the `docker` group to avoid trouble with permissions, see [docs](https://docs.docker.com/install/linux/linux-postinstall/)
-
-### Generate JWT keys
-We need to generate the public and private keys used for signing JWT tokens. If you're using the API Platform distribution, you may run this from the project's root directory:
-```sh
-mkdir -p config/jwt
-jwt_passhrase=$(grep "^JWT_PASSPHRASE=" .env | cut -f 2 -d=)
-echo "$jwt_passhrase" | openssl genpkey -out config/jwt/private.pem -pass stdin -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-echo "$jwt_passhrase" | openssl pkey -in config/jwt/private.pem -passin stdin -out config/jwt/public.pem -pubout
-```
-This takes care of using the correct passphrase to encrypt the private key, and setting the correct permissions on the keys allowing the web server to read them.
 
 ### Run API with dependencies (MySQL, Mongodb, Node)
 #### Start services
@@ -113,8 +103,52 @@ but if the container doesn't start (ie. missing dependencies), the method must b
 directly the built image using `docker run -it -v `pwd`:/api -u $UID:$UID rec-api-dev bash` (also
 explained [above](#run-api-image-only)).
 
+### Generate JWT key pair
+JWT key pair is needed to sign and verify bearer tokens.
 
-### Consideration and known issues
+Private key is used to generate tokens when user does login, this key must be keep in a safe place and not share to
+anyone.
+
+Public keys to verify the token, so you need to provide ONLY this public key to other projects to have a successful
+integration.
+
+If you're using the API Platform distribution, you may run this from the project's root directory:
+```sh
+mkdir -p config/jwt
+jwt_passhrase=$(grep "^JWT_PASSPHRASE=" .env | cut -f 2 -d=)
+echo "$jwt_passhrase" | openssl genpkey -out config/jwt/private.pem -pass stdin -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+echo "$jwt_passhrase" | openssl pkey -in config/jwt/private.pem -passin stdin -out config/jwt/public.pem -pubout
+```
+This takes care of using the correct passphrase to encrypt the private key, and setting the correct permissions on the keys allowing the web server to read them.
+
+### Create first admin and application
+You need to create at least one admin and application to make other projects be able to authenticate using SuperAdmin API.
+
+#### Create admin
+```sh
+make shell api
+app sa:user:create --role ROLE_ADMIN --name Me --password secret --email 
+Creating new user ...
+User created successfully!
+User details:
+  - Id: xxxxxxxxx-yyyyyy-zzzzzzzzzz-ttttt
+  - Name: Me
+```
+
+#### Create application
+```sh
+make shell api
+app sa:application:create --admin xxxxxxxxx-yyyyyy-zzzzzzzzzz-ttttt --name MyApp --realm myapp
+Creating new application ...
+Application created successfully!
+Application details:
+  - Name: MyApp
+  - Realm: myapp
+  - JWT Public key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==
+```
+
+### Considerations and known issues
 #### Token TTL (time to live)
-If a tokens TTL is small, there is a risk of beeing expired whilst a user is in the middle of some Record or just about to create it. If token expires it will reset everyting, and user will need to redo what he was doing.
+If a tokens TTL is small, there is a risk of being expired whilst a user is in the middle of some operation. If token
+expires it will reset everything, and user will need to redo what he was doing.
 
