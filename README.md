@@ -121,6 +121,14 @@ echo "$jwt_passhrase" | openssl pkey -in config/jwt/private.pem -passin stdin -o
 ```
 This takes care of using the correct passphrase to encrypt the private key, and setting the correct permissions on the keys allowing the web server to read them.
 
+### Create database schema
+You need the base database schema to be created.
+
+```shell
+make shell api
+app doctrine:schema:update --force
+```
+
 ### Create first admin and application
 You need to create at least one admin and application to make other projects be able to authenticate using SuperAdmin API.
 

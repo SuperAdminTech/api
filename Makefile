@@ -1,6 +1,6 @@
 
-STACK := caste
-DOCKER_IMAGE := api-caste
+STACK := superadmin
+DOCKER_IMAGE := superadmin-api
 DOCKER_TAG := master
 BUILD_DIR := .
 DOCKERFILE_DIR := .
